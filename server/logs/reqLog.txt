@@ -1,0 +1,6 @@
+20220525	21:55:20	b5a574cf-7813-41a6-bc17-0ca467ec24cc	POST	undefined	/api/v1/users/signin
+20220525	21:56:56	1a632a0e-a91a-4f62-b067-ff17e2f098e8	POST	undefined	/api/v1/users/signup
+20220525	21:59:03	24ed0c3c-7fa8-4d75-92fc-d784b62e5fab	POST	undefined	/api/v1/users/signup
+20220525	22:26:50	a49138ce-45d2-48a2-a6f2-fa53a008cc1e	POST	undefined	/api/v1/transactions
+20220525	22:30:49	41289414-6b34-460f-a3f1-a4e938d60ea5	POST	undefined	/api/v1/transactions/628eecf7e91b59846c249e8d
+20220525	22:31:31	106c1d27-3397-40b4-9b5a-35763b30b85b	POST	undefined	/api/v1/transactions/628eecf7e91b59846c249e8d
