@@ -1,0 +1,7 @@
+{
+  "name": "money-trees",
+  "version": "1.0.0",
+  "description": "Mock Budget App",
+  "main": "index.js",
+  "license": "MIT"
+}
