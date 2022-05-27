@@ -4,18 +4,14 @@ const jwt = require('jsonwebtoken');
 const authController = require('./../controllers/authController');
 const userController = require('./../controllers/userController');
 
-
 const router = express.Router();
 
-router.post('/signup', authController.register);
-router.post('/signin', authController.login);
-router.post('/logout', authController.handleLogout);
-router.get('/refreshToken', authController.refreshToken);
+router.post('/signup', authController.signup);
+router.post('/signin', authController.signin);
+router.post('/logout', authController.logout);
 
-router
-  .route('/')
-  .get(userController.getAllUsers)
 
+router.route('/').get(userController.getAllUsers);
 
 router
   .route('/:id')

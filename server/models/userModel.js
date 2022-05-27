@@ -3,41 +3,50 @@ const Schema = mongoose.Schema;
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 
-const User = new Schema({
-  firstName: {
-    type: String,
-    default: '',
-  },
-  lastName: {
-    type: String,
-    default: '',
-  },
-  username: {
-    type: String,
-    default: '',
-    validate: [validator.isEmail, 'Please provide a valid email'],
-  },
-  roles: {
-    user: {
-      type: Number,
-      default: 2003,
+const User = new Schema(
+  {
+    firstName: {
+      type: String,
+      default: '',
     },
-    admin: Number,
+    lastName: {
+      type: String,
+      default: '',
+    },
+    email: {
+      type: String,
+      default: '',
+      validate: [validator.isEmail, 'Please provide a valid email'],
+    },
+    roles: {
+      user: {
+        type: Number,
+        default: 2003,
+      },
+      admin: Number,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    passwordConfirm: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+      select: false,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
- transactions: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Transactions',
-  },
-  refreshToken: [String],
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-    select: false,
-  },
+
+  { timestamps: true, toJSON: { virtuals: true } }
+);
+
+User.virtual('transaction', {
+  ref: 'Transactions',
+  foreignField: 'user',
+  localField: '_id',
 });
 
 //Function hashes password before its saved to the database, so the actual password is not saved to the database
@@ -76,6 +85,20 @@ User.pre(/^find/, function (next) {
   next();
 });
 
+User.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp;
+  }
+
+  // False means NOT changed
+  return false;
+};
+
 User.methods.createPasswordResetToken = function () {
   //generate random token and convert to a hex string
   //We are going send the token to the user, so they can have it stored in the client
@@ -94,13 +117,4 @@ User.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-
-
-
-
-
-
 module.exports = mongoose.model('User', User);
-
-
-

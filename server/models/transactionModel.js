@@ -36,17 +36,24 @@ const Transactions = new mongoose.Schema({
   description: {
     type: String,
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
   date: {
     type: Date,
+    trim: true,
+    default: '',
     required: [true, 'Please Enter the Date of Transaction'],
-    validate: [validator.isDate, 'Please provide a valid Date'],
   },
-//   user: {
-//     type: mongoose.Schema.ObjectId,
-//     ref: 'User',
-//     required: [true, 'You must be signed'],
-//   },
+  //   user: {
+  //     type: mongoose.Schema.ObjectId,
+  //     ref: 'User',
+  //     required: [true, 'You must be signed'],
+  //   },
   submittedDate: { type: Date, default: Date.now },
 });
+
+
 
 module.exports = mongoose.model('Transactions', Transactions);

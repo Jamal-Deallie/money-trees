@@ -1,2 +1,0 @@
-20220525	22:26:50	e5ae55f9-9ff9-4bed-aa90-81693edfecb6	Error: ENOENT: no such file or directory, stat '/Users/jamaldeallie/budget-app/server/views/404.html'
-20220525	22:30:49	14dc9a57-86d5-47ae-915a-e78b44a2a5d3	ValidationError: Transactions validation failed: category: `Shopping` is not a valid enum value for path `category`., cashflow: `debit` is not a valid enum value for path `cashflow`.

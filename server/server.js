@@ -23,7 +23,7 @@ app.use(logger);
 
 // Handle options credentials check - before CORS!
 // and fetch cookies credentials requirement
-app.use(credentials);
+// app.use(credentials);
 
 // Cross Origin Resource Sharing
 app.use(cors());
@@ -45,13 +45,7 @@ app.use((req, res, next) => {
 });
 
 // app.use(bodyParser.json());
-app.use(
-  session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+
 
 // 3) ROUTES
 
