@@ -2,14 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const corsOptions = require('./config/corsOptions');
-const { logger } = require('./middleware/logEvents');
-const errorHandler = require('./middleware/errorHandler');
 const cookieParser = require('cookie-parser');
-const credentials = require('./middleware/credentials');
 const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
 const cors = require('cors');
-const session = require('express-session');
 const userRouter = require('./routes/userRoutes');
 const transactionRouter = require('./routes/transactionRoutes');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -18,17 +14,20 @@ const app = express();
 
 connectDB();
 
-// custom middleware logger
-app.use(logger);
-
 // Handle options credentials check - before CORS!
 // and fetch cookies credentials requirement
 // app.use(credentials);
 
 // Cross Origin Resource Sharing
 app.use(cors());
+// Access-Control-Allow-Origin *
+// api.natours.com, front-end natours.com
+// app.use(cors({
+//   origin: 'https://www.natours.com'
+// }))
 
 app.options('*', cors());
+
 
 // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
@@ -67,8 +66,9 @@ app.all('*', (req, res) => {
   }
 });
 
-app.use(errorHandler);
+
 const port = process.env.PORT || 5001;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
+

@@ -28,13 +28,10 @@ const Transactions = new mongoose.Schema({
     type: Number,
     required: [true, 'Enter the transaction amount'],
   },
-  cashflow: {
+  cashFlow: {
     type: String,
     enum: ['debit', 'credit'],
     required: [true, 'Select the transaction Flow'],
-  },
-  description: {
-    type: String,
   },
   user: {
     type: mongoose.Schema.ObjectId,
@@ -53,7 +50,5 @@ const Transactions = new mongoose.Schema({
   //   },
   submittedDate: { type: Date, default: Date.now },
 });
-
-
 
 module.exports = mongoose.model('Transactions', Transactions);
