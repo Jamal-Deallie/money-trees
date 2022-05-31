@@ -1,18 +1,8 @@
 import { styled } from '@mui/system';
-import { Button } from '@mui/material';
-
-export const Navbar = styled('nav')(({ theme }) => ({
-  width: '100%',
-  borderBottom: '2px solid #422800',
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: ' 0 3rem',
-  alignItems: 'center',
-  position: 'relative',
-}));
+import { Button, Box } from '@mui/material';
 
 export const MainButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.secondary.main,
+  background: theme.palette.success.main,
   color: theme.palette.primary.main,
   fontSize: 16,
   fontFamily: 'open-sans,sans-serif',
@@ -27,4 +17,16 @@ export const MainButton = styled(Button)(({ theme }) => ({
     backgroundColor: '#ffffff',
     boxShadow: 'none',
   },
+}));
+
+export const Container = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 450,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
 }));

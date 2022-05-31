@@ -7,11 +7,12 @@ export const StyledLayout = styled('div')`
   align-items: stretch;
 `;
 export const NavContainer = styled('div')`
-  position: 'relative';
-  flex: 1;
+  position: 'sticky';
+
 `;
 
 export const ContentContainer = styled('main')({
+
   flexGrow: 2,
   minHeight: '60rem',
   position: 'relative',
@@ -19,7 +20,7 @@ export const ContentContainer = styled('main')({
 
 export const FooterContainer = styled('div')`
   position: 'relative';
-  flex: 1;
+
   height: 40rem;
 `;
 

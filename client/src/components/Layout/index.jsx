@@ -1,31 +1,24 @@
 import { Outlet } from 'react-router-dom';
-import {
-  Paper,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Stack,
-  AppBar,
-  IconButton,
-  Toolbar,
-} from '@mui/material/';
+import { Box, Typography } from '@mui/material/';
 import { Navigation, Footer } from '../../components';
 import {
   StyledLayout,
   ContentContainer,
   NavContainer,
   FooterContainer,
+  Main,
 } from './styles';
 
 export default function Layout({ children }) {
   return (
-    <Box>
+    <Box sx={{ background: '#FCF4EC' }}>
       <NavContainer>
         <Navigation />
       </NavContainer>
-      <Box>{children}</Box>
+      <ContentContainer><Outlet/></ContentContainer>
+      <FooterContainer>
+        <Typography>FOOTER</Typography>
+      </FooterContainer>
     </Box>
   );
 }

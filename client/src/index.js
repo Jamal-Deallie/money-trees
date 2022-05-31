@@ -12,6 +12,8 @@ import { extendedApiSlice } from './features/transactions/transactionSlice';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 store.dispatch(extendedApiSlice.endpoints.getTransactions.initiate());
+
+
 root.render(
   <Provider store={store}>
     <ThemeProvider theme={customTheme}>

@@ -1,27 +1,28 @@
-import { createSlice, current } from '@reduxjs/toolkit';
-import { createSelector } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   token: '',
   user: {},
+  name: '',
+  creditScore: '',
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+
   reducers: {
     setCredentials: (state, { payload }) => {
-      console.log(payload)
-      const { user, token } = payload.data;
-      state.user = user;
-      state.token = token;
-      console.log(user);
-      console.log(token);
+      console.log({ credentials: payload });
+
+      state.name = payload.user.name;
+      state.creditScore = payload.user.creditScore;
+      state.token = payload.token;
     },
-    logOut: (state, {payload}) => {
-      state.user = null
-      state.token = null
-  }
+    logOut: (state, { payload }) => {
+      state.user = null;
+      state.token = null;
+    },
   },
 });
 

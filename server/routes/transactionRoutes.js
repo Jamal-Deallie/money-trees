@@ -6,13 +6,13 @@ const router = express.Router();
 router
   .route('/')
   .get(authController.protect, transactionController.getAllTransactions);
-router.get('/search', transactionController.getTransactionsBySearch);
+router.get('/search', authController.protect, transactionController.getTransactionsBySearch);
 
-const { protect } = router
+router
   .route('/:id')
   .get(transactionController.getTransaction)
   .patch(transactionController.updateTransaction)
-  .delete(transactionController.deleteTransaction)
+  .delete(authController.protect, transactionController.deleteTransaction)
   .post(transactionController.createTransaction);
 
 module.exports = router;

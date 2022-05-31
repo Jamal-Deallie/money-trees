@@ -1,121 +1,95 @@
+import { Grid, Box } from '@mui/material/';
 import {
-  Paper,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Stack,
-  AppBar,
-  IconButton,
-  Toolbar,
-} from '@mui/material/';
-import { Image, CustomContainer } from './styles';
-import { TransactionsContainer, AccountContainer } from '../../containers';
+  CustomContainer,
+  GridItem,
+  AccountSection,
+  GridContainer,
+} from './styles';
+import {
+  TransactionsContainer,
+  AccountContainer,
+  CardContainer,
+} from '../../containers';
 
 export default function DashboardContainer() {
   return (
     <CustomContainer sx={{ width: '100%' }}>
-      <Box>
-        <Grid container spacing={2}>
-          <Grid item lg={9}>
-            <Stack spacing={3}>
-              <Grid container spacing={2}>
-                <Grid item lg={3}>
-                  <Card sx={{ minWidth: 275, background: '#E35C2C' }}>
-                    <CardContent>
-                      <Grid container spacing={2}>
-                        <Grid item s={6}>
-                          <Typography
-                            variant='h3'
-                            component='div'
-                            sx={{ fontFamily: 'balboa, sans-serif' }}>
-                            CREDIT CARD
-                          </Typography>
-                          <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                            $500
-                          </Typography>
-                        </Grid>
-                        <Grid item s={6}>
-                          <Image
-                            src='/images/creditscore.svg'
-                            alt='credit score'
-                          />
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item lg={3}>
-                  <Card sx={{ minWidth: 275, background: '#F4BF34' }}>
-                    <CardContent>
-                      <Grid container spacing={2}>
-                        <Grid item s={6}>
-                          <Typography variant='h5' component='div'>
-                            Monthly Savings
-                          </Typography>
-                          <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                            $500
-                          </Typography>
-                        </Grid>
-                        <Grid item s={6}>
-                          <Image src='/images/savings.svg' alt='cash' />
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item lg={3}>
-                  <Card sx={{ minWidth: 275, background: '#2E8AC3' }}>
-                    <CardContent>
-                      <Grid container spacing={2}>
-                        <Grid item s={6}>
-                          <Typography variant='h5' component='div'>
-                            Monthly Savings
-                          </Typography>
-                          <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                            $500
-                          </Typography>
-                        </Grid>
-                        <Grid item s={6}>
-                          <Image src='/images/budget.svg' alt='cash' />
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item lg={3}>
-                  <Card sx={{ minWidth: 275, background: '#46AC4C' }}>
-                    <CardContent>
-                      <Grid container spacing={2}>
-                        <Grid item s={6}>
-                          <Typography
-                            component='div'
-                            sx={{ fontFamily: 'open-sans, sans-serif' }}>
-                            Monthly Savings
-                          </Typography>
-                          <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                            $500
-                          </Typography>
-                        </Grid>
-                        <Grid item s={6}>
-                          <Image src='/images/cash.svg' alt='cash' />
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
-              <TransactionsContainer />
-            </Stack>
-          </Grid>
-          <Grid item lg={3}>
-            <Box sx={{ height: 820 }}>
-              <AccountContainer />
-            </Box>
-          </Grid>
-        </Grid>
+      <Box sx={{ width: '100%' }}>
+        <GridContainer container>
+          <AccountSection item s={6} md={5} lg={4}>
+            <AccountContainer />
+          </AccountSection>
+          <GridItem item s={6} md={7} lg={8}>
+            <TransactionsContainer />
+            <CardContainer />
+          </GridItem>
+        </GridContainer>
       </Box>
     </CustomContainer>
   );
+}
+
+{
+  /* <Grid container spacing={2} sx={{ padding: 5 }}>
+                <Grid item lg={3}>
+                  <CustomCard sx={{ background: '#F29877' }}>
+                    <Typography
+                      variant='h3'
+                      sx={{
+                        fontFamily: 'balboa, sans-serif',
+                        textTransform: 'uppercase',
+                      }}>
+                      CREDIT SCORE
+                    </Typography>
+                    <Typography color='text.secondary'>700</Typography>
+                    <Image src='/images/creditscore.svg' alt='credit score' />
+                  </CustomCard>
+                </Grid>
+                <Grid item lg={3}>
+                  <CustomCard sx={{ background: '#F2D091' }}>
+                    <Typography
+                      variant='h3'
+                      sx={{
+                        fontFamily: 'balboa, sans-serif',
+                        textTransform: 'uppercase',
+                      }}>
+                      Savings
+                    </Typography>
+                    <Typography color='text.secondary'>$500</Typography>
+
+                    <Image src='/images/savings.svg' alt='cash' />
+                  </CustomCard>
+                </Grid>
+                <Grid item lg={3}>
+                  <CustomCard sx={{ background: '#84A9D9' }}>
+                    <Typography
+                      variant='h3'
+                      sx={{
+                        fontFamily: 'balboa, sans-serif',
+                        textTransform: 'uppercase',
+                      }}>
+                      My Budget
+                    </Typography>
+                    <Typography color='text.secondary'>$500</Typography>
+
+                    <Image src='/images/budget.svg' alt='cash' />
+                  </CustomCard>
+                </Grid>
+                <Grid item lg={3}>
+                  <CustomCard sx={{ background: '#E0AEEB' }}>
+                    <Typography
+                      variant='h3'
+                      sx={{
+                        fontFamily: 'balboa, sans-serif',
+                        textTransform: 'uppercase',
+                      }}>
+                      Expenses
+                    </Typography>
+                    <Typography color='text.secondary' variant='body2'>
+                      $500
+                    </Typography>
+
+                    <Image src='/images/cash.svg' alt='cash' />
+                  </CustomCard>
+                </Grid> */
 }

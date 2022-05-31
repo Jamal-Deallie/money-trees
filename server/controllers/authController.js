@@ -32,16 +32,19 @@ const createSendToken = (user, statusCode, req, res) => {
   res.status(statusCode).json({
     status: 'success',
     token,
-    data: {
-      user,
-    },
+    user,
   });
 };
 
 //Register User Controller
 exports.signup = catchAsync(async (req, res, next) => {
-  const { firstName, lastName, email, password, passwordConfirm } = req.body;
+  console.log(req.body);
+  const { firstName, lastName, creditScore, email, password, passwordConfirm } =
+    req.body;
 
+  if (!email || !password || !passwordConfirm || !firstName || !creditScore) {
+    return next(new AppError('Please complete all fields!', 400));
+  }
   try {
     const user = await User.findOne({ email });
     //check if user exist send a failed 404 message
@@ -51,6 +54,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     const newUser = await User.create({
       firstName: firstName,
       lastName: lastName,
+      creditScore: creditScore,
       email: email,
       password: password,
       passwordConfirm: passwordConfirm,
@@ -64,32 +68,33 @@ exports.signup = catchAsync(async (req, res, next) => {
     });
   }
 
-  const message = `You've registered your customer account.`;
-  try {
-    await sendEmail({
-      email: email,
-      subject: 'Customer registration confirmation',
-      message: message,
-    });
-    res.status(200).json({
-      status: 'success',
-      message: 'Token sent to email',
-    });
-  } catch (err) {
-    console.log(err);
+  // const message = `You've registered your customer account.`;
+  // try {
+  //   await sendEmail({
+  //     email: email,
+  //     subject: 'Customer registration confirmation',
+  //     message: message,
+  //   });
+  //   res.status(200).json({
+  //     status: 'success',
+  //     message: 'Token sent to email',
+  //   });
+  // } catch (err) {
+  //   console.log(err);
 
-    //this disregards all validation requirements
+  //   //this disregards all validation requirements
 
-    return next(
-      new AppError(
-        'There was an error resetting your password. Please try again later',
-        500
-      )
-    );
-  }
+  //   return next(
+  //     new AppError(
+  //       'There was an error resetting your password. Please try again later',
+  //       500
+  //     )
+  //   );
+  // }
 });
 
 exports.signin = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   const { email, password } = req.body;
 
   // 1) Check if email and password exist
@@ -252,7 +257,7 @@ exports.isLoggedIn = async (req, res, next) => {
 };
 
 exports.protect = catchAsync(async (req, res, next) => {
-  // 1) Getting token and check of it's there
+  // 1) Getting token and check it's there
   let token;
   if (
     req.headers.authorization &&

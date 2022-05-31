@@ -6,7 +6,7 @@ const transactionsAdapter = createEntityAdapter({
 });
 
 const initialState = transactionsAdapter.getInitialState();
-const userId = '62905c154d8bd9afe7da8b54'
+const userId = '6295a74ab4e78bcb041d932c';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getTransactions: builder.query({
@@ -21,7 +21,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: ({ merchant, category, amount, cashFlow, date }) => ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-       
+
         url: `/transactions/${userId}`,
         body: { merchant, category, amount, cashFlow, date },
       }),
@@ -55,4 +55,19 @@ export const {
   // Pass in a selector that returns the transaction slice of state
 } = transactionsAdapter.getSelectors(
   state => selectTransactionsData(state) ?? initialState
+);
+
+export const selectFilterTransactionsData = createSelector(
+  selectAllTransactions,
+  TransactionsResult =>
+    TransactionsResult.filter(transaction => transaction.cashFlow === 'credit')
+
+  // normalized state object with ids & entities
+);
+export const selectTotalCreditAmount = createSelector(
+  selectFilterTransactionsData,
+  TransactionsResult =>
+    TransactionsResult.reduce((accumulator, object) => {
+      return accumulator + object.amount;
+    }, 0)
 );

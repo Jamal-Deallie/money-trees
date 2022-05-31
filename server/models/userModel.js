@@ -25,6 +25,10 @@ const User = new Schema(
       },
       admin: Number,
     },
+    creditScore:{
+      type: Number,
+      required: true,
+    },
     password: {
       type: String,
       required: true,

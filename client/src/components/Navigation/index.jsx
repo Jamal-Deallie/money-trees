@@ -1,54 +1,47 @@
-import { useState } from 'react';
-import { Typography, AppBar, Toolbar } from '@mui/material/';
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import { Link, useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material/';
+import { Navbar, MainButton } from './styles';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../features/auth/authSlice';
 
 export default function Navigation() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const token = JSON.parse(localStorage.getItem('token'));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    //remove token from localStorage
+    localStorage.removeItem('token');
+    //navigate to homepage
+    navigate('/');
+    //remove user from state
+    dispatch(logout());
+  };
+
   return (
     <>
-      <AppBar position='static'>
-        <Toolbar variant='dense'>
-          <Typography variant='h6' color='inherit' component='div'>
-            Photos
+      <Navbar position='static' color='warning' sx={{ height: '7rem' }}>
+        <Link to='/'>
+          <Typography
+            variant='h2'
+            sx={{
+              fontFamily: 'balboa, sans-serif',
+              textTransform: 'uppercase',
+              fontWeight: 'bold',
+              color: 'primary.main',
+            }}>
+            Money Trees
           </Typography>
-          <Button onClick={handleOpen} sx={{ color: 'white' }}>
-            Open modal
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby='modal-modal-title'
-          aria-describedby='modal-modal-description'>
-          <Box sx={style}>
-            <Typography id='modal-modal-title' variant='h6' component='h2'>
-              Text in a modal
-            </Typography>
-            <Typography id='modal-modal-description' sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-          </Box>
-        </Modal>
-      </div>
+        </Link>
+
+        {token ? (
+          <MainButton onClick={signOut}>SIGN OUT</MainButton>
+        ) : (
+          <Link to='/signin'>
+            <MainButton>SIGN IN</MainButton>
+          </Link>
+        )}
+      </Navbar>
     </>
   );
 }

@@ -21,7 +21,7 @@ const actions = [
 
 export default function Menu() {
   return (
-    <MenuButton sx={{ background: 'red' }}>
+    <MenuButton>
       <IconButton aria-label='delete'>
         <MoreVert />
       </IconButton>

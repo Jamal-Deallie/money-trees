@@ -4,9 +4,7 @@ import { DashboardContainer } from '../../containers';
 export default function DashboardPage() {
   return (
     <>
-      <Layout>
-        <DashboardContainer />
-      </Layout>
+      <DashboardContainer />
     </>
   );
 }

@@ -1,12 +1,12 @@
 import { createTheme } from '@mui/material/styles';
 
-const primaryDark = '#131919';
+const primaryDark = '#26323';
 const primaryColor = '#253232';
 
-const secondaryColor = '#A68764';
-const secondaryLight = '#E6E1DD';
+const secondaryColor = '#FCF4EC';
 
-const warningColor = '#d14334';
+const warningColor = '#DC756C';
+const successColor = '#59BDB6';
 
 export const customTheme = createTheme({
   palette: {
@@ -15,27 +15,40 @@ export const customTheme = createTheme({
       dark: primaryDark,
     },
     secondary: {
-      light: secondaryLight,
       main: secondaryColor,
     },
     warning: {
       main: warningColor,
     },
+    success: {
+      main: successColor,
+    },
   },
   typography: {
     fontFamily: ["'balboa, sans-serif', 'open-sans, sans-serif'"].join(','),
     h1: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'balboa, sans-serif',
+      fontSize: 54,
+      textTransform: 'uppercase',
     },
     body1: {
       fontSize: '1.6rem',
-      fontFamily: 'Open Sans',
+      fontFamily: 'open-sans, sans-serif',
+    },
+    body2: {
+      fontSize: '1.8rem',
+      fontFamily: 'open-sans, sans-serif',
     },
   },
   components: {
     MuiButton: {
       fontSize: '1.6rem',
-      fontFamily: ['Open Sans'],
+      fontFamily: ['open-sans,sans-serif'],
+    },
+    defaultProps: {
+      disableElevation: true,
+      disableFocusRipple: true,
+      disableRipple: true,
     },
   },
 });
