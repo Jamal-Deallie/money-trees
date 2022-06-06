@@ -6,7 +6,7 @@ const primaryColor = '#253232';
 const secondaryColor = '#FCF4EC';
 
 const warningColor = '#DC756C';
-const successColor = '#59BDB6';
+const successColor = "#56C090";
 
 export const customTheme = createTheme({
   palette: {

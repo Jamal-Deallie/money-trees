@@ -1,38 +1,59 @@
-import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
-import { apiSlice } from '../api/apiSlice';
+import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
+import { apiSlice } from "../api/apiSlice";
 
 const transactionsAdapter = createEntityAdapter({
-  selectId: data => data._id,
+  selectId: (data) => data._id,
 });
 
 const initialState = transactionsAdapter.getInitialState();
-const userId = '6295a74ab4e78bcb041d932c';
+const userId = "6295a74ab4e78bcb041d932c";
 export const extendedApiSlice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getTransactions: builder.query({
-      query: () => '/transactions',
-      transformResponse: response => {
+      query: () => "/transactions",
+      transformResponse: (response) => {
         const { transaction } = response.transaction;
         return transactionsAdapter.setAll(initialState, transaction);
       },
-      providesTags: ['Transactions'],
+      providesTags: ["Transactions"],
     }),
     addTransaction: builder.mutation({
       query: ({ merchant, category, amount, cashFlow, date }) => ({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
 
         url: `/transactions/${userId}`,
         body: { merchant, category, amount, cashFlow, date },
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: 'Transactions', id: arg.id },
+        { type: "Transactions", id: arg.id },
+      ],
+    }),
+    deleteTransaction: builder.mutation({
+      query: (_id) => ({
+        method: "DELETE",
+        url: `/transactions/${_id}`,
+        body: { _id },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Transactions", id: arg.id },
+      ],
+    }),
+    updateTransaction: builder.mutation({
+      query: ({ merchant, category, amount, cashFlow, date, _id }) => ({
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        url: `/transactions/${_id}`,
+        body: { merchant, category, amount, cashFlow, date },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Transactions", id: arg.id },
       ],
     }),
   }),
 });
 
-export const { useGetTransactionsQuery, useAddTransactionMutation } =
+export const { useGetTransactionsQuery, useAddTransactionMutation, useUpdateTransactionMutation, useDeleteTransactionMutation } =
   extendedApiSlice;
 
 // returns the query result object
@@ -42,7 +63,7 @@ export const selectTransactionsResult =
 // Creates memoized selector
 export const selectTransactionsData = createSelector(
   selectTransactionsResult,
-  TransactionsResult => TransactionsResult.data
+  (TransactionsResult) => TransactionsResult.data
 
   // normalized state object with ids & entities
 );
@@ -54,19 +75,37 @@ export const {
   selectIds: selectTransactionIds,
   // Pass in a selector that returns the transaction slice of state
 } = transactionsAdapter.getSelectors(
-  state => selectTransactionsData(state) ?? initialState
+  (state) => selectTransactionsData(state) ?? initialState
 );
 
-export const selectFilterTransactionsData = createSelector(
+export const selectFilterCredit = createSelector(
   selectAllTransactions,
-  TransactionsResult =>
-    TransactionsResult.filter(transaction => transaction.cashFlow === 'credit')
+  (TransactionsResult) =>
+    TransactionsResult.filter(
+      (transaction) => transaction.cashFlow === "credit"
+    )
+
+  // normalized state object with ids & entities
+);
+
+export const selectFilterDebit = createSelector(
+  selectAllTransactions,
+  (TransactionsResult) =>
+    TransactionsResult.filter((transaction) => transaction.cashFlow === "debit")
 
   // normalized state object with ids & entities
 );
 export const selectTotalCreditAmount = createSelector(
-  selectFilterTransactionsData,
-  TransactionsResult =>
+  selectFilterCredit,
+  (TransactionsResult) =>
+    TransactionsResult.reduce((accumulator, object) => {
+      return accumulator + object.amount;
+    }, 0)
+);
+
+export const selectTotalDebitAmount = createSelector(
+  selectFilterDebit,
+  (TransactionsResult) =>
     TransactionsResult.reduce((accumulator, object) => {
       return accumulator + object.amount;
     }, 0)

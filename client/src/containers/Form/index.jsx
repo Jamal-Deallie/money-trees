@@ -18,19 +18,10 @@ export default function FormContainer() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: "100%" }}>
       <Box>
-        <Tabs value={index} onChange={onTabClicked}>
-          <Tab label='Add A Transaction' />
-          <Tab label='Update Your Goals' />
-        </Tabs>
-      </Box>
-      <Panel value={index} index={0}>
         <TransactionForm />
-      </Panel>
-      <Panel value={index} index={1}>
-        <GoalForm />
-      </Panel>
+      </Box>
     </Box>
   );
 }

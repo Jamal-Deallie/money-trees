@@ -20,7 +20,5 @@ export const ContentContainer = styled('main')({
 
 export const FooterContainer = styled('div')`
   position: 'relative';
-
-  height: 40rem;
 `;
 

@@ -17,7 +17,7 @@ export default function Layout({ children }) {
       </NavContainer>
       <ContentContainer><Outlet/></ContentContainer>
       <FooterContainer>
-        <Typography>FOOTER</Typography>
+        <Footer/>
       </FooterContainer>
     </Box>
   );
