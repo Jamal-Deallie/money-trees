@@ -5,6 +5,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const sendEmail = require('../utils/email');
 const { promisify } = require('util');
+const cloudinary = require('cloudinary');
 
 const signToken = id => {
   //get the id of the user that's created by mongoDB
@@ -38,9 +39,12 @@ const createSendToken = (user, statusCode, req, res) => {
 
 //Register User Controller
 exports.signup = catchAsync(async (req, res, next) => {
+  console.log(req.file.path);
   console.log(req.body);
   const { firstName, lastName, creditScore, email, password, passwordConfirm } =
     req.body;
+
+  const { path } = req.file;
 
   if (!email || !password || !passwordConfirm || !firstName || !creditScore) {
     return next(new AppError('Please complete all fields!', 400));
@@ -51,15 +55,38 @@ exports.signup = catchAsync(async (req, res, next) => {
     if (user) {
       return next(new AppError('The email already exists', 409));
     }
-    const newUser = await User.create({
-      firstName: firstName,
-      lastName: lastName,
-      creditScore: creditScore,
-      email: email,
-      password: password,
-      passwordConfirm: passwordConfirm,
-    });
 
+    //check if avatar was included in body, if so, upload it to cloudinary
+    let newUser;
+    if (path) {
+      console.log('path checked');
+      const result = await cloudinary.uploader.upload(req.file.path);
+      newUser = new User({
+        firstName: firstName,
+        lastName: lastName,
+        creditScore: creditScore,
+        email: email,
+        password: password,
+        passwordConfirm: passwordConfirm,
+        avatar: {
+          avatarImg: result.secure_url,
+          cloudinaryId: result.public_id,
+        },
+      });
+    }
+    //if avatar is not included upload the default avatar
+    else {
+      newUser = new User({
+        firstName: firstName,
+        lastName: lastName,
+        creditScore: creditScore,
+        email: email,
+        password: password,
+        passwordConfirm: passwordConfirm,
+      });
+    }
+
+    await newUser.save();
     createSendToken(newUser, 201, req, res);
   } catch (err) {
     console.log('signup error', err);

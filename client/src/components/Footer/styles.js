@@ -1,12 +1,11 @@
-import { styled } from "@mui/system";
+import { styled } from '@mui/system';
 
-export const CustomFooter = styled("footer")(({ theme }) => ({
-  background: theme.palette.success.main,
-  height: "100%",
-  borderTop: `solid 2px ${theme.palette.primary.main}`,
-  padding: "2.5rem",
+export const CustomFooter = styled('footer')(({ theme }) => ({
+  background: theme.palette.primary.main,
+  padding: '5rem',
+  height: 'auto',
 }));
 
-export const Icons = styled("img")({
-  height: "3rem",
+export const Icons = styled('img')({
+  height: '3rem',
 });

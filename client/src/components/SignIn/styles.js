@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { Box, Typography, TextField, Button } from '@mui/material';
 
 export const LoginSection = styled('div')(({ theme }) => ({}));
@@ -19,6 +19,7 @@ export const MainButton = styled('button')(({ theme }) => ({
   border: '2px solid #111',
   borderRadius: '8px',
   boxSizing: 'border-box',
+  width: '100%',
   boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
 
   '&:hover': {
@@ -26,8 +27,6 @@ export const MainButton = styled('button')(({ theme }) => ({
     boxShadow: 'none',
   },
 }));
-
-
 
 export const CustomInput = styled(TextField)({
   '& label.Mui-focused': {
@@ -68,7 +67,7 @@ export const Links = styled(Link)(({ theme }) => ({
   },
 }));
 
-export const FormWrap = styled(Box)(({ theme }) => ({
+export const FormWrap = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -77,5 +76,11 @@ export const FormWrap = styled(Box)(({ theme }) => ({
   border: `2px solid ${theme.palette.primary.main}`,
   boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
   borderRadius: '30px',
-  padding: '5rem',
+  padding: '15rem 5rem',
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+  gap: '5rem',
+  justifyContent: 'center',
+  alignItems: 'center',
 }));

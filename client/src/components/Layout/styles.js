@@ -1,24 +1,20 @@
 import { styled } from '@mui/system';
 
-export const StyledLayout = styled('div')`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: stretch;
-`;
-export const NavContainer = styled('div')`
-  position: 'sticky';
+export const StyledLayout = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  minHeight: '100vh',
+});
 
-`;
-
-export const ContentContainer = styled('main')({
-
-  flexGrow: 2,
-  minHeight: '60rem',
+export const NavContainer = styled('div')({
   position: 'relative',
 });
 
-export const FooterContainer = styled('div')`
-  position: 'relative';
-`;
+export const ContentContainer = styled('main')({
+  position: 'relative',
+});
 
+export const FooterContainer = styled('footer')({
+  width: '100%',
+  height: '60rem',
+});

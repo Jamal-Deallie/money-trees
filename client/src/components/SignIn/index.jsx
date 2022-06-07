@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { MainButton, FormWrap } from './styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Box, TextField } from '@mui/material';
+import { Typography, Box, TextField, Container } from '@mui/material';
 import { useSignInUserMutation } from '../../features/users/usersSlice';
 import { setCredentials } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
@@ -40,40 +40,47 @@ export default function SignIn() {
   };
 
   return (
-    <FormWrap noValidate sx={{ mt: 1 }}>
-      <Typography
-        variant='h3'
-        sx={{
-          fontFamily: 'balboa, sans-serif',
-          textTransform: 'uppercase',
-          textAlign: 'center',
-        }}>
-        Sign In
-      </Typography>
-      <TextField
-        margin='normal'
-        required
-        fullWidth
-        id='user'
-        placeholder='Email'
-        label='Email Address'
-        onChange={e => setEmail(e.target.value)}
-        value={email}
-        autoFocus
-      />
+    <Box sx={{ position: 'relative', height: 'auto', padding: '12.5rem 0' }}>
+      <Container sx={{ position: 'relative', height: '60rem' }}>
+        <FormWrap noValidate sx={{ mt: 1 }}>
+          <Typography
+            variant='h1'
+            sx={{
+              fontFamily: 'balboa, sans-serif',
+              textTransform: 'uppercase',
+              textAlign: 'center',
+            }}>
+            Sign In
+          </Typography>
+          <Box>
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              id='user'
+              placeholder='Email'
+              label='Email Address'
+              onChange={e => setEmail(e.target.value)}
+              value={email}
+              autoFocus
+            />
 
-      <TextField
-        margin='normal'
-        required
-        fullWidth
-        label='Password'
-        id='password'
-        placeholder='Password'
-        type='password'
-        onChange={e => setPassword(e.target.value)}
-        value={password}
-      />
-      <MainButton onClick={handleSubmit}>Submit</MainButton>
-    </FormWrap>
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              label='Password'
+              id='password'
+              placeholder='Password'
+              type='password'
+              onChange={e => setPassword(e.target.value)}
+              value={password}
+            />
+          </Box>
+
+          <MainButton onClick={handleSubmit}>Submit</MainButton>
+        </FormWrap>
+      </Container>
+    </Box>
   );
 }

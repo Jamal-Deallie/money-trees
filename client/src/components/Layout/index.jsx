@@ -6,19 +6,19 @@ import {
   ContentContainer,
   NavContainer,
   FooterContainer,
-  Main,
 } from './styles';
 
-export default function Layout({ children }) {
+export default function Layout() {
   return (
-    <Box sx={{ background: '#FCF4EC' }}>
+    <StyledLayout>
       <NavContainer>
         <Navigation />
       </NavContainer>
-      <ContentContainer><Outlet/></ContentContainer>
-      <FooterContainer>
-        <Footer/>
-      </FooterContainer>
-    </Box>
+      <ContentContainer>
+        <Outlet />
+      </ContentContainer>
+
+      <Footer />
+    </StyledLayout>
   );
 }

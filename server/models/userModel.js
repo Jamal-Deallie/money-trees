@@ -18,6 +18,11 @@ const User = new Schema(
       default: '',
       validate: [validator.isEmail, 'Please provide a valid email'],
     },
+    avatar: {
+      type: Object,
+      avatarImg: String,
+      cloudinaryId: String,
+    },
     roles: {
       user: {
         type: Number,
@@ -25,7 +30,7 @@ const User = new Schema(
       },
       admin: Number,
     },
-    creditScore:{
+    creditScore: {
       type: Number,
       required: true,
     },
