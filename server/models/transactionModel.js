@@ -1,11 +1,10 @@
-const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 
 const Transactions = new mongoose.Schema({
-  merchant: {
+  party: {
     type: String,
-    required: [true, 'Please Enter the Merchant Name'],
+    required: [true, 'Please Enter the Transacting Party'],
   },
   category: {
     type: String,
@@ -43,11 +42,7 @@ const Transactions = new mongoose.Schema({
     default: '',
     required: [true, 'Please Enter the Date of Transaction'],
   },
-  //   user: {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'User',
-  //     required: [true, 'You must be signed'],
-  //   },
+
   submittedDate: { type: Date, default: Date.now },
 });
 

@@ -1,30 +1,31 @@
 import { styled } from '@mui/system';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 export const Navbar = styled('nav')(({ theme }) => ({
   width: '100%',
-  borderBottom: '2px solid #422800',
   display: 'flex',
   justifyContent: 'space-between',
-  padding: ' 0 3rem',
+  height: '9rem',
   alignItems: 'center',
-  position: 'relative',
+  position: 'sticky',
+  padding: ' 0 2.5rem',
 }));
 
 export const MainButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.secondary.main,
-  color: theme.palette.primary.main,
+  background: theme.palette.primary.main,
+  color: theme.palette.success.main,
   fontSize: 16,
   fontFamily: 'open-sans,sans-serif',
   fontWeight: 400,
   padding: '1rem 4rem',
-  border: '2px solid #111',
-  borderRadius: '8px',
+  border: `2px solid ${theme.palette.success.main}`,
   boxSizing: 'border-box',
-  boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
 
   '&:hover': {
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.palette.success.main,
     boxShadow: 'none',
+    color: theme.palette.primary.main,
+    border: 'none',
   },
 }));
+

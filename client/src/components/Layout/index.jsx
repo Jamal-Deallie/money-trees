@@ -17,7 +17,6 @@ export default function Layout() {
       <ContentContainer>
         <Outlet />
       </ContentContainer>
-
       <Footer />
     </StyledLayout>
   );

@@ -1,5 +1,6 @@
 import { styled } from '@mui/system';
-import { Paper, Card, Grid } from '@mui/material/';
+import { Paper, Box, Grid } from '@mui/material/';
+import { Typography } from '@material-ui/core';
 export const Image = styled('img')({
   height: 100,
 });
@@ -49,4 +50,22 @@ export const GridItem = styled(Grid)({
   alignItems: 'center',
   justifyContent: 'space-between',
   flexDirection: 'column',
+});
+
+export const Underline = styled(Typography)(({ theme }) => ({
+  backgroundPosition: '50% 100%',
+  backgroundSize: 'contain',
+  backgroundRepeat: 'no-repeat',
+  backgroundImage: 'url(/images/underline_img.svg)',
+  color: theme.palette.success.main,
+  fontFamily: 'balboa, sans-serif',
+  fontSize: 72,
+  textTransform: 'uppercase',
+}));
+
+export const NameWrapper = styled(Box)({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  width: '100%',
 });

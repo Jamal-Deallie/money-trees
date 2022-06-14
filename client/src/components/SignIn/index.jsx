@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { MainButton, FormWrap } from './styles';
+import React, { useState, useEffect } from 'react';
+import { MainButton, FormWrap, CustomLink } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { Typography, Box, TextField, Container } from '@mui/material';
 import { useSignInUserMutation } from '../../features/users/usersSlice';
@@ -11,38 +11,51 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const [signInUser, { isLoading, isSuccess, data }] = useSignInUserMutation();
+  const [signInUser, { isLoading, isSuccess, data, isError }] =
+    useSignInUserMutation();
 
   const canSave = [email, password].every(Boolean) && !isLoading;
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data);
-      dispatch(setCredentials({ token: data.token, user: data.user }));
-      localStorage.setItem('token', JSON.stringify(data.token));
-      localStorage.setItem('name', JSON.stringify(data.user.firstName));
-      localStorage.setItem(
-        'creditScore',
-        JSON.stringify(data.user.creditScore)
-      );
-      navigate('/dashboard');
-    }
-  }, [isSuccess, data, dispatch, navigate]);
+
+  if (isSuccess) {
+    dispatch(setCredentials({ token: data.token, user: data.user }));
+    localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('token', JSON.stringify(data.token));
+    setEmail('');
+    setPassword('');
+    navigate('/dashboard');
+  }
 
   const handleSubmit = async () => {
     if (canSave) {
       try {
         await signInUser({ email, password }).unwrap();
       } catch (err) {
-        console.log(err);
+        if (!err?.originalStatus) {
+          // isLoading: true until timeout occurs
+          setError('No Server Response');
+        } else if (err.originalStatus === 400) {
+          setError('Missing Username or Password');
+        } else if (err.originalStatus === 401) {
+          setError('Unauthorized');
+        } else {
+          setError('Login Failed');
+        }
       }
     }
   };
 
+  const handleEmailInput = e => setEmail(e.target.value);
+
+  const handlePasswordInput = e => setPassword(e.target.value);
+
+  console.log(error);
   return (
     <Box sx={{ position: 'relative', height: 'auto', padding: '12.5rem 0' }}>
       <Container sx={{ position: 'relative', height: '60rem' }}>
-        <FormWrap noValidate sx={{ mt: 1 }}>
+        <FormWrap noValidate>
+          {error && <Typography>{error}</Typography>}
           <Typography
             variant='h1'
             sx={{
@@ -52,7 +65,7 @@ export default function SignIn() {
             }}>
             Sign In
           </Typography>
-          <Box>
+          <Box sx={{ mt: 5 }}>
             <TextField
               margin='normal'
               required
@@ -76,9 +89,13 @@ export default function SignIn() {
               onChange={e => setPassword(e.target.value)}
               value={password}
             />
-          </Box>
+            <Box sx={{ textAlign: 'center', mt: 2.5, color: 'primary.main' }}>
+              <CustomLink to='/'>Forgot Password</CustomLink> |
+              <CustomLink to='/'>Create An Account</CustomLink>
+            </Box>
 
-          <MainButton onClick={handleSubmit}>Submit</MainButton>
+            <MainButton onClick={handleSubmit}>Submit</MainButton>
+          </Box>
         </FormWrap>
       </Container>
     </Box>

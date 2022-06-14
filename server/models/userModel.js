@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
-const User = new Schema(
+const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -36,15 +36,27 @@ const User = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'Please provide a password'],
+      minlength: 8,
+      select: false,
     },
     passwordConfirm: {
       type: String,
-      required: true,
+      required: [true, 'Please confirm your password'],
+      validate: {
+        // This only works on CREATE and SAVE!!!
+        validator: function (el) {
+          return el === this.password;
+        },
+        message: 'Passwords are not the same!',
+      },
     },
-    createdAt: {
-      type: Date,
-      default: Date.now(),
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    active: {
+      type: Boolean,
+      default: true,
       select: false,
     },
   },
@@ -52,7 +64,7 @@ const User = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
-User.virtual('transaction', {
+userSchema.virtual('transaction', {
   ref: 'Transactions',
   foreignField: 'user',
   localField: '_id',
@@ -60,7 +72,7 @@ User.virtual('transaction', {
 
 //Function hashes password before its saved to the database, so the actual password is not saved to the database
 //The is persisted between getting data and saving it to the database
-User.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   // Only run this function if password was actually modified
   //Does not run if the email is modified
   if (!this.isModified('password')) return next();
@@ -74,27 +86,27 @@ User.pre('save', async function (next) {
 });
 
 //The instance method compares and confirms if the encrypted password matches the inputted password
-User.methods.correctPassword = async function (
+userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-User.pre('save', function (next) {
+userSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next();
 
   this.passwordChangedAt = Date.now() - 1000;
   next();
 });
 
-User.pre(/^find/, function (next) {
+userSchema.pre(/^find/, function (next) {
   // this points to the current query
   this.find({ active: { $ne: false } });
   next();
 });
 
-User.methods.changedPasswordAfter = function (JWTTimestamp) {
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
       this.passwordChangedAt.getTime() / 1000,
@@ -108,7 +120,7 @@ User.methods.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
-User.methods.createPasswordResetToken = function () {
+userSchema.methods.createPasswordResetToken = function () {
   //generate random token and convert to a hex string
   //We are going send the token to the user, so they can have it stored in the client
   //When they attempt to update their password, the server will provide access to that route by affirming the validity of the token
@@ -126,4 +138,6 @@ User.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-module.exports = mongoose.model('User', User);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

@@ -6,12 +6,12 @@ export const CardSection = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  flexDirection: 'column',
 });
 
 export const GridContainer = styled(Grid)({
-  margin: '0 auto',
-  alignItems: 'center',
-  justifyContent: 'center',
+  maxWidth: '120rem',
+  width: '100%',
   padding: '2.5rem 1rem 5rem 1rem',
 });
 

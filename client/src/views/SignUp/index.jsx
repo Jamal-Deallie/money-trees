@@ -1,9 +1,5 @@
-import { SignUp } from '../../components';
+import { SignUpContainer } from '../../containers';
 
 export default function SignUpPage() {
-  return (
-    <>
-      <SignUp />
-    </>
-  );
+  return <SignUpContainer />;
 }

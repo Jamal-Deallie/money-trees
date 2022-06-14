@@ -1,5 +1,7 @@
-import { CustomFooter, Icons } from './styles';
-import { Typography, Box, Grid } from '@mui/material/';
+import { CustomFooter, Icons, Links, GridLinks, CopyrightWrap } from './styles';
+import { Typography, Grid } from '@mui/material/';
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   return (
     <CustomFooter>
@@ -25,17 +27,23 @@ export default function Footer() {
             New York, NY 12345
           </Typography>
         </Grid>
-        <Grid item>
-          <Typography
-            sx={{
-              fontFamily: '"open-sans", sans-serif"',
-              textTransform: 'uppercase',
-              fontWeight: 'bold',
-              color: 'secondary.main',
-            }}>
-            Contact Policy Terms & Conditions
-          </Typography>
-        </Grid>
+        <GridLinks item>
+          <Links to='/'>
+            <Typography variant='body1' sx={{ color: 'secondary.main' }}>
+              CONTACT
+            </Typography>
+          </Links>
+          <Links to='/'>
+            <Typography variant='body1' sx={{ color: 'secondary.main' }}>
+              POLICY
+            </Typography>
+          </Links>
+          <Links to='/'>
+            <Typography variant='body1' sx={{ color: 'secondary.main' }}>
+              TERMS & CONDITIONS
+            </Typography>
+          </Links>
+        </GridLinks>
         <Grid
           item
           sx={{
@@ -44,10 +52,11 @@ export default function Footer() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Icons src='/images/logos/twitter-icon.svg' alt='twitter' />
-          <Icons src='/images/logos/instagram-icon.svg' alt='twitter' />
-          <Icons src='/images/logos/youtube-icon.svg' alt='twitter' />
-          <Icons src='/images/logos/in-icon.svg' alt='twitter' />
+          <Icons src='/images/logos/social-media-1.svg' alt='twitter' />
+          <Icons src='/images/logos/social-media-2.svg' alt='twitter' />
+          <Icons src='/images/logos/social-media-3.svg' alt='twitter' />
+          <Icons src='/images/logos/social-media-4.svg' alt='twitter' />
+          <Icons src='/images/logos/social-media-5.svg' alt='twitter' />
         </Grid>
       </Grid>
     </CustomFooter>

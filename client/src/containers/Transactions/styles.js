@@ -89,3 +89,4 @@ export const CloseSearchBtn = styled('button')(({ theme }) => ({
 export const SubmitBtn = styled('button')(({ theme }) => ({
   display: 'none',
 }));
+

@@ -6,12 +6,16 @@ export const StyledLayout = styled('div')({
   minHeight: '100vh',
 });
 
-export const NavContainer = styled('div')({
+export const NavContainer = styled('div')(({ theme }) => ({
   position: 'relative',
-});
+  background: theme.palette.primary.main,
+  height: '9rem',
+  borderBottom: `1px solid ${theme.palette.secondary.main}`,
+}));
 
 export const ContentContainer = styled('main')({
   position: 'relative',
+  flexGrow: 2,
 });
 
 export const FooterContainer = styled('footer')({

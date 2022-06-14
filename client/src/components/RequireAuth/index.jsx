@@ -1,6 +1,5 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectToken } from '../../features/auth/authSlice';
+
 
 export default function RequireAuthorization() {
   const token = JSON.parse(localStorage.getItem('token'));

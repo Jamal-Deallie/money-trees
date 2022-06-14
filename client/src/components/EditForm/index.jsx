@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { StyledButton, EditSection } from './styles';
+import { SubmitButton, EditSection } from './styles';
 import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -15,8 +15,12 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Paper from '@mui/material/Paper';
-import { useAddTransactionMutation } from '../../features/transactions/transactionSlice';
+import { useSelector } from 'react-redux';
+import {
+  useAddTransactionMutation,
+  useGetTransactionByIdQuery,
+  selectTransactionById,
+} from '../../features/transactions/transactionSlice';
 
 const categories = [
   {
@@ -87,20 +91,33 @@ const categories = [
   },
 ];
 
-export default function EditForm({ transaction }) {
+export default function EditForm({ id }) {
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState();
+  const loadedTransaction = useSelector(state =>
+    selectTransactionById(state, id)
+  );
 
+  const { isLoading, isSuccess, isError } = useGetTransactionByIdQuery(id);
   const [state, setState] = useState({
-    merchant: transaction.merchant,
-    category: transaction.category,
-    amount: transaction.amount,
-    cashFlow: transaction.cashFlow,
-    date: transaction.date,
+    party: '',
+    category: '',
+    amount: '',
+    cashFlow: '',
+    date: '',
   });
 
+  useEffect(() => {
+    setState({
+      amount: loadedTransaction.amount,
+      cashFlow: loadedTransaction.cashFlow,
+      date: loadedTransaction.date,
+      party: loadedTransaction.party,
+      category: loadedTransaction.category,
+    });
+  }, []);
+
   console.log('### Refreshing');
-  // const dispatch = useDispatch();
 
   const handleChange = useCallback(
     type => event => {
@@ -108,13 +125,13 @@ export default function EditForm({ transaction }) {
     },
     [state]
   );
-  const [addTransaction, { isLoading }] = useAddTransactionMutation();
+  const [addTransaction] = useAddTransactionMutation();
 
   const handleSubmit = async () => {
     try {
       await addTransaction({ ...state });
     } catch (err) {
-      console.error('Failed to save the add transaction', err);
+      setError('Failed to update the transaction');
     }
   };
 
@@ -129,8 +146,17 @@ export default function EditForm({ transaction }) {
             flexDirection: 'column',
             p: 4,
           }}>
-          <Typography>Enter a Transaction</Typography>
-          <form sx={{ p: 2 }}>
+          <Typography
+            variant='h4'
+            sx={{
+              fontFamily: 'balboa, sans-serif',
+              textTransform: 'uppercase',
+              fontWeight: 'bold',
+              pb: 5.5,
+            }}>
+            Update a Transaction
+          </Typography>
+          <form>
             <Stack spacing={2}>
               <FormControl>
                 <FormGroup sx={{ width: '350px' }}>
@@ -152,11 +178,10 @@ export default function EditForm({ transaction }) {
               <FormControl>
                 <FormGroup sx={{ width: '350px' }}>
                   <TextField
-                    label='Enter Merchant'
+                    label='Enter Party'
                     required
-                    value={state.merchant}
-                    // error={!transactionData.merchant}
-                    onChange={handleChange('merchant')}
+                    value={state.party}
+                    onChange={handleChange('party')}
                   />
                 </FormGroup>
                 <FormHelperText>{helperText}</FormHelperText>
@@ -167,7 +192,6 @@ export default function EditForm({ transaction }) {
                     displayEmpty
                     inputProps={{ 'aria-label': 'Without label' }}
                     value={state.category}
-                    // error={!transactionData.category}
                     onChange={handleChange('category')}>
                     <MenuItem value=''>
                       <em>Select Category</em>
@@ -222,13 +246,13 @@ export default function EditForm({ transaction }) {
                 />
               </FormControl>
 
-              <StyledButton
+              <SubmitButton
                 type='button'
                 onClick={handleSubmit}
                 variant='contained'
                 sx={{ px: 5, py: 1.5 }}>
                 Enter Transaction
-              </StyledButton>
+              </SubmitButton>
             </Stack>
           </form>
         </Box>

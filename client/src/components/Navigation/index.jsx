@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material/';
-import { Navbar, MainButton } from './styles';
+import { Navbar, MainButton} from './styles';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../features/auth/authSlice';
+import { logOut } from '../../features/auth/authSlice';
 
 export default function Navigation() {
   const token = JSON.parse(localStorage.getItem('token'));
@@ -12,15 +12,16 @@ export default function Navigation() {
   const signOut = () => {
     //remove token from localStorage
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     //navigate to homepage
     navigate('/');
     //remove user from state
-    dispatch(logout());
+    dispatch(logOut());
   };
 
   return (
     <>
-      <Navbar position='static' color='warning' sx={{ height: '7rem' }}>
+      <Navbar>
         <Link to='/'>
           <Typography
             variant='h2'
@@ -28,7 +29,7 @@ export default function Navigation() {
               fontFamily: 'balboa, sans-serif',
               textTransform: 'uppercase',
               fontWeight: 'bold',
-              color: 'primary.main',
+              color: 'secondary.main',
             }}>
             Money Trees
           </Typography>

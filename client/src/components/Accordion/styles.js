@@ -1,11 +1,15 @@
 import { styled } from '@mui/system';
-import { ButtonGroup } from '@mui/material';
+import { ButtonGroup, Box } from '@mui/material';
 
-export const BtnGroup = styled(ButtonGroup, {
+export const BtnGroup = styled(Box, {
   shouldForwardProp: prop => prop !== '$options',
 })(({ $options }) => ({
-  transition: 'all 250ms ease-in-out',
-  display: $options ? 'block' : 'none',
+  transition: 'opacity 0.5s ease-in-out',
+  opacity: $options ? 1 : 0,
+  width: '10rem',
+  display: 'flex',
+  justifyContent: 'center',
+  gap: 2
 }));
 
 export const AccordionMenu = styled('div')(({ theme }) => ({
@@ -39,7 +43,7 @@ export const TitleContainer = styled('div', {
   border: '0.1rem solid white',
   alignItems: 'center',
   background:
-    $bg === 'credit' ? theme.palette.warning.main : theme.palette.success.main,
+    $bg === 'credit' ? theme.palette.success.main : theme.palette.warning.main,
 }));
 
 export const Icon = styled('img')({});
@@ -53,4 +57,16 @@ export const AccordionWrapper = styled('div')(({ theme }) => ({
 export const ContentContainer = styled('div')(({ theme }) => ({
   overflow: 'hidden',
   height: 0,
+}));
+
+export const ModalContainer = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  backgroundColor: theme.palette.secondary.main,
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
 }));

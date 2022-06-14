@@ -25,10 +25,10 @@ exports.getAllTransactions = catchAsync(async (req, res) => {
 
 exports.createTransaction = catchAsync(async (req, res) => {
   console.log(req);
-  const { merchant, category, amount, cashFlow, date } = req.body;
+  const { party, category, amount, cashFlow, date } = req.body;
   try {
     const transaction = await Transactions.create({
-      merchant: merchant,
+      party: party,
       category: category,
       amount: amount,
       cashFlow: cashFlow,
@@ -48,23 +48,21 @@ exports.createTransaction = catchAsync(async (req, res) => {
 });
 
 exports.getTransactionsBySearch = catchAsync(async (req, res) => {
-  console.log('Query Working');
   const { term } = req.query;
   const user = req.user.id;
-  const transaction = await User.findById(user);
 
   try {
     const query = new RegExp(term, 'i');
     console.log(query);
-    const Transactions = await Transactions.find({
-      $and: [
-        {
-          $or: [{ merchant: query }, { category: query }, { cashflow: query }],
-        },
-      ],
-    })
+    const Transactions = await User.findById(user)
       .populate('transaction')
-      .exec();
+      .find({
+        $and: [
+          {
+            $or: [{ party: query }, { category: query }, { cashflow: query }],
+          },
+        ],
+      });
 
     const doc = Transactions;
     res.status(200).json({
@@ -78,4 +76,3 @@ exports.getTransactionsBySearch = catchAsync(async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 });
-

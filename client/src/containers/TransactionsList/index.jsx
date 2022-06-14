@@ -1,38 +1,80 @@
-import { Box, Container } from '@mui/material';
+import { useCallback, useState, useEffect } from 'react';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { Accordion } from '../../components';
-import { useSelector } from 'react-redux';
 import {
+  useGetTransactionsQuery,
   selectAllTransactions,
 } from '../../features/transactions/transactionSlice';
+import { useSelector } from 'react-redux';
 
-export default function TransactionsListContainer() {
+export default function TransactionsListContainer({ term }) {
+  const { isLoading, isSuccess, isError, error } = useGetTransactionsQuery();
   const loadedTransactions = useSelector(selectAllTransactions);
+  const [transactionData, setTransactionData] = useState(loadedTransactions);
 
+  useEffect(() => {
+    setTransactionData(loadedTransactions);
+  }, [loadedTransactions]);
 
+  console.log(loadedTransactions);
 
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        margin: '0 auto',
-        width: '100%',
-      }}>
-      {loadedTransactions.map(transaction => {
+  const searchedTransactions = () =>
+    term
+      ? transactionData.filter(transaction => {
+          return (
+            transaction.party.toLowerCase().includes(term?.toLowerCase()) ||
+            transaction.cashFlow.toLowerCase().includes(term?.toLowerCase())
+          );
+        })
+      : transactionData;
+
+  console.log({ search: searchedTransactions() });
+
+  const renderedTransaction = useCallback(() => {
+    if (isLoading) {
+      return (
+        <Box sx={{ display: 'flex' }}>
+          <CircularProgress />
+        </Box>
+      );
+    } else if (isSuccess) {
+      return transactionData?.map(transaction => {
+        const { party, _id, amount, date, cashFlow } = transaction;
         return (
           <Box
-            key={transaction._id}
+            key={_id}
             sx={{
-              margin: '0 auto',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
               width: '100%',
-              maxWidth: 800,
-              minWidth: 400,
             }}>
-            <Accordion transaction={{ ...transaction }} />
+            <Accordion
+              party={party}
+              id={_id}
+              amount={amount}
+              date={date}
+              cashFlow={cashFlow}
+            />
           </Box>
         );
-      })}
+      });
+    } else if (isError) {
+      return <Typography>{error}</Typography>;
+    }
+  }, [isLoading, isSuccess, isError, error, transactionData]);
+
+  return (
+    <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 2.5,
+        }}>
+        {renderedTransaction()}
+      </Box>
     </Box>
   );
 }

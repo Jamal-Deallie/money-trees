@@ -8,4 +8,8 @@ export { default as CashContainer } from './Cash';
 export { default as AccountContainer } from './Account';
 export { default as FormContainer } from './Form';
 export { default as LandingContainer } from './Landing';
+export { default as SignUpContainer } from './SignUp';
+export { default as SignInContainer } from './SignIn';
+export { default as ForgotPasswordContainer } from './ForgotPassword';
+export { default as ResetPasswordContainer } from './ResetPassword';
 export { default as CardContainer } from './Card';

@@ -37,56 +37,60 @@ const createSendToken = (user, statusCode, req, res) => {
   });
 };
 
-//Register User Controller
+// Register User Controller
 exports.signup = catchAsync(async (req, res, next) => {
-  console.log(req.file.path);
-  console.log(req.body);
-  const { firstName, lastName, creditScore, email, password, passwordConfirm } =
-    req.body;
-
-  const { path } = req.file;
-
+  console.log(req.body)
+  //abstract items from body
+  const {
+    firstName,
+    lastName,
+    creditScore,
+    email,
+    password,
+    passwordConfirm,
+    avatar,
+  } = req.body;
+  //if required items are undefined send error
   if (!email || !password || !passwordConfirm || !firstName || !creditScore) {
-    return next(new AppError('Please complete all fields!', 400));
+    return next(new AppError('Please complete all required fields!', 400));
   }
+
+  const user = await User.findOne({ email });
+  //check if user exist send a failed 409 message
+  if (user) {
+    return next(new AppError('The email already exists', 409));
+  }
+
   try {
-    const user = await User.findOne({ email });
-    //check if user exist send a failed 404 message
-    if (user) {
-      return next(new AppError('The email already exists', 409));
-    }
-
-    //check if avatar was included in body, if so, upload it to cloudinary
     let newUser;
-    if (path) {
-      console.log('path checked');
-      const result = await cloudinary.uploader.upload(req.file.path);
-      newUser = new User({
-        firstName: firstName,
-        lastName: lastName,
-        creditScore: creditScore,
-        email: email,
-        password: password,
-        passwordConfirm: passwordConfirm,
-        avatar: {
-          avatarImg: result.secure_url,
-          cloudinaryId: result.public_id,
-        },
+    //if the avatar is included upload to cloudinary
+    if (avatar) {
+      const uploadedRes = await cloudinary.uploader.upload(avatar, {
+        upload_preset: 'money-tree-avatar',
       });
-    }
-    //if avatar is not included upload the default avatar
-    else {
-      newUser = new User({
-        firstName: firstName,
-        lastName: lastName,
-        creditScore: creditScore,
-        email: email,
-        password: password,
-        passwordConfirm: passwordConfirm,
-      });
+
+      if (uploadedRes) {
+        newUser = await User.create({
+          firstName: firstName,
+          lastName: lastName,
+          creditScore: creditScore,
+          email: email,
+          password: password,
+          passwordConfirm: passwordConfirm,
+          avatar: uploadedRes,
+        });
+      } else {
+        newUser = await User.create({
+          firstName: firstName,
+          lastName: lastName,
+          creditScore: creditScore,
+          email: email,
+          password: password,
+          passwordConfirm: passwordConfirm,
+        });
+      }
     }
 
-    await newUser.save();
     createSendToken(newUser, 201, req, res);
   } catch (err) {
     console.log('signup error', err);
@@ -94,30 +98,6 @@ exports.signup = catchAsync(async (req, res, next) => {
       errorMessage: `Server Error: ${err.message}`,
     });
   }
-
-  // const message = `You've registered your customer account.`;
-  // try {
-  //   await sendEmail({
-  //     email: email,
-  //     subject: 'Customer registration confirmation',
-  //     message: message,
-  //   });
-  //   res.status(200).json({
-  //     status: 'success',
-  //     message: 'Token sent to email',
-  //   });
-  // } catch (err) {
-  //   console.log(err);
-
-  //   //this disregards all validation requirements
-
-  //   return next(
-  //     new AppError(
-  //       'There was an error resetting your password. Please try again later',
-  //       500
-  //     )
-  //   );
-  // }
 });
 
 exports.signin = catchAsync(async (req, res, next) => {
@@ -130,9 +110,10 @@ exports.signin = catchAsync(async (req, res, next) => {
   }
   // 2) Check if user exists && password is correct
   const user = await User.findOne({ email }).select('+password');
-
+  const correctPassword = await user.correctPassword(password, user.password);
+  console.log(correctPassword);
   //since the password is encrypted via bcrypt the correctPassword function can confirm the hashed PW matches the inputted PW
-  if (!user || !(await user.correctPassword(password, user.password))) {
+  if (!user || !correctPassword) {
     return next(new AppError('Incorrect email or password', 401));
   }
 
@@ -211,7 +192,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get user from collection
   const user = await User.findById(req.user.id).select('+password');
 
-  // 2) Check if POSTed current password is correct
+  // 2) Check if current password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError('Your current password is wrong.', 401));
   }
@@ -252,36 +233,6 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // 4) Log the user in, send JWT
   createSendToken(user, 200, req, res);
 });
-
-exports.isLoggedIn = async (req, res, next) => {
-  if (req.cookies.jwt) {
-    try {
-      // 1) verify token
-      const decoded = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRET
-      );
-      console.log(req);
-      // 2) Check if user still exists
-      const currentUser = await User.findById(decoded.id);
-      if (!currentUser) {
-        return next();
-      }
-
-      // 3) Check if user changed password after the token was issued
-      if (currentUser.changedPasswordAfter(decoded.iat)) {
-        return next();
-      }
-
-      // THERE IS A LOGGED IN USER
-      res.locals.user = currentUser;
-      return next();
-    } catch (err) {
-      return next(new AppError('Token Invalid', 401));
-    }
-  }
-  next();
-};
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check it's there
@@ -327,7 +278,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   res.locals.user = currentUser;
   next();
 });
-// Only for rendered pages, no errors!
+
+
 exports.isLoggedIn = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {

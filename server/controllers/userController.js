@@ -25,11 +25,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError('This route is not for updating password', 400));
   }
-
-  const { path } = req.file;
   //filter object, so only the eligible fields listed below are updated
   const filteredBody = filterObj(
-    req.body,
+    'avatar',
     'firstName',
     'lastName',
     'email',
@@ -38,9 +36,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   //update user document
 
   console.log(filteredBody);
-
   let updatedUser;
-
   if (path) {
     console.log('path checked');
     //find user
@@ -57,7 +53,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         cloudinary_id: result.public_id,
       },
     };
-
     updatedUser = await User.findByIdAndUpdate(req.user.id, data, {
       new: true,
       runValidators: true,

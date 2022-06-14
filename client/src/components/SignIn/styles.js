@@ -15,48 +15,19 @@ export const MainButton = styled('button')(({ theme }) => ({
   fontSize: 16,
   fontFamily: 'open-sans,sans-serif',
   fontWeight: 400,
-  padding: '1rem 4rem',
+  padding: '1.5rem 4rem',
   border: '2px solid #111',
   borderRadius: '8px',
   boxSizing: 'border-box',
   width: '100%',
   boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
-
+  marginTop: '5rem',
   '&:hover': {
     backgroundColor: '#ffffff',
     boxShadow: 'none',
   },
 }));
 
-export const CustomInput = styled(TextField)({
-  '& label.Mui-focused': {
-    color: ' #e9e7dc',
-  },
-  '& label': {
-    color: ' #1c1c1c',
-    fontFamily: 'open-sans, sans-serif',
-    fontSize: 18,
-    margin: 'dense',
-  },
-  '&& .MuiInput-underline:hover:before': {
-    borderBottomColor: '#e9e7dc',
-  },
-  '& .MuiInput-underline': {
-    marginTop: 25,
-  },
-  '& .MuiInput-input': {
-    fontSize: 18,
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#1c1c1c',
-  },
-  '& .MuiInput-underline:before': {
-    borderBottomColor: ' #1c1c1c',
-  },
-  '& .MuiInput-underline:focused': {
-    borderBottomColor: ' #e9e7dc',
-  },
-});
 
 export const Links = styled(Link)(({ theme }) => ({
   cursor: 'pointer',
@@ -67,7 +38,7 @@ export const Links = styled(Link)(({ theme }) => ({
   },
 }));
 
-export const FormWrap = styled('div')(({ theme }) => ({
+export const FormWrap = styled(Box)(({ theme }) => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -76,11 +47,16 @@ export const FormWrap = styled('div')(({ theme }) => ({
   border: `2px solid ${theme.palette.primary.main}`,
   boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
   borderRadius: '30px',
-  padding: '15rem 5rem',
-  display: 'flex',
-  flexDirection: 'column',
+  padding: '10rem 5rem',
   height: '100%',
   gap: '5rem',
-  justifyContent: 'center',
-  alignItems: 'center',
+  background: theme.palette.secondary.main
+}));
+
+export const CustomLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  '&:hover': {
+    color: theme.palette.primary.dark,
+    fontWeight: 600,
+  },
 }));

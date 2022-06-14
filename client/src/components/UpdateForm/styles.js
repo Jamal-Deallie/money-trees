@@ -1,9 +1,6 @@
 import { styled } from '@mui/system';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-
-export const StyledButton = styled(Button)``;
+import { Box, TextField } from '@mui/material';
+import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 
 export const Wrapper = styled(Box)`
   width: 100%;
@@ -14,7 +11,7 @@ export const Wrapper = styled(Box)`
   flex-direction: column;
 `;
 
-export const UserSection = styled('section')({
+export const UpdateSection = styled('section')({
   width: '100%',
   padding: '5px',
 });
@@ -23,7 +20,6 @@ export const Text = styled('p')({
   padding: '20px',
   width: '350px',
 });
-
 
 export const ValidationTextField = styled(TextField)({
   '& input:valid + fieldset': {
@@ -39,3 +35,20 @@ export const ValidationTextField = styled(TextField)({
     padding: '4px !important', // override inline-style
   },
 });
+
+export const SubmitButton = styled(ButtonUnstyled)(({ theme }) => ({
+  background: theme.palette.success.main,
+  color: theme.palette.primary.main,
+  fontSize: 16,
+  fontFamily: 'open-sans,sans-serif',
+  fontWeight: 400,
+  padding: '1rem 4rem',
+  border: '2px solid #111',
+  borderRadius: '8px',
+  boxSizing: 'border-box',
+  boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
+  '&:hover': {
+    backgroundColor: '#ffffff',
+    boxShadow: 'none',
+  },
+}));

@@ -1,29 +1,20 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   LandingPage,
-  // ProductPage,
-  // ProductQueryPage,
-  // ProductDetailsPage,
-  // AboutPage,
-  // NotFoundPage,
-  // ContactPage,
-  // LocationPage,
-  // RegisterPage,
   SignInPage,
   SignUpPage,
-  // ForgotPasswordPage,
   DashboardPage,
-  // ResetPasswordPage,
-  // CheckoutSuccessPage,
-  // CategoriesPage,
 } from './views';
-import { Layout, RequireAuth } from './components';
+import { Layout, RequireAuth, RedirectRoute } from './components';
 function App() {
   return (
     <Router>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<LandingPage />} />
+          <Route element={<RedirectRoute />}>
+            <Route index element={<LandingPage />} />
+          </Route>
+
           <Route element={<RequireAuth />}>
             <Route path='dashboard' element={<DashboardPage />} />
           </Route>

@@ -4,6 +4,7 @@ import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 
 export const Image = styled('img')({
   width: '100%',
+  objectFit: 'cover',
 });
 
 export const ImageWrap = styled('div')({});
@@ -18,7 +19,6 @@ export const LandingWrap = styled(Box)({
   marginTop: '4rem',
   height: '100%',
   gap: '2.5rem',
-  padding: '10rem',
 });
 
 export const MainButton = styled(ButtonUnstyled)(({ theme }) => ({
@@ -41,29 +41,59 @@ export const MainButton = styled(ButtonUnstyled)(({ theme }) => ({
 export const Heading = styled(Typography)({
   fontFamily: 'balboa, sans-serif',
   textTransform: 'uppercase',
-  lineHeight: '9.5rem',
-  fontSize: 90,
+  lineHeight: '100%',
+  fontSize: 'clamp(4.50rem, calc(2.64rem + 9.32vw), 9.28rem)',
   fontWeight: 'bold',
   display: 'block',
-
 });
-
-export const GridItem = styled('div')({});
 
 export const GridContainer = styled('div')({
   display: 'flex',
 });
 
-export const GridImage = styled(Grid)({
+export const GridImage = styled(Grid)(({ theme }) => ({
   display: 'flex',
-});
-
-export const ImageContainer = styled('div')({});
+  background: theme.palette.success.main,
+}));
 
 export const Underline = styled('span')(({ theme }) => ({
-  backgroundPosition: '50% 100%',
-  backgroundSize: 'contain',
-  backgroundRepeat: 'no-repeat',
-  backgroundImage: 'url(/images/underline_img.svg)',
   color: theme.palette.success.main,
+  display: 'inline-block',
 }));
+
+export const FreeIcon = styled('img')({
+  height: '7.5rem',
+  '@keyframes spin': {
+    from: {
+      transform: ' translate3d(-50%, -50%, 0) rotate(0deg)',
+    },
+    to: {
+      transform: 'translate3d(-50%, -50%, 0) rotate(360deg)',
+    },
+  },
+  animation: 'spin 2s linear infinite',
+});
+
+export const IconWrap = styled(Box)({
+  position: 'relative',
+});
+
+export const ContentContainer = styled(Box)({
+  paddingLeft: 'calc(5rem  + 1.5625vw)',
+  paddingTop: 'calc(5rem + 1.5625vw)',
+});
+
+export const SubTextContainer = styled(Box)({
+  maxWidth: '55rem',
+  overflow: 'hidden',
+  position: 'relative',
+  paddingLeft: 'calc(5rem  + 1.5625vw)',
+  display: 'inline-block',
+});
+
+export const ButtonContainer = styled(Box)({
+  display: 'flex',
+  gap: 50,
+  alignItems: 'center',
+  marginTop: 50,
+});
