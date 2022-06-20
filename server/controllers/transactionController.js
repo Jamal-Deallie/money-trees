@@ -9,14 +9,14 @@ exports.updateTransaction = factory.updateOne(Transactions);
 exports.deleteTransaction = factory.deleteOne(Transactions);
 
 exports.getAllTransactions = catchAsync(async (req, res) => {
+
   try {
-    const user = req.user.id;
-    const transaction = await User.findById(user).populate('transaction');
+    const transactions = await Transactions.find({ user: req.user.id });
 
     res.status(200).json({
       status: 'success',
-      results: transaction.length,
-      transaction,
+      results: transactions.length,
+      transactions,
     });
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -24,7 +24,7 @@ exports.getAllTransactions = catchAsync(async (req, res) => {
 });
 
 exports.createTransaction = catchAsync(async (req, res) => {
-  console.log(req);
+
   const { party, category, amount, cashFlow, date } = req.body;
   try {
     const transaction = await Transactions.create({
@@ -49,28 +49,20 @@ exports.createTransaction = catchAsync(async (req, res) => {
 
 exports.getTransactionsBySearch = catchAsync(async (req, res) => {
   const { term } = req.query;
-  const user = req.user.id;
 
   try {
     const query = new RegExp(term, 'i');
-    console.log(query);
-    const Transactions = await User.findById(user)
-      .populate('transaction')
-      .find({
-        $and: [
-          {
-            $or: [{ party: query }, { category: query }, { cashflow: query }],
-          },
-        ],
-      });
 
-    const doc = Transactions;
+    const transactions = await Transactions.find({
+      $and: [
+        { $or: [{ party: query }, { cashFlow: query }, { category: query }] },
+      ],
+    });
+
     res.status(200).json({
       status: 'success',
-      results: doc.length,
-      data: {
-        doc,
-      },
+      results: transactions.length,
+      transactions,
     });
   } catch (error) {
     res.status(404).json({ message: error.message });

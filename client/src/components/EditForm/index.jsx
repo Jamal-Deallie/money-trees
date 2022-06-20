@@ -1,21 +1,33 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
-import FormGroup from '@mui/material/FormGroup';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import { SubmitButton, EditSection } from './styles';
-import FormHelperText from '@mui/material/FormHelperText';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import FormLabel from '@mui/material/FormLabel';
+
 import { todaysDate } from '../../helpers/todaysDate';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {
+  RadioGroup,
+  Box,
+  Stack,
+  FormGroup,
+  FormControl,
+  TextField,
+  InputLabel,
+  Select,
+  Typography,
+  InputAdornment,
+  FormControlLabel,
+  FormLabel,
+  MenuItem,
+} from '@mui/material';
 import { useSelector } from 'react-redux';
+
+import {
+  SubmitButton,
+  EditSection,
+  CustomItem,
+  CustomSelect,
+  TransactionSection,
+  CustomInput,
+  CustomRadio,
+  SelectWrapper,
+} from './styles';
 import {
   useAddTransactionMutation,
   useGetTransactionByIdQuery,
@@ -91,45 +103,45 @@ const categories = [
   },
 ];
 
+const initialValues = {
+  party: '',
+  category: '',
+  amount: '',
+  cashFlow: '',
+  date: todaysDate(),
+};
+
+
 export default function EditForm({ id }) {
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState();
   const loadedTransaction = useSelector(state =>
     selectTransactionById(state, id)
   );
+  const [editTransaction, setEditTransaction] = useState(initialValues);
 
-  const { isLoading, isSuccess, isError } = useGetTransactionByIdQuery(id);
-  const [state, setState] = useState({
-    party: '',
-    category: '',
-    amount: '',
-    cashFlow: '',
-    date: '',
-  });
 
   useEffect(() => {
-    setState({
+    setEditTransaction({
       amount: loadedTransaction.amount,
       cashFlow: loadedTransaction.cashFlow,
       date: loadedTransaction.date,
       party: loadedTransaction.party,
       category: loadedTransaction.category,
     });
-  }, []);
-
-  console.log('### Refreshing');
+  }, [loadedTransaction]);
 
   const handleChange = useCallback(
     type => event => {
-      setState({ ...state, [type]: event.target.value });
+      setEditTransaction({ ...editTransaction, [type]: event.target.value });
     },
-    [state]
+    [editTransaction]
   );
   const [addTransaction] = useAddTransactionMutation();
 
   const handleSubmit = async () => {
     try {
-      await addTransaction({ ...state });
+      await addTransaction({ ...editTransaction });
     } catch (err) {
       setError('Failed to update the transaction');
     }
@@ -145,116 +157,98 @@ export default function EditForm({ id }) {
             alignItems: 'center',
             flexDirection: 'column',
             p: 4,
+            color: 'primary.main',
           }}>
-          <Typography
-            variant='h4'
-            sx={{
-              fontFamily: 'balboa, sans-serif',
-              textTransform: 'uppercase',
-              fontWeight: 'bold',
-              pb: 5.5,
-            }}>
-            Update a Transaction
-          </Typography>
-          <form>
-            <Stack spacing={2}>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='Enter Amount'
-                    required
-                    value={state.amount}
-                    // error={!transactionData.amount}
-                    onChange={handleChange('amount')}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>$</InputAdornment>
-                      ),
-                    }}
-                  />
-                </FormGroup>
-                <FormHelperText>{helperText}</FormHelperText>
-              </FormControl>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='Enter Party'
-                    required
-                    value={state.party}
-                    onChange={handleChange('party')}
-                  />
-                </FormGroup>
-                <FormHelperText>{helperText}</FormHelperText>
-              </FormControl>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <Select
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                    value={state.category}
-                    onChange={handleChange('category')}>
-                    <MenuItem value=''>
-                      <em>Select Category</em>
-                    </MenuItem>
-                    {categories.map(cat => {
-                      console.log(cat);
-                      return (
-                        <MenuItem value={cat.transaction} key={cat.id}>
-                          {cat.transaction}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormGroup>
-                <FormHelperText>{helperText}</FormHelperText>
-              </FormControl>
+          {error && <Typography>{error}</Typography>}
+          <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
+          <Stack spacing={4}>
+              <CustomInput
+                label='Enter Amount'
+                type='number'
+                value={editTransaction.amount}
+                onChange={handleChange('amount')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position='start'
+                      sx={{ color: 'primary.main' }}>
+                      $
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
-              <FormControl error={error} component='fieldset'>
+              <CustomInput
+                label='Enter The Transacting Party'
+                required
+                value={editTransaction.party}
+                onChange={handleChange('party')}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+
+              <SelectWrapper>
+                <InputLabel id='demo-simple-select-label'>
+                  Select Category
+                </InputLabel>
+                <CustomSelect
+                  labelId='demo-simple-select-label'
+                  label='Select Category'
+                  value={editTransaction.category}
+                  onChange={handleChange('category')}>
+                  {categories.map(cat => {
+                    return (
+                      <CustomItem value={cat.transaction} key={cat.id}>
+                        {cat.transaction}
+                      </CustomItem>
+                    );
+                  })}
+                </CustomSelect>
+              </SelectWrapper>
+
+              <SelectWrapper component='fieldset'>
                 <FormLabel id='cashFlows-radio'>Cash Flows</FormLabel>
-
                 <RadioGroup
                   id='cashFlows-radio'
                   aria-label='cashFlows'
                   name='radio-buttons-group'
-                  value={state.cashFlow}
+                  value={editTransaction.cashFlow}
                   // error={!transactionData.cashFlows}
                   onChange={handleChange('cashFlow')}
                   row>
                   <FormControlLabel
                     value='credit'
-                    control={<Radio />}
+                    control={<CustomRadio />}
                     label='Credit'
                   />
                   <FormControlLabel
                     value='debit'
-                    control={<Radio />}
+                    control={<CustomRadio />}
                     label='Debit'
                   />
                 </RadioGroup>
-                <FormHelperText>{helperText}</FormHelperText>
-              </FormControl>
-              <FormControl sx={{ width: '350px' }}>
-                <TextField
-                  id='date'
-                  label='Transaction Date'
-                  type='date'
-                  defaultValue={state.date}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onChange={handleChange('date')}
-                />
-              </FormControl>
+              </SelectWrapper>
+
+              <CustomInput
+                id='date'
+                label='Transaction Date'
+                type='date'
+                defaultValue={editTransaction.date}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={handleChange('date')}
+              />
 
               <SubmitButton
-                type='button'
-                onClick={handleSubmit}
                 variant='contained'
+                type='submit'
                 sx={{ px: 5, py: 1.5 }}>
                 Enter Transaction
               </SubmitButton>
             </Stack>
-          </form>
+          </Box>
         </Box>
       </Box>
     </EditSection>

@@ -5,6 +5,7 @@ const initialState = {
   user: {},
   name: '',
   creditScore: '',
+  resetToken: '',
 };
 
 const authSlice = createSlice({
@@ -14,10 +15,15 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, { payload }) => {
       console.log({ credentials: payload });
-
-      state.name = payload.user.name;
-      state.creditScore = payload.user.creditScore;
       state.token = payload.token;
+    },
+    setUser: (state, { payload }) => {
+      console.log(payload);
+      state.firstName = payload.user.name;
+      state.creditScore = payload.user.creditScore;
+      state.resetToken = payload.user.resetToken;
+      state.creditScore = payload.user.creditScore;
+      
     },
     logOut: (state, { payload }) => {
       state.user = null;
@@ -26,7 +32,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, logOut } = authSlice.actions;
+export const { setCredentials, setUser, logOut } = authSlice.actions;
 
 export const selectToken = state => state.auth.token;
 

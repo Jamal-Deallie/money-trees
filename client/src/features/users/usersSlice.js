@@ -1,4 +1,11 @@
+import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
 import { apiSlice } from '../api/apiSlice';
+
+const userAdapter = createEntityAdapter({
+  selectId: data => data.id,
+});
+
+const initialState = userAdapter.getInitialState();
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -35,7 +42,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     forgotPassword: builder.mutation({
       query: ({ email }) => ({
-        url: '/users/forgotPassword',
+        url: `/users/resetPassword`,
         method: 'post',
         body: { email },
       }),
@@ -47,12 +54,27 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         body: { token, password, passwordConfirm },
       }),
     }),
-    refreshToken: builder.mutation({
-      query: ({ token, password, passwordConfirm }) => ({
-        url: '/users/refreshToken',
-        method: 'get',
-        body: { token, password, passwordConfirm },
+    updateMe: builder.mutation({
+      query: ({ email, firstName, lastName, creditScore }) => ({
+        url: `/users/updateMe`,
+        method: 'PATCH',
+        body: { email, firstName, lastName, creditScore },
       }),
+    }),
+    updateAvatar: builder.mutation({
+      query: ({ avatar }) => ({
+        url: `/users/updateAvatar`,
+        method: 'PATCH',
+        body: { avatar },
+      }),
+    }),
+    getMe: builder.query({
+      query: () => `/users/getme`,
+      transformResponse: response => {
+        const { data } = response;
+        return userAdapter.setAll(initialState, data);
+      },
+      providesTags: ['User'],
     }),
   }),
 });
@@ -62,4 +84,47 @@ export const {
   useSignInUserMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useUpdateMeMutation,
+  useUpdateAvatarMutation,
+  useGetMeQuery,
 } = extendedApiSlice;
+
+export const selectUserResults = extendedApiSlice.endpoints.getMe.select();
+
+export const selectUserData = createSelector(
+  selectUserResults,
+  UserResult => UserResult.data
+
+  // normalized state object with ids & entities
+);
+
+export const {
+  selectAll: selectMe,
+
+  // Pass in a selector that returns the transaction slice of state
+} = userAdapter.getSelectors(state => selectUserData(state) ?? initialState);
+
+export const selectCreditScore = createSelector(
+  selectMe,
+  UserResult => UserResult.map(user => user.creditScore)
+
+  // normalized state object with ids & entities
+);
+export const selectName = createSelector(
+  selectMe,
+  UserResult => UserResult.map(user => user.firstName)
+
+  // normalized state object with ids & entities
+);
+export const selectPhoto = createSelector(
+  selectMe,
+  UserResult => UserResult.map(user => user.photo)
+
+  // normalized state object with ids & entities
+);
+export const selectResetToken = createSelector(
+  selectMe,
+  UserResult => UserResult.map(user => user.restToken)
+
+  // normalized state object with ids & entities
+);

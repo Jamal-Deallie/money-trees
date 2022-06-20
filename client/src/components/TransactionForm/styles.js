@@ -1,23 +1,13 @@
 import { styled } from '@mui/system';
 import ButtonUnstyled from '@mui/base/ButtonUnstyled';
+import {
+  Radio,
+  FormControl,
+  TextField,
+  Select,
+  MenuItem,
+} from '@mui/material';
 
-export const StyledButton = styled(ButtonUnstyled)(({ theme }) => ({
-  background: theme.palette.secondary.main,
-  color: theme.palette.primary.main,
-  fontSize: 16,
-  fontFamily: 'open-sans,sans-serif',
-  fontWeight: 400,
-  padding: '1rem 4rem',
-  border: '2px solid #111',
-  borderRadius: '8px',
-  boxSizing: 'border-box',
-  boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
-  marginTop: '5rem',
-  '&:hover': {
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
-  },
-}));
 export const TransactionSection = styled('div')({
   width: '100%',
   padding: '5px',
@@ -35,38 +25,76 @@ export const SubmitButton = styled(ButtonUnstyled)(({ theme }) => ({
   fontFamily: 'open-sans,sans-serif',
   fontWeight: 400,
   padding: '1rem 4rem',
-  border: '2px solid #111',
+  border: `2px solid ${theme.palette.primary.main}`,
   borderRadius: '3px',
   boxSizing: 'border-box',
   height: '5rem',
-  width: '90%',
+  width: '100%',
   '&:hover': {
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 
-export const ButtonWrap = styled('div')({
-  position: 'relative',
+export const CustomInput = styled(TextField)(({ theme }) => ({
+  width: '350px',
+  '& .MuiOutlinedInput-root': {
+    '& > fieldset': { border: `1px solid ${theme.palette.primary.main}` },
+  },
+  '&& .MuiOutlinedInput-root:hover': {
+    '& > fieldset': { border: `1px solid ${theme.palette.primary.main}` },
+  },
+  '& label': {
+    color: theme.palette.primary.main,
+    fontFamily: 'open-sans, sans-serif',
+    fontSize: 16,
+    margin: 'dense',
+  },
+  
+  '& .MuiTypography-root': {
+    color: theme.palette.primary.main,
+  },
 
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '10rem',
-});
+  '& .MuiInputBase-root': {
+    color: theme.palette.primary.main,
+  },
 
-export const ButtonLines = styled('div')({
-  position: 'absolute',
+  ' & ::-webkit-calendar-picker-indicator': {
+    filter: 'invert(100%)',
+  },
+}));
 
-  top: -20,
-  right: 0,
-});
+export const CustomRadio = styled(Radio)(({ theme }) => ({
+  color: theme.palette.primary.main,
+}));
+export const SelectWrapper = styled(FormControl)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  '& .MuiSvgIcon-root': {
+    color: 'white',
+  },
+  '&& .MuiInputBase-formControl:hover': {
+    '& > fieldset': { border: `1px solid ${theme.palette.primary.main}` },
+  },
+  '& .MuiInputBase-formControl': {
+    color: theme.palette.primary.main,
+  },
+}));
 
-export const Lines = styled('div')({
-  width: '6rem',
-  height: '6rem',
-  backgroundImage: 'url(images/hero-lines.svg)',
-  backgroundPosition: '50% 50%',
-  backgroundSize: 'contain',
-  backgroundRepeat: 'no-repeat',
-});
+export const CustomSelect = styled(Select)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  '& .MuiOutlinedInput-notchedOutline': {
+    border: `1px solid ${theme.palette.primary.main}`,
+  },
+  '& label': {
+    color: theme.palette.secondary.main,
+    fontFamily: 'open-sans, sans-serif',
+    fontSize: 16,
+    margin: 'dense',
+  },
+  '& .MuiSvgIcon-root': {
+    color: 'white',
+  },
+}));
+
+export const CustomItem = styled(MenuItem)(({ theme }) => ({
+  color: theme.palette.secondary.main,
+}));

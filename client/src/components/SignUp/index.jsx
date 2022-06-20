@@ -3,16 +3,14 @@ import {
   Typography,
   Grid,
   Box,
-  TextField,
   Container,
   InputAdornment,
   IconButton,
   InputLabel,
   FormControl,
-  OutlinedInput,
 } from '@mui/material';
-import { MainButton } from './styles';
-import { useDispatch } from 'react-redux';
+import { MainButton, CustomInput, OutlineInput } from './styles';
+
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSignUpUserMutation } from '../../features/users/usersSlice';
 import Visibility from '@mui/icons-material/Visibility';
@@ -129,7 +127,7 @@ export default function SignUp() {
         <Box sx={{ mt: 3 }} component='form' onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
+              <CustomInput
                 name='firstName'
                 fullWidth
                 id='outlined-required'
@@ -143,7 +141,7 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
+              <CustomInput
                 fullWidth
                 id='lastName'
                 label='Last Name'
@@ -156,7 +154,7 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomInput
                 fullWidth
                 type='number'
                 id='creditScore'
@@ -170,7 +168,7 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomInput
                 label='Avatar'
                 fullWidth
                 type='file'
@@ -184,7 +182,7 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomInput
                 fullWidth
                 id='email'
                 label='Email Address'
@@ -202,7 +200,7 @@ export default function SignUp() {
                 <InputLabel htmlFor='outlined-adornment-password'>
                   Password
                 </InputLabel>
-                <OutlinedInput
+                <OutlineInput
                   id='outlined-adornment-password'
                   type={showPassword ? 'text' : 'password'}
                   onChange={e => setPassword(e.target.value)}
@@ -213,9 +211,12 @@ export default function SignUp() {
                       <IconButton
                         onClick={handleClickShowPassword}
                         aria-label='toggle password visibility'
-                        sx={{ pointerEvents: 'click' }}>
+                        sx={{ pointerEvents: 'click', color: 'primary.main' }}>
                         {showPassword ? (
-                          <VisibilityOff fontSize='large' />
+                          <VisibilityOff
+                            fontSize='large'
+                            sx={{ fill: 'primary.main' }}
+                          />
                         ) : (
                           <Visibility fontSize='large' />
                         )}
@@ -228,11 +229,10 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel htmlFor='outlined-adornment-passwordConfirm'>
+                <InputLabel htmlFor='outlined-adornment-password-confirm'>
                   Password Confirm
                 </InputLabel>
-                <OutlinedInput
-                  id='outlined-adornment-passwordConfirm'
+                <OutlineInput
                   type={showPassword ? 'text' : 'password'}
                   onChange={e => setPasswordConfirm(e.target.value)}
                   name='passwordConfirm'
@@ -242,7 +242,7 @@ export default function SignUp() {
                       <IconButton
                         onClick={handleClickShowPassword}
                         aria-label='toggle password visibility'
-                        sx={{ pointerEvents: 'click' }}>
+                        sx={{ pointerEvents: 'click', color: 'primary.main' }}>
                         {showPassword ? (
                           <VisibilityOff fontSize='large' />
                         ) : (

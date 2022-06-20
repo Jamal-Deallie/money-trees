@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
-import { SignUp } from '../../components';
-
+import { ResetPassword } from '../../components';
+import { ResetPasswordSection } from './styles';
 export default function ResetPasswordContainer() {
   return (
-    <Box sx={{width: '100%', height: '100%'}}>
-      <SignUp />
-    </Box>
+    <ResetPasswordSection>
+      <ResetPassword />
+    </ResetPasswordSection>
   );
 }

@@ -23,15 +23,14 @@ export const LandingWrap = styled(Box)({
 
 export const MainButton = styled(ButtonUnstyled)(({ theme }) => ({
   background: theme.palette.success.main,
-  color: theme.palette.primary.main,
+  color: theme.palette.secondary.main,
   fontSize: 16,
   fontFamily: 'open-sans,sans-serif',
   fontWeight: 400,
   padding: '1rem 4rem',
-  border: '2px solid #111',
+  border: `2px solid ${theme.palette.primary.main}`,
   borderRadius: '8px',
   boxSizing: 'border-box',
-  boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
   '&:hover': {
     backgroundColor: '#ffffff',
     boxShadow: 'none',

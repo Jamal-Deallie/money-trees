@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { Typography, Box } from '@mui/material';
-import Tab from '@mui/material/Tab';
+import { Box } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
-import { TransactionForm, UpdateForm } from '../../components';
+import { TransactionForm, UpdateForm, DropZone } from '../../components';
 import { TabContainer, CustomTab } from './styles';
 
 const Panel = props => (
@@ -22,8 +20,9 @@ export default function FormContainer() {
     <Box sx={{ width: '100%' }}>
       <TabContainer>
         <Tabs value={index} onChange={onTabClicked}>
-          <CustomTab label='Add A Transaction' />
-          <CustomTab label='Update Your Goals' />
+          <CustomTab label='Enter Transaction' />
+          <CustomTab label='Update Profile' />
+          <CustomTab label='Upload Avatar' />
         </Tabs>
       </TabContainer>
       <Panel value={index} index={0}>
@@ -31,6 +30,9 @@ export default function FormContainer() {
       </Panel>
       <Panel value={index} index={1}>
         <UpdateForm />
+      </Panel>
+      <Panel value={index} index={2}>
+        <DropZone />
       </Panel>
     </Box>
   );

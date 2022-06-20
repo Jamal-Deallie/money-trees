@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
@@ -11,42 +10,57 @@ import {
   SearchIconWrapper,
   FormWrapper,
   SubmitBtn,
+  TransactionSection,
+  Header,
 } from './styles';
-import { TransactionsListContainer } from '../../containers';
+import {
+  TransactionsListContainer,
+  SearchListContainer,
+} from '../../containers';
 import { useDispatch } from 'react-redux';
 import { extendedApiSlice } from '../../features/transactions/transactionSlice';
 
 export default function TransactionsContainer() {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const handleChange = event => {
-    setSearchParams({ q: event.target.value });
-  };
-
-  console.log(searchParams.get('q'));
   useEffect(() => {
     dispatch(extendedApiSlice.endpoints.getTransactions.initiate());
   });
+  // This function will be called whenever the text input changes
+  const handleChange = event => {
+    let search;
+    if (event.target.value) {
+      search = {
+        keyword: event.target.value,
+      };
+    } else {
+      search = undefined;
+    }
+
+    setSearchParams(search, { replace: true });
+  };
+
+  useEffect(() => {
+    if (searchParams.has('keyword')) {
+      const token = searchParams.get('keyword');
+      if (token) {
+        searchParams.delete('keyword');
+
+        console.dir(searchParams.toString());
+        setSearchParams(searchParams);
+      }
+    }
+  }, []);
 
   return (
-    <Box
-      sx={{
-        background: '#263232',
-        padding: '5rem 5rem',
-        overflow: 'auto',
-        maxHeight: '50rem',
-        width: '100%',
-      }}>
+    <TransactionSection>
       <Box>
-        <Typography variant='h1' sx={{ color: 'success.main' }}>
-          Your Transactions
-        </Typography>
+        <Header>Your Transactions</Header>
       </Box>
 
       <SearchBarSection>
         <FormWrapper>
-          <div>
+         
             <Search>
               <SearchIconWrapper>
                 <SearchIcon
@@ -58,18 +72,22 @@ export default function TransactionsContainer() {
                 placeholder='Search A Transaction'
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={handleChange}
-                value={searchParams.get('q')}
+                value={searchParams.keyword}
               />
 
               <SubmitBtn type='submit'></SubmitBtn>
             </Search>
-          </div>
+        
         </FormWrapper>
       </SearchBarSection>
 
-      <Box sx={{ mt: 5.5 }}>
-        <TransactionsListContainer term={searchParams.get('q')} />
+      <Box sx={{ mt: 5.5, maxHeight: '60rem', overflow: 'auto' }}>
+        {searchParams.get('keyword') ? (
+          <SearchListContainer term={searchParams.get('keyword')} />
+        ) : (
+          <TransactionsListContainer />
+        )}
       </Box>
-    </Box>
+    </TransactionSection>
   );
 }

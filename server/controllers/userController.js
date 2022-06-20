@@ -1,9 +1,7 @@
 const User = require('../models/userModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('./../utils/catchAsync');
-
-
-let path = require('path');
+const cloudinary = require('cloudinary');
 
 const filterObj = (obj, ...allowedFields) => {
   //create empty object
@@ -20,14 +18,40 @@ exports.getAllUsers = factory.getAll(User);
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
 
+// exports.getMe = catchAsync(async (req, res) => {
+//   let me = User.findById(req.params.id);
+
+//   const doc = await me;
+
+//   if (!doc) {
+//     return next(new AppError('No document found with that ID', 404));
+//   }
+
+//   let userData = {
+//     id: doc._id,
+//     firstName: doc.firstName,
+//     email: doc.email,
+//     photo: doc.avatar.url,
+//     creditScore: doc.creditScore,
+//     passwordResetToken: doc.passwordResetToken,
+//     roles: doc.roles,
+//   };
+
+//   res.status(200).json({
+//     status: 'success',
+//     data: { userData },
+//   });
+// });
+
 exports.updateMe = catchAsync(async (req, res, next) => {
+
   //create an error if user attempts to update password
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError('This route is not for updating password', 400));
   }
   //filter object, so only the eligible fields listed below are updated
   const filteredBody = filterObj(
-    'avatar',
+    req.body,
     'firstName',
     'lastName',
     'email',
@@ -35,38 +59,71 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   );
   //update user document
 
-  console.log(filteredBody);
-  let updatedUser;
-  if (path) {
-    console.log('path checked');
-    //find user
-    let user = await User.findById(req.user.id);
-    //delete previous avatar
-    await cloudinary.uploader.destroy(user.avatar.cloudinary_id);
-    //upload new avatar
-    const result = await cloudinary.uploader.upload(req.file.path);
 
-    const data = {
-      filteredBody,
-      avatar: {
-        profile_img: result.secure_url,
-        cloudinary_id: result.public_id,
-      },
-    };
-    updatedUser = await User.findByIdAndUpdate(req.user.id, data, {
-      new: true,
-      runValidators: true,
-    });
-  } else {
-    updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
-      new: true,
-      runValidators: true,
-    });
-  }
+
+  // 3) Update user document
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
 
   //send update user
   res.status(200).json({
     status: 'success',
     updatedUser,
+  });
+});
+
+exports.updateAvatar = catchAsync(async (req, res, next) => {
+  const { avatar } = req.body;
+
+  try {
+    //if the avatar is included upload to cloudinary
+    if (avatar) {
+      const uploadedRes = await cloudinary.uploader.upload(avatar, {
+        upload_preset: 'money-tree-avatar',
+      });
+
+      if (uploadedRes) {
+        const updatedAvatar = await User.findByIdAndUpdate(
+          req.user.id,
+          { avatar: uploadedRes },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+   
+        //send update Avatar
+        res.status(200).json({
+          status: 'success',
+          updatedAvatar,
+        });
+      }
+    }
+  } catch (err) {
+    console.log('upload error', err);
+    res.status(500).json({
+      errorMessage: `Server Error: ${err.message}`,
+    });
+  }
+});
+
+exports.getMe = catchAsync(async (req, res) => {
+  const doc = req.user;
+
+  let userData = {
+    id: doc._id,
+    firstName: doc.firstName,
+    email: doc.email,
+    photo: doc.avatar.url,
+    creditScore: doc.creditScore,
+    passwordResetToken: doc.passwordResetToken,
+    roles: doc.roles,
+  };
+
+  res.status(200).json({
+    status: 'success',
+    data: { userData },
   });
 });

@@ -11,6 +11,7 @@ export const TabContainer = styled(Box)({
 export const CustomTab = styled(Tab)(({ theme }) => ({
   '&.MuiButtonBase-root.MuiTab-root': {
     fontFamily: 'open-sans, sans-serif',
-    fontSize: '1.6rem',
+    fontSize: '1.4rem',
+    color: theme.palette.primary.main,
   },
 }));

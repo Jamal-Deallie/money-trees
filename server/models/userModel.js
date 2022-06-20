@@ -64,12 +64,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 );
 
-userSchema.virtual('transaction', {
-  ref: 'Transactions',
-  foreignField: 'user',
-  localField: '_id',
-});
-
 //Function hashes password before its saved to the database, so the actual password is not saved to the database
 //The is persisted between getting data and saving it to the database
 userSchema.pre('save', async function (next) {
@@ -131,7 +125,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .update(resetToken)
     .digest('hex');
 
-  console.log({ resetToken }, this.passwordResetToken);
+  // console.log({ resetToken }, this.passwordResetToken);
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 

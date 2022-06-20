@@ -13,10 +13,17 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     getTransactions: builder.query({
       query: () => '/transactions',
       transformResponse: response => {
-        const { transaction } = response.transaction;
+        const transaction = response.transactions.reduce((acc, curr) => {
+          acc[curr._id] = curr;
+          return acc;
+        }, {});
         return transactionsAdapter.setAll(initialState, transaction);
       },
       providesTags: ['Transactions'],
+    }),
+    getTransactionsBySearch: builder.query({
+      query: term => `/transactions/search?term=${term}`,
+      
     }),
     getTransactionById: builder.query({
       query: _id => `/transactions/${_id}`,
@@ -64,6 +71,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetTransactionsQuery,
+  useGetTransactionsBySearchQuery,
   useGetTransactionByIdQuery,
   useAddTransactionMutation,
   useUpdateTransactionMutation,
@@ -122,4 +130,3 @@ export const selectTotalDebitAmount = createSelector(
       return accumulator + object.amount;
     }, 0)
 );
-

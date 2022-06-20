@@ -163,29 +163,7 @@ h3,
 h4,
 h5,
 h6 {
-  line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   vertical-align: baseline;
 }
-h1 {
-  font-size: clamp(2.16rem, calc(1.17rem + 4.93vw), 4.69rem);
-}
-
-h2 {
-  font-size: clamp(1.76rem, calc(1.45rem + 1.53vw), 2.54rem);
-}
-p {
-  font-size: 1.618rem;
-}
-
-
-/* @font-face {
-  font-family:Mightype;
-  src: url("/font/mightype-script.otf ");
-  format: ("opentype");
-  font-display: swap;
-}
- */
-
-

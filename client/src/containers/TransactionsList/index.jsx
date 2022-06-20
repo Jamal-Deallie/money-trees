@@ -5,30 +5,17 @@ import {
   useGetTransactionsQuery,
   selectAllTransactions,
 } from '../../features/transactions/transactionSlice';
+
 import { useSelector } from 'react-redux';
+;
 
-export default function TransactionsListContainer({ term }) {
-  const { isLoading, isSuccess, isError, error } = useGetTransactionsQuery();
+export default function TransactionsListContainer() {
+  const { isLoading, isSuccess, isError } = useGetTransactionsQuery();
+
   const loadedTransactions = useSelector(selectAllTransactions);
-  const [transactionData, setTransactionData] = useState(loadedTransactions);
 
-  useEffect(() => {
-    setTransactionData(loadedTransactions);
-  }, [loadedTransactions]);
+  const user = JSON.parse(localStorage.getItem('user'));
 
-  console.log(loadedTransactions);
-
-  const searchedTransactions = () =>
-    term
-      ? transactionData.filter(transaction => {
-          return (
-            transaction.party.toLowerCase().includes(term?.toLowerCase()) ||
-            transaction.cashFlow.toLowerCase().includes(term?.toLowerCase())
-          );
-        })
-      : transactionData;
-
-  console.log({ search: searchedTransactions() });
 
   const renderedTransaction = useCallback(() => {
     if (isLoading) {
@@ -38,7 +25,7 @@ export default function TransactionsListContainer({ term }) {
         </Box>
       );
     } else if (isSuccess) {
-      return transactionData?.map(transaction => {
+      return loadedTransactions?.map(transaction => {
         const { party, _id, amount, date, cashFlow } = transaction;
         return (
           <Box
@@ -60,9 +47,9 @@ export default function TransactionsListContainer({ term }) {
         );
       });
     } else if (isError) {
-      return <Typography>{error}</Typography>;
+      return <Typography>An Error has occured</Typography>;
     }
-  }, [isLoading, isSuccess, isError, error, transactionData]);
+  }, [isLoading, isSuccess, isError]);
 
   return (
     <Box>

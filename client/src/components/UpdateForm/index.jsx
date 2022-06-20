@@ -1,50 +1,53 @@
-import React, { useState } from 'react';
-import {
-  SubmitButton,
-  UpdateSection,
-  Text,
-  ValidationTextField,
-} from './styles';
-import {
-  InputAdornment,
-  TextField,
-  FormGroup,
-  FormControl,
-  Box,
-  Stack,
-  Typography,
-  Paper,
-  FormHelperText,
-} from '@mui/material';
+import React, { useState, useCallback, useEffect } from 'react';
+import { SubmitButton, UpdateSection, CustomInput } from './styles';
+import { Box, Stack, Typography } from '@mui/material';
+import { useUpdateMeMutation } from '../../features/users/usersSlice';
+import { setUser } from '../../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+const initialValues = {
+  creditScore: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+};
 
 export default function UpdateForm() {
   const [error, setError] = useState(false);
-  const [creditScore, setCreditScore] = useState('');
-  const [photo, setPhoto] = useState('');
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [updateMe, { data, isSuccess }] = useUpdateMeMutation();
+  const [updateData, setUpdateData] = useState(initialValues);
 
-  const TransformFileData = file => {
-    const reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setPhoto(reader.result);
-      };
-    } else {
-      setPhoto('');
+  useEffect(() => {
+    setUpdateData({
+      creditScore: user.creditScore,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    });
+  }, []);
+
+
+  const handleChange = useCallback(
+    type => event => {
+      setUpdateData({ ...updateData, [type]: event.target.value });
+    },
+    [updateData]
+  );
+
+  if (isSuccess) {
+    dispatch(setUser({ user: data.updatedUser }));
+    localStorage.setItem('user', JSON.stringify(data.updatedUser));
+    navigate('/dashboard');
+  }
+  const handleSubmit = async () => {
+    try {
+      await updateMe({ ...updateData });
+    } catch (err) {
+      setError('Failed to update your profile');
     }
-  };
-
-  const handleImageUpload = e => {
-    const file = e.target.files[0];
-
-    TransformFileData(file);
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault();
   };
   return (
     <UpdateSection>
@@ -56,90 +59,72 @@ export default function UpdateForm() {
             alignItems: 'center',
             flexDirection: 'column',
             p: 4,
+            color: 'primary.main',
           }}>
           {error && <Typography>{error}</Typography>}
 
-          <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
-            <Stack spacing={2}>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='First Name'
-                    value={firstName}
-                    fullWidth
-                    type='text'
-                    name='firstName'
-                    onChange={e => setFirstName(e.target.value)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </FormGroup>
-              </FormControl>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='Last Name'
-                    value={lastName}
-                    fullWidth
-                    type='text'
-                    name='lastName'
-                    onChange={e => setLastName(e.target.value)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </FormGroup>
-              </FormControl>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='Email'
-                    value={email}
-                    fullWidth
-                    type='email'
-                    name='email'
-                    onChange={e => setEmail(e.target.value)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </FormGroup>
-              </FormControl>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='Credit Score'
-                    value={creditScore}
-                    fullWidth
-                    type='number'
-                    name='creditScore'
-                    onChange={e => setCreditScore(e.target.value)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </FormGroup>
-              </FormControl>
+          <Box sx={{ p: 2 }}>
+            <Stack spacing={4}>
+              <CustomInput
+                label='First Name'
+                value={updateData.firstName}
+                type='text'
+                name='firstName'
+                onChange={handleChange('firstName')}
+                inputProps={{
+                  autoComplete: 'off',
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
 
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='Avatar'
-                    fullWidth
-                    type='file'
-                    accept='image/*'
-                    name='file'
-                    id='avatar'
-                    onChange={handleImageUpload}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </FormGroup>
-              </FormControl>
+              <CustomInput
+                label='Last Name'
+                value={updateData.lastName}
+                fullWidth
+                type='text'
+                name='lastName'
+                onChange={handleChange('lastName')}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
 
-              <SubmitButton variant='contained' sx={{ px: 5, py: 1.5 }}>
+              <CustomInput
+                label='Email'
+                value={updateData.email}
+                fullWidth
+                type='email'
+                name='email'
+                onChange={handleChange('email')}
+                inputProps={{
+                  autoComplete: 'off',
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+
+              <CustomInput
+                label='Credit Score'
+                value={updateData.creditScore}
+                fullWidth
+                type='number'
+                name='creditScore'
+                onChange={handleChange('creditScore')}
+                inputProps={{
+                  autoComplete: 'off',
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+
+              <SubmitButton
+                variant='contained'
+                onClick={handleSubmit}
+                sx={{ px: 5, py: 1.5 }}>
                 Submit
               </SubmitButton>
             </Stack>

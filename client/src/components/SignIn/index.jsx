@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { MainButton, FormWrap, CustomLink } from './styles';
+import {
+  MainButton,
+  FormWrap,
+  CustomLink,
+  CustomInput,
+  OutlineInput,
+} from './styles';
 import { useNavigate } from 'react-router-dom';
-import { Typography, Box, TextField, Container } from '@mui/material';
+import {
+  Typography,
+  Box,
+  Container,
+  InputAdornment,
+  IconButton,
+  InputLabel,
+  FormControl,
+  Stack,
+} from '@mui/material';
 import { useSignInUserMutation } from '../../features/users/usersSlice';
 import { setCredentials } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -12,9 +29,9 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [signInUser, { isLoading, isSuccess, data, isError }] =
-    useSignInUserMutation();
+  const [signInUser, { isLoading, isSuccess, data }] = useSignInUserMutation();
 
   const canSave = [email, password].every(Boolean) && !isLoading;
 
@@ -26,6 +43,9 @@ export default function SignIn() {
     setPassword('');
     navigate('/dashboard');
   }
+  const handleClickShowPassword = () => {
+    setShowPassword(showPassword => !showPassword);
+  };
 
   const handleSubmit = async () => {
     if (canSave) {
@@ -50,7 +70,7 @@ export default function SignIn() {
 
   const handlePasswordInput = e => setPassword(e.target.value);
 
-  console.log(error);
+
   return (
     <Box sx={{ position: 'relative', height: 'auto', padding: '12.5rem 0' }}>
       <Container sx={{ position: 'relative', height: '60rem' }}>
@@ -65,36 +85,63 @@ export default function SignIn() {
             }}>
             Sign In
           </Typography>
-          <Box sx={{ mt: 5 }}>
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              id='user'
-              placeholder='Email'
-              label='Email Address'
-              onChange={e => setEmail(e.target.value)}
-              value={email}
-              autoFocus
-            />
+          <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
+            <Stack spacing={4}>
+              <CustomInput
+                margin='normal'
+                fullWidth
+                id='user'
+                placeholder='Email'
+                label='Email Address'
+                onChange={e => setEmail(e.target.value)}
+                value={email}
+                autoFocus
+                inputProps={{
+                  autoComplete: "off",
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
 
-            <TextField
-              margin='normal'
-              required
-              fullWidth
-              label='Password'
-              id='password'
-              placeholder='Password'
-              type='password'
-              onChange={e => setPassword(e.target.value)}
-              value={password}
-            />
-            <Box sx={{ textAlign: 'center', mt: 2.5, color: 'primary.main' }}>
-              <CustomLink to='/'>Forgot Password</CustomLink> |
-              <CustomLink to='/'>Create An Account</CustomLink>
-            </Box>
+              <FormControl fullWidth>
+                <InputLabel htmlFor='outlined-adornment-password'>
+                  Password
+                </InputLabel>
+                <OutlineInput
+                  id='outlined-adornment-password'
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={e => setPassword(e.target.value)}
+                  name='password'
+                  value={password}
+                  autoComplete='new-password'
+                  startAdornment={
+                    <InputAdornment position='start'>
+                      <IconButton
+                        onClick={handleClickShowPassword}
+                        aria-label='toggle password visibility'
+                        sx={{ pointerEvents: 'click', color: 'primary.main' }}>
+                        {showPassword ? (
+                          <VisibilityOff
+                            fontSize='large'
+                            sx={{ fill: 'primary.main' }}
+                          />
+                        ) : (
+                          <Visibility fontSize='large' />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label='Password'
+                />
+              </FormControl>
+              <Box sx={{ textAlign: 'center', mt: 2.5, color: 'primary.main' }}>
+                <CustomLink to='/'>Forgot Password</CustomLink> |
+                <CustomLink to='/'>Create An Account</CustomLink>
+              </Box>
 
-            <MainButton onClick={handleSubmit}>Submit</MainButton>
+              <MainButton onClick={handleSubmit}>Submit</MainButton>
+            </Stack>
           </Box>
         </FormWrap>
       </Container>

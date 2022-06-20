@@ -1,22 +1,31 @@
 import React, { useState, useCallback } from 'react';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
-import FormGroup from '@mui/material/FormGroup';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import { TransactionSection } from './styles';
-import FormHelperText from '@mui/material/FormHelperText';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import FormLabel from '@mui/material/FormLabel';
 import { todaysDate } from '../../helpers/todaysDate';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import { useAddTransactionMutation } from '../../features/transactions/transactionSlice';
-import { SubmitButton, ButtonWrap, ButtonLines, Lines } from './styles';
+import {
+  SubmitButton,
+  ButtonWrap,
+  CustomItem,
+  CustomSelect,
+  TransactionSection,
+  CustomInput,
+  CustomRadio,
+  SelectWrapper,
+} from './styles';
+import {
+  RadioGroup,
+  Box,
+  Stack,
+  FormGroup,
+  FormControl,
+  TextField,
+  InputLabel,
+  Select,
+  Typography,
+  InputAdornment,
+  FormControlLabel,
+  FormLabel,
+  MenuItem,
+} from '@mui/material';
 const categories = [
   {
     id: 1,
@@ -97,9 +106,6 @@ const initialValues = {
 export default function TransactionForm() {
   const [transactionData, setTransactionData] = useState(initialValues);
   const [error, setError] = useState(false);
-  const [helperText, setHelperText] = useState();
-
-  const [date, setDate] = useState(todaysDate());
 
   console.log('### Refreshing');
   // const dispatch = useDispatch();
@@ -120,7 +126,7 @@ export default function TransactionForm() {
       transactionData.date,
     ].every(Boolean) && !isLoading;
 
-  console.log(canSave);
+
 
   const handleSubmit = async () => {
     if (canSave) {
@@ -132,7 +138,7 @@ export default function TransactionForm() {
     }
   };
 
-  console.log(transactionData);
+
   return (
     <TransactionSection>
       <Box sx={{ width: '100%' }}>
@@ -143,66 +149,64 @@ export default function TransactionForm() {
             alignItems: 'center',
             flexDirection: 'column',
             p: 4,
+            color: 'primary.main',
           }}>
           {error && <Typography>{error}</Typography>}
-          <form sx={{ p: 2 }}>
-            <Stack spacing={2}>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='Enter Amount'
-                    required
-                    value={transactionData.amount}
-                    // error={!transactionData.amount}
-                    onChange={handleChange('amount')}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>$</InputAdornment>
-                      ),
-                    }}
-                  />
-                </FormGroup>
-                <FormHelperText>{helperText}</FormHelperText>
-              </FormControl>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <TextField
-                    label='Enter The Transacting Party'
-                    required
-                    value={transactionData.party}
-                    // error={!transactionData.merchant}
-                    onChange={handleChange('party')}
-                  />
-                </FormGroup>
-                <FormHelperText>{helperText}</FormHelperText>
-              </FormControl>
-              <FormControl>
-                <FormGroup sx={{ width: '350px' }}>
-                  <Select
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                    value={transactionData.category}
-                    // error={!transactionData.category}
-                    onChange={handleChange('category')}>
-                    <MenuItem value=''>
-                      <em>Select Category</em>
-                    </MenuItem>
-                    {categories.map(cat => {
-                      console.log(cat);
-                      return (
-                        <MenuItem value={cat.transaction} key={cat.id}>
-                          {cat.transaction}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormGroup>
-                <FormHelperText>{helperText}</FormHelperText>
-              </FormControl>
+          <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
+            <Stack spacing={4}>
+              <CustomInput
+                label='Enter Amount'
+                type='number'
+                value={transactionData.amount}
+                onChange={handleChange('amount')}
+                inputProps={{
+                  autoComplete: 'off',
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position='start'
+                      sx={{ color: 'primary.main' }}>
+                      $
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
-              <FormControl error={error} component='fieldset'>
+              <CustomInput
+                label='Enter The Transacting Party'
+                required
+                value={transactionData.party}
+                onChange={handleChange('party')}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  autoComplete: 'off',
+                }}
+              />
+
+              <SelectWrapper>
+                <InputLabel id='demo-simple-select-label'>
+                  Select Category
+                </InputLabel>
+                <CustomSelect
+                  labelId='demo-simple-select-label'
+                  label='Select Category'
+                  value={transactionData.category}
+                  onChange={handleChange('category')}>
+                  {categories.map(cat => {
+                    return (
+                      <CustomItem value={cat.transaction} key={cat.id}>
+                        {cat.transaction}
+                      </CustomItem>
+                    );
+                  })}
+                </CustomSelect>
+              </SelectWrapper>
+
+              <SelectWrapper component='fieldset'>
                 <FormLabel id='cashFlows-radio'>Cash Flows</FormLabel>
-
                 <RadioGroup
                   id='cashFlows-radio'
                   aria-label='cashFlows'
@@ -213,42 +217,36 @@ export default function TransactionForm() {
                   row>
                   <FormControlLabel
                     value='credit'
-                    control={<Radio />}
+                    control={<CustomRadio />}
                     label='Credit'
                   />
                   <FormControlLabel
                     value='debit'
-                    control={<Radio />}
+                    control={<CustomRadio />}
                     label='Debit'
                   />
                 </RadioGroup>
-                <FormHelperText>{helperText}</FormHelperText>
-              </FormControl>
-              <FormControl sx={{ width: '350px' }}>
-                <TextField
-                  id='date'
-                  label='Transaction Date'
-                  type='date'
-                  defaultValue={date}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  onChange={handleChange('date')}
-                />
-              </FormControl>
-              <ButtonWrap>
-                <SubmitButton
-                  type='button'
-                  onClick={handleSubmit}
-                  variant='contained'>
-                  Enter Transaction
-                </SubmitButton>
-                <ButtonLines>
-                  <Lines />
-                </ButtonLines>
-              </ButtonWrap>
+              </SelectWrapper>
+
+              <CustomInput
+                id='date'
+                label='Transaction Date'
+                type='date'
+                defaultValue={transactionData.date}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={handleChange('date')}
+              />
+
+              <SubmitButton
+                variant='contained'
+                type='submit'
+                sx={{ px: 5, py: 1.5 }}>
+                Enter Transaction
+              </SubmitButton>
             </Stack>
-          </form>
+          </Box>
         </Box>
       </Box>
     </TransactionSection>

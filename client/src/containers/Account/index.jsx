@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { FormContainer } from '../../containers';
 import { Image } from './styles';
 
@@ -7,13 +7,7 @@ export default function AccountContainer() {
   const { avatar } = user;
   return (
     <Box sx={{ paddingTop: '5rem' }}>
-      <Image
-        src={avatar.secure_url}
-        alt='placeholder'
-        sx={{
-      
-        }}
-      />
+      <Image src={avatar.secure_url} alt='placeholder' />
       <FormContainer />
     </Box>
   );

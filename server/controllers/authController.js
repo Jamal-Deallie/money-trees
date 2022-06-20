@@ -39,7 +39,7 @@ const createSendToken = (user, statusCode, req, res) => {
 
 // Register User Controller
 exports.signup = catchAsync(async (req, res, next) => {
-  console.log(req.body)
+
   //abstract items from body
   const {
     firstName,
@@ -111,7 +111,7 @@ exports.signin = catchAsync(async (req, res, next) => {
   // 2) Check if user exists && password is correct
   const user = await User.findOne({ email }).select('+password');
   const correctPassword = await user.correctPassword(password, user.password);
-  console.log(correctPassword);
+
   //since the password is encrypted via bcrypt the correctPassword function can confirm the hashed PW matches the inputted PW
   if (!user || !correctPassword) {
     return next(new AppError('Incorrect email or password', 401));
@@ -137,7 +137,7 @@ exports.restrictTo = (...roles) => {
 };
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
-  console.log(req);
+
   //1 Get User based on posted Email
   const user = await User.findOne({ email: req.body.email });
 

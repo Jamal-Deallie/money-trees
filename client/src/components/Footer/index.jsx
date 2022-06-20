@@ -1,6 +1,6 @@
-import { CustomFooter, Icons, Links, GridLinks, CopyrightWrap } from './styles';
+import { CustomFooter, Icons, Links, GridLinks} from './styles';
 import { Typography, Grid } from '@mui/material/';
-import { Link } from 'react-router-dom';
+
 
 export default function Footer() {
   return (
@@ -16,30 +16,30 @@ export default function Footer() {
               fontFamily: 'balboa, sans-serif',
               textTransform: 'uppercase',
               fontWeight: 'bold',
-              color: 'secondary.main',
+              color: 'primary.main',
             }}>
             Money Trees
           </Typography>
-          <Typography sx={{ color: 'secondary.main' }}>
+          <Typography sx={{ color: 'primary.main' }}>
             123 Main Street
           </Typography>
-          <Typography sx={{ color: 'secondary.main' }}>
+          <Typography ssx={{ color: 'primary.main' }}>
             New York, NY 12345
           </Typography>
         </Grid>
         <GridLinks item>
           <Links to='/'>
-            <Typography variant='body1' sx={{ color: 'secondary.main' }}>
+            <Typography variant='body1' sx={{ color: 'primary.main' }}>
               CONTACT
             </Typography>
           </Links>
           <Links to='/'>
-            <Typography variant='body1' sx={{ color: 'secondary.main' }}>
+            <Typography variant='body1' sx={{ color: 'primary.main' }}>
               POLICY
             </Typography>
           </Links>
           <Links to='/'>
-            <Typography variant='body1' sx={{ color: 'secondary.main' }}>
+            <Typography variant='body1' sx={{ color: 'primary.main' }}>
               TERMS & CONDITIONS
             </Typography>
           </Links>

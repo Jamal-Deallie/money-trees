@@ -18,8 +18,7 @@ import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { EditForm } from '../../components';
 import { useDispatch } from 'react-redux';
 import { useDeleteTransactionMutation } from '../../features/transactions/transactionSlice';
-
-
+import useArrayRef from '../../hooks/useArrayRef';
 
 export default function Accordion({ id, party, amount, date, cashFlow }) {
   const contentRef = useRef(null);
@@ -27,12 +26,12 @@ export default function Accordion({ id, party, amount, date, cashFlow }) {
   const iconRef = useRef(null);
   const textRef = useRef(null);
   const [reversed, setReversed] = useState(false);
-  const [deleteTransaction] = useDeleteTransactionMutation();
+  const [deleteTransaction, isSuccess] = useDeleteTransactionMutation();
   const [edit, setEdit] = useState(false);
   const handleOpen = () => setEdit(true);
   const handleClose = () => setEdit(false);
   const [isShown, setIsShown] = useState(false);
-
+  const [transactionRef, setTransactionRef] = useArrayRef();
   useEffect(() => {
     tl.current = gsap.timeline();
     tl.current
@@ -52,15 +51,21 @@ export default function Accordion({ id, party, amount, date, cashFlow }) {
 
   const handleDelete = async () => {
     try {
+      gsap.to(transactionRef.current, {
+        display: 'none',
+        opacity: 0,
+      });
       await deleteTransaction(id);
     } catch (err) {
       console.log('Failed to delete the transaction', err);
     }
   };
 
+
+
   return (
     <>
-      <AccordionMenu key={id}>
+      <AccordionMenu key={id} ref={setTransactionRef}>
         <AccordionWrapper>
           <TitleContainer
             $bg={cashFlow}

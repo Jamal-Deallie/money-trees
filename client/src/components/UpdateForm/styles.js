@@ -43,12 +43,42 @@ export const SubmitButton = styled(ButtonUnstyled)(({ theme }) => ({
   fontFamily: 'open-sans,sans-serif',
   fontWeight: 400,
   padding: '1rem 4rem',
-  border: '2px solid #111',
-  borderRadius: '8px',
+  border: `2px solid ${theme.palette.primary.main}`,
+  borderRadius: '3px',
   boxSizing: 'border-box',
-  boxShadow: `${theme.palette.primary.main} 4px 4px 0 0`,
+  height: '5rem',
+  width: '100%',
   '&:hover': {
-    backgroundColor: '#ffffff',
-    boxShadow: 'none',
+    backgroundColor: theme.palette.secondary.main,
+
+  },
+}));
+
+
+
+export const CustomInput = styled(TextField)(({ theme }) => ({
+  width: '350px',
+  '& .MuiOutlinedInput-root': {
+    '& > fieldset': { border: `1px solid ${theme.palette.primary.main}` },
+  },
+  '&& .MuiOutlinedInput-root:hover': {
+    '& > fieldset': { border: `1px solid ${theme.palette.primary.main}` },
+  },
+  '& label': {
+    color: theme.palette.primary.main,
+    fontFamily: 'open-sans, sans-serif',
+    fontSize: 16,
+    margin: 'dense',
+  },
+  '& .MuiTypography-root': {
+    color: theme.palette.primary.main,
+  },
+
+  '& .MuiInputBase-root': {
+  color: theme.palette.primary.main,
+  },
+
+  ' & ::-webkit-calendar-picker-indicator': {
+    filter: 'invert(100%)',
   },
 }));

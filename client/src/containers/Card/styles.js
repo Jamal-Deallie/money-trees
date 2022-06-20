@@ -7,20 +7,22 @@ export const CardSection = styled(Box)({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
+  padding: '2rem',
 });
 
 export const GridContainer = styled(Grid)({
   maxWidth: '120rem',
   width: '100%',
-  padding: '2.5rem 1rem 5rem 1rem',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 export const GridItem = styled(Grid)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  aspectRatio: 'auto 1 / 1',
+  padding: '1rem',
 
-  [theme.breakpoints.down('xs')]: {
-    paddingLeft: '5rem',
-  },
 }));

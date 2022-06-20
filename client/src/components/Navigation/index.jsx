@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material/';
-import { Navbar, MainButton} from './styles';
+import { Navbar, MainButton, Logo } from './styles';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../features/auth/authSlice';
 
@@ -23,16 +23,7 @@ export default function Navigation() {
     <>
       <Navbar>
         <Link to='/'>
-          <Typography
-            variant='h2'
-            sx={{
-              fontFamily: 'balboa, sans-serif',
-              textTransform: 'uppercase',
-              fontWeight: 'bold',
-              color: 'secondary.main',
-            }}>
-            Money Trees
-          </Typography>
+          <Logo>Money Trees</Logo>
         </Link>
 
         {token ? (

@@ -1,6 +1,7 @@
 export { default as DashboardContainer } from './Dashboard';
 export { default as TransactionsContainer } from './Transactions';
 export { default as TransactionsListContainer } from './TransactionsList';
+export { default as SearchListContainer } from './SearchList';
 export { default as CreditCardContainer } from './CreditCard';
 export { default as SavingsContainer } from './Savings';
 export { default as DebtContainer } from './Debt';
@@ -12,4 +13,6 @@ export { default as SignUpContainer } from './SignUp';
 export { default as SignInContainer } from './SignIn';
 export { default as ForgotPasswordContainer } from './ForgotPassword';
 export { default as ResetPasswordContainer } from './ResetPassword';
+export { default as ContactContainer } from './Contact';
+export { default as NotFoundContainer } from './NotFound';
 export { default as CardContainer } from './Card';

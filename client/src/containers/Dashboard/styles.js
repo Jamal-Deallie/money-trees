@@ -1,38 +1,18 @@
 import { styled } from '@mui/system';
-import { Paper, Box, Grid } from '@mui/material/';
+import { Box, Grid } from '@mui/material/';
 import { Typography } from '@material-ui/core';
-export const Image = styled('img')({
-  height: 100,
-});
 
-export const Item = styled(Paper)(({ theme }) => ({
-  //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
-export const CustomContainer = styled('div')(({ theme }) => ({}));
-
-export const CustomCard = styled('div')(({ theme }) => ({
-  border: '2px solid #422800',
-  borderRadius: '30px',
-  boxShadow: '#422800 4px 4px 0 0',
-  width: 200,
-  height: 250,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
-  padding: '2rem',
+export const CustomContainer = styled('div')(({ theme }) => ({
+  width: '100%',
+  backgroundColor: theme.palette.secondary.main,
 }));
 
 export const AccountSection = styled(Grid)(({ theme }) => ({
-  borderRight: '2px solid #422800',
+  borderRight: `2px solid ${theme.palette.primary.main}`,
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'center',
-  [theme.breakpoints.down('lg')]: {
+  [theme.breakpoints.down('md')]: {
     borderRight: 'none',
   },
 }));
@@ -52,15 +32,13 @@ export const GridItem = styled(Grid)({
   flexDirection: 'column',
 });
 
-export const Underline = styled(Typography)(({ theme }) => ({
-  backgroundPosition: '50% 100%',
-  backgroundSize: 'contain',
-  backgroundRepeat: 'no-repeat',
-  backgroundImage: 'url(/images/underline_img.svg)',
-  color: theme.palette.success.main,
+export const Underline = styled('h1')(({ theme }) => ({
+  color: theme.palette.primary.main,
   fontFamily: 'balboa, sans-serif',
   fontSize: 72,
   textTransform: 'uppercase',
+  overflow: 'hidden',
+  fontWeight: 300,
 }));
 
 export const NameWrapper = styled(Box)({

@@ -70,7 +70,7 @@ export default function LandingContainer() {
   return (
     <LandingSection>
       <Grid container>
-        <Grid item lg={6} sx={{ backgroundColor: 'primary.main' }}>
+        <Grid item lg={6} sx={{ backgroundColor: 'secondary.main' }}>
           <LandingWrap>
             <ContentContainer
               sx={{
@@ -79,7 +79,7 @@ export default function LandingContainer() {
               <IconWrap></IconWrap>
               <Heading
                 sx={{
-                  color: 'secondary.main',
+                  color: 'primary.main',
                   overflow: 'hidden',
                   display: 'inline-block',
                 }}
@@ -91,7 +91,7 @@ export default function LandingContainer() {
             <SubTextContainer>
               <Typography
                 sx={{
-                  color: 'secondary.main',
+                  color: 'primary.main',
                   overflow: 'hidden',
                   display: 'inline-block',
                 }}

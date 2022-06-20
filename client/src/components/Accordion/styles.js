@@ -9,7 +9,7 @@ export const BtnGroup = styled(Box, {
   width: '10rem',
   display: 'flex',
   justifyContent: 'center',
-  gap: 2
+  gap: 2,
 }));
 
 export const AccordionMenu = styled('div')(({ theme }) => ({
@@ -42,10 +42,11 @@ export const TitleContainer = styled('div', {
   boxSizing: 'border-box',
   border: '0.1rem solid white',
   alignItems: 'center',
-  background:
-    $bg === 'credit' ? theme.palette.success.main : theme.palette.warning.main,
+  // background: $bg === 'debit' ? 'none' : 'none',
+  backgroundColor: $bg === 'debit' ? '#39B54A' : '#D9303E',
 }));
 
+//
 export const Icon = styled('img')({});
 /* height: 2.5rem; */
 

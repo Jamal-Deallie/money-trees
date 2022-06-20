@@ -1,4 +1,3 @@
-import { Divider, Typography, Box } from '@mui/material';
 import { CustomCard } from '../../components';
 import { CardSection, GridContainer, GridItem } from './styles';
 import {
@@ -6,52 +5,56 @@ import {
   selectTotalDebitAmount,
 } from '../../features/transactions/transactionSlice';
 import { useSelector } from 'react-redux';
+
+
 export default function CardContainer() {
   const income = useSelector(selectTotalCreditAmount);
   const expenses = useSelector(selectTotalDebitAmount);
   const cash = income - expenses;
-  console.log(expenses);
 
   const user = JSON.parse(localStorage.getItem('user'));
   const { creditScore } = user;
 
   return (
     <CardSection>
-      <GridContainer container spacing={2}>
+      <GridContainer
+        container
+        rowSpacing={{ xs: 1, xl: 2 }}
+        columnSpacing={{ xs: 1, xl: 2 }}>
         <GridItem item xs={12} md={6} lg={6} xl={3}>
           <CustomCard
-            bgColor='#F29877'
+            bgColor='none'
             image='creditScore'
             category='Credit Score'
             stat={creditScore}
-            bgImage={'url(images/card-1.svg)'}
+            bgImage={'linear-gradient(120deg, #f6d365 0%, #fda085 100%)'}
           />
         </GridItem>
         <GridItem item xs={12} md={6} lg={6} xl={3}>
           <CustomCard
-            bgColor='#84A9D9'
+            bgColor='#fe7bb0'
             image='expenses'
             category='Expenses'
-            stat={`$${expenses}`}
-            bgImage={'url(images/card-2.svg)'}
+            stat={`${expenses}`}
+            bgImage={'linear-gradient(315deg, #fe7bb0 0%, #ff748b 74%)'}
           />
         </GridItem>
         <GridItem item xs={12} md={6} lg={6} xl={3}>
           <CustomCard
-            bgColor='#E0AEEB'
+            bgColor='#7cffcb'
             image='income'
             category='Income'
-            stat={`$${income}`}
-            bgImage={'url(images/card-3.svg)'}
+            stat={`${income}`}
+            bgImage={'linear-gradient(315deg, #7cffcb 0%, #74f2ce 74%)'}
           />
         </GridItem>
         <GridItem item xs={12} md={6} lg={6} xl={3}>
           <CustomCard
-            bgColor='#F2D091'
+            bgColor='none'
             image='savings'
             category='Savings'
-            stat={`$${cash}`}
-            bgImage={'url(images/card-4.svg)'}
+            stat={`${cash}`}
+            bgImage={'linear-gradient(to top, #a3bded 0%, #6991c7 100%)'}
           />
         </GridItem>
       </GridContainer>

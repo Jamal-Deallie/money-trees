@@ -12,7 +12,7 @@ export const Navbar = styled('nav')(({ theme }) => ({
 }));
 
 export const MainButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.primary.main,
+  background: 'none',
   color: theme.palette.success.main,
   fontSize: 16,
   fontFamily: 'open-sans,sans-serif',
@@ -29,3 +29,10 @@ export const MainButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+export const Logo = styled(Typography)(({ theme }) => ({
+  fontFamily: 'balboa, sans-serif',
+  textTransform: 'uppercase',
+  fontWeight: 'bold',
+  color: theme.palette.primary.main,
+  fontSize: '3.6rem',
+}));
