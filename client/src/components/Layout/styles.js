@@ -1,9 +1,8 @@
 import { styled } from '@mui/system';
+import { Box } from '@mui/material';
 
 export const StyledLayout = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  minHeight: '100vh',
+  display: 'grid',
 });
 
 export const NavContainer = styled('div')(({ theme }) => ({
@@ -15,6 +14,7 @@ export const NavContainer = styled('div')(({ theme }) => ({
 
 export const ContentContainer = styled('main')({
   position: 'relative',
-  flexGrow: 2,
-  minHeight: 'calc(100vh - 20rem)',
+  minHeight: 'calc(100vh - 9rem',
 });
+
+export const FooterContainer = styled(Box)({});

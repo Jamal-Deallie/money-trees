@@ -22,11 +22,11 @@ function App() {
 
           <Route element={<RequireAuth />}>
             <Route path='dashboard' element={<DashboardPage />} />
-            <Route
-              path='resetPassword/:resetToken'
-              element={<ResetPasswordPage />}
-            />
           </Route>
+          <Route
+            path='resetPassword/:resetToken'
+            element={<ResetPasswordPage />}
+          />
           <Route path='signin' element={<SignInPage />} />
           <Route path='signup' element={<SignUpPage />} />
 

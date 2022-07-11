@@ -39,7 +39,6 @@ const createSendToken = (user, statusCode, req, res) => {
 
 // Register User Controller
 exports.signup = catchAsync(async (req, res, next) => {
-
   //abstract items from body
   const {
     firstName,
@@ -69,6 +68,8 @@ exports.signup = catchAsync(async (req, res, next) => {
         upload_preset: 'money-tree-avatar',
       });
 
+   
+
       if (uploadedRes) {
         newUser = await User.create({
           firstName: firstName,
@@ -77,16 +78,7 @@ exports.signup = catchAsync(async (req, res, next) => {
           email: email,
           password: password,
           passwordConfirm: passwordConfirm,
-          avatar: uploadedRes,
-        });
-      } else {
-        newUser = await User.create({
-          firstName: firstName,
-          lastName: lastName,
-          creditScore: creditScore,
-          email: email,
-          password: password,
-          passwordConfirm: passwordConfirm,
+          avatar: uploadedRes.url,
         });
       }
     }
@@ -137,7 +129,6 @@ exports.restrictTo = (...roles) => {
 };
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
-
   //1 Get User based on posted Email
   const user = await User.findOne({ email: req.body.email });
 
@@ -180,13 +171,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.logout = (req, res) => {
-  res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-  res.status(200).json({ status: 'success' });
-};
+
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get user from collection
@@ -278,7 +263,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   res.locals.user = currentUser;
   next();
 });
-
 
 exports.isLoggedIn = async (req, res, next) => {
   if (req.cookies.jwt) {

@@ -59,6 +59,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: `/users/updateMe`,
         method: 'PATCH',
         body: { email, firstName, lastName, creditScore },
+        invalidatesTags: ['User'],
       }),
     }),
     updateAvatar: builder.mutation({
@@ -66,11 +67,13 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: `/users/updateAvatar`,
         method: 'PATCH',
         body: { avatar },
+        invalidatesTags: ['User'],
       }),
     }),
     getMe: builder.query({
-      query: () => `/users/getme`,
+      query: () => `/users/getme?fields=firstName`,
       transformResponse: response => {
+        console.log(response);
         const { data } = response;
         return userAdapter.setAll(initialState, data);
       },
@@ -110,21 +113,11 @@ export const selectCreditScore = createSelector(
 
   // normalized state object with ids & entities
 );
-export const selectName = createSelector(
-  selectMe,
-  UserResult => UserResult.map(user => user.firstName)
 
-  // normalized state object with ids & entities
-);
-export const selectPhoto = createSelector(
-  selectMe,
-  UserResult => UserResult.map(user => user.photo)
-
-  // normalized state object with ids & entities
-);
 export const selectResetToken = createSelector(
   selectMe,
-  UserResult => UserResult.map(user => user.restToken)
+  UserResult => UserResult.map(user => user.resetToken)
 
   // normalized state object with ids & entities
 );
+

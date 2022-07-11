@@ -116,7 +116,7 @@ export default function TransactionForm() {
     },
     [transactionData]
   );
-  const [addTransaction, { isLoading }] = useAddTransactionMutation();
+  const [addTransaction, { isLoading, isSuccess }] = useAddTransactionMutation();
   const canSave =
     [
       transactionData.party,
@@ -126,6 +126,10 @@ export default function TransactionForm() {
       transactionData.date,
     ].every(Boolean) && !isLoading;
 
+    if(isSuccess) {
+
+      console.log('Success')
+    }
 
 
   const handleSubmit = async () => {
@@ -138,7 +142,7 @@ export default function TransactionForm() {
     }
   };
 
-
+console.log(transactionData)
   return (
     <TransactionSection>
       <Box sx={{ width: '100%' }}>

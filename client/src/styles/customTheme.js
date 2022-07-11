@@ -31,6 +31,13 @@ export const customTheme = createTheme({
       fontSize: '5.4rem',
       textTransform: 'uppercase',
     },
+    header1: {
+      fontWeight: 400,
+      fontFamily: 'balboa, sans-serif',
+      textTransform: 'uppercase',
+      fontSize: '2.4rem',
+      color: primaryColor,
+    },
     body1: {
       fontSize: '1.6rem',
       fontFamily: 'open-sans, sans-serif',
@@ -40,16 +47,45 @@ export const customTheme = createTheme({
       fontSize: '1.8rem',
       fontFamily: 'open-sans, sans-serif',
     },
+    body3: {
+      fontSize: '1.8rem',
+      fontFamily: 'open-sans, sans-serif',
+      textTransform: 'capitalize',
+    },
   },
   components: {
     MuiButton: {
-      fontSize: '1.6rem',
-      fontFamily: ['open-sans,sans-serif'],
-    },
-    defaultProps: {
-      disableElevation: true,
-      disableFocusRipple: true,
-      disableRipple: true,
+      variants: [
+        {
+          props: { variant: 'main' },
+          style: {
+            fontFamily: 'open-sans, sans-serif',
+            color: primaryColor,
+            background: secondaryColor,
+            border: '1px solid transparent',
+            letterSpacing: '0.025rem',
+            fontSize: '1.8rem',
+            fontWeight: 300,
+            padding: '1rem 4rem',
+            borderRadius: '3px',
+            boxSizing: 'border-box',
+            height: '5rem',
+            width: '100%',
+            maxWidth: '65rem',
+            transition: 'border color background 0.2s ease-in-out',
+            '&:hover': {
+              background: 'none',
+              color: secondaryColor,
+              border: `2px solid ${secondaryColor}`,
+            },
+          },
+        },
+      ],
+      defaultProps: {
+        disableElevation: true,
+        disableFocusRipple: true,
+        disableRipple: true,
+      },
     },
   },
 });

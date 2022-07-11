@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  token: '',
-  user: {},
-  name: '',
-  creditScore: '',
-  resetToken: '',
+  token: localStorage.getItem('token')
+    ? JSON.parse(localStorage.getItem('token'))
+    : '',
+
+  user: localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : {},
 };
 
 const authSlice = createSlice({
@@ -14,20 +16,19 @@ const authSlice = createSlice({
 
   reducers: {
     setCredentials: (state, { payload }) => {
-      console.log({ credentials: payload });
       state.token = payload.token;
+      localStorage.setItem('token', JSON.stringify(state.token));
     },
     setUser: (state, { payload }) => {
-      console.log(payload);
-      state.firstName = payload.user.name;
-      state.creditScore = payload.user.creditScore;
-      state.resetToken = payload.user.resetToken;
-      state.creditScore = payload.user.creditScore;
-      
+      console.log({ user: payload });
+      state.user = payload.user;
+      localStorage.setItem('user', JSON.stringify(state.user));
     },
     logOut: (state, { payload }) => {
       state.user = null;
       state.token = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     },
   },
 });
@@ -35,6 +36,8 @@ const authSlice = createSlice({
 export const { setCredentials, setUser, logOut } = authSlice.actions;
 
 export const selectToken = state => state.auth.token;
+
+export const selectName = state => state.auth.user;
 
 export const selectUser = state => state.auth.user;
 

@@ -1,38 +1,46 @@
 import { useRef, useEffect, useState } from 'react';
 import {
   AccordionMenu,
-  AccordionContent,
   BtnGroup,
   AccordionWrapper,
   TitleContainer,
   ContentContainer,
   ModalContainer,
+  ContentInner,
+  CustomTooltip,
 } from './styles';
 import { gsap } from 'gsap';
-import { IconButton, Typography, Box, Tooltip, Modal } from '@mui/material';
+import { IconButton, Typography, Box, Modal } from '@mui/material';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import Moment from 'react-moment';
-import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { EditForm } from '../../components';
-import { useDispatch } from 'react-redux';
 import { useDeleteTransactionMutation } from '../../features/transactions/transactionSlice';
 import useArrayRef from '../../hooks/useArrayRef';
 
-export default function Accordion({ id, party, amount, date, cashFlow }) {
+export default function Accordion({
+  id,
+  party,
+  amount,
+  date,
+  cashFlow,
+  category,
+  submittedDate,
+}) {
   const contentRef = useRef(null);
   const tl = useRef();
   const iconRef = useRef(null);
-  const textRef = useRef(null);
   const [reversed, setReversed] = useState(false);
-  const [deleteTransaction, isSuccess] = useDeleteTransactionMutation();
+  const [deleteTransaction] = useDeleteTransactionMutation();
   const [edit, setEdit] = useState(false);
   const handleOpen = () => setEdit(true);
   const handleClose = () => setEdit(false);
-  const [isShown, setIsShown] = useState(false);
+  const [isShown, setIsShown] = useState(true);
   const [transactionRef, setTransactionRef] = useArrayRef();
+
   useEffect(() => {
+    gsap.set(contentRef.current, { height: 0 });
     tl.current = gsap.timeline();
     tl.current
       .to(iconRef.current, {
@@ -60,8 +68,6 @@ export default function Accordion({ id, party, amount, date, cashFlow }) {
       console.log('Failed to delete the transaction', err);
     }
   };
-
-
 
   return (
     <>
@@ -97,7 +103,7 @@ export default function Accordion({ id, party, amount, date, cashFlow }) {
                 {party}
               </Typography>
               <BtnGroup $options={isShown}>
-                <Tooltip title='Delete'>
+                <CustomTooltip title='Delete'>
                   <IconButton
                     color='primary'
                     aria-label='delete transaction'
@@ -105,14 +111,8 @@ export default function Accordion({ id, party, amount, date, cashFlow }) {
                     onClick={handleDelete}>
                     <DeleteIcon sx={{ fontSize: 27 }} />
                   </IconButton>
-                </Tooltip>
-                <Tooltip
-                  title='Update'
-                  sx={{
-                    '& .MuiTooltip-tooltip': {
-                      border: 'solid skyblue 1px',
-                    },
-                  }}>
+                </CustomTooltip>
+                <CustomTooltip title='Update'>
                   <IconButton
                     onClick={handleOpen}
                     color='primary'
@@ -120,7 +120,7 @@ export default function Accordion({ id, party, amount, date, cashFlow }) {
                     component='span'>
                     <ChangeCircleIcon sx={{ fontSize: 27 }} />
                   </IconButton>
-                </Tooltip>
+                </CustomTooltip>
               </BtnGroup>
             </Box>
 
@@ -139,7 +139,13 @@ export default function Accordion({ id, party, amount, date, cashFlow }) {
           </TitleContainer>
 
           <ContentContainer ref={contentRef}>
-            <AccordionContent ref={textRef}>Details</AccordionContent>
+            <ContentInner>
+              <Typography variant='header1'>Summary:</Typography>
+              <Typography variant='body3'>Party: {party}</Typography>
+              <Typography variant='body3'>Category: {category}</Typography>
+              <Typography variant='body3'>Amount: ${amount}</Typography>
+              <Typography variant='body3'>CashFlow: {cashFlow}</Typography>
+            </ContentInner>
           </ContentContainer>
         </AccordionWrapper>
       </AccordionMenu>

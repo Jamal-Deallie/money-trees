@@ -1,11 +1,12 @@
 import { styled } from '@mui/system';
-import { ButtonGroup, Box } from '@mui/material';
+import { Tooltip, Box } from '@mui/material';
 
 export const BtnGroup = styled(Box, {
   shouldForwardProp: prop => prop !== '$options',
 })(({ $options }) => ({
   transition: 'opacity 0.5s ease-in-out',
-  opacity: $options ? 1 : 0,
+  opacity: 1,
+  // opacity: $options ? 1 : 0,
   width: '10rem',
   display: 'flex',
   justifyContent: 'center',
@@ -26,7 +27,6 @@ export const AccordionTitle = styled('h2')(({ theme }) => ({}));
 export const AccordionContent = styled('p')(({ theme }) => ({
   color: 'orange',
   padding: '5rem',
-  opacity: 0,
   overflow: 'hidden',
   fontSize: 'clamp(1.44rem, calc(1.05rem + 1.95vw), 2.44rem)',
   transform: 'translateY(-100%)',
@@ -43,7 +43,7 @@ export const TitleContainer = styled('div', {
   border: '0.1rem solid white',
   alignItems: 'center',
   // background: $bg === 'debit' ? 'none' : 'none',
-  backgroundColor: $bg === 'debit' ? '#39B54A' : '#D9303E',
+  backgroundColor: $bg === 'debit' ? '#D9303E' : '#39B54A',
 }));
 
 //
@@ -71,3 +71,21 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   boxShadow: 24,
   p: 4,
 }));
+
+export const ContentInner = styled(Box)({
+  padding: '2rem 4rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '.5rem',
+});
+
+export const CustomTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .MuiTooltip-tooltip`]: {
+    padding: 5,
+    fontSize: '1rem',
+    fontWeight: 400,
+    fontFamily: 'open-sans, sans-serif',
+  },
+});

@@ -21,20 +21,17 @@ export const Stat = styled('h1')(({ theme }) => ({
   fontWeight: 500,
 }));
 
-export const StyledCard = styled(Box, {
-  shouldForwardProp: prop => prop !== '$bg',
-})(({ $bgImg, $bg, theme }) => ({
+export const StyledCard = styled(Box)({
   height: '100%',
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  background: $bg ? $bg : 'none',
-  backgroundImage: $bgImg ? $bgImg : 'none',
-  backgroundPosition: 'cover',
+  background: 'url(images/mesh.png)',
+  backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
-}));
+});
 
 export const Span = styled('span')(({ theme }) => ({
   fontFamily: 'balboa, sans-serif',

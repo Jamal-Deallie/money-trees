@@ -11,10 +11,10 @@ export const MainButton = styled(Button)(({ theme }) => ({
   border: '2px solid #111',
   borderRadius: '8px',
   boxSizing: 'border-box',
-
+  transition: 'all 0.2s ease-in-out',
   '&:hover': {
     backgroundColor: '#ffffff',
-    color: theme.palette.secondary.main,
+    color: theme.palette.success.main,
     boxShadow: 'none',
   },
 }));
@@ -32,6 +32,7 @@ export const Container = styled(Box)(({ theme }) => ({
 }));
 
 export const CustomInput = styled(TextField)(({ theme }) => ({
+  color: theme.palette.primary.main,
   '& .MuiOutlinedInput-root': {
     '& > fieldset': {
       border: `1px solid ${theme.palette.primary.main}`,
@@ -62,6 +63,7 @@ export const CustomInput = styled(TextField)(({ theme }) => ({
 }));
 
 export const OutlineInput = styled(OutlinedInput)(({ theme }) => ({
+  color: theme.palette.primary.main,
   '& .MuiOutlinedInput-notchedOutline': {
     border: `1px solid ${theme.palette.primary.main}`,
     background: 'none',

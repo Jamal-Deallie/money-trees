@@ -17,8 +17,8 @@ import {
   FormControl,
   Stack,
 } from '@mui/material';
-import { useSignInUserMutation } from '../../features/users/usersSlice';
-import { setCredentials } from '../../features/auth/authSlice';
+import { useSignInUserMutation, } from '../../features/users/usersSlice';
+import { setCredentials, setUser } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -34,15 +34,29 @@ export default function SignIn() {
   const [signInUser, { isLoading, isSuccess, data }] = useSignInUserMutation();
 
   const canSave = [email, password].every(Boolean) && !isLoading;
+  console.log(data);
 
-  if (isSuccess) {
-    dispatch(setCredentials({ token: data.token, user: data.user }));
-    localStorage.setItem('user', JSON.stringify(data.user));
-    localStorage.setItem('token', JSON.stringify(data.token));
-    setEmail('');
-    setPassword('');
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setCredentials({ token: data.token }));
+      dispatch(
+        setUser({
+          user: {
+            id: data.user._id,
+            creditScore: data.user.creditScore,
+            email: data.user.email,
+            firstName: data.user.firstName,
+            lastName: data.user.lastName,
+            avatar: data.user.avatar,
+          },
+        })
+      );
+      setEmail('');
+      setPassword('');
+      navigate('/dashboard');
+    }
+  }, [isSuccess]);
+
   const handleClickShowPassword = () => {
     setShowPassword(showPassword => !showPassword);
   };
@@ -70,7 +84,6 @@ export default function SignIn() {
 
   const handlePasswordInput = e => setPassword(e.target.value);
 
-
   return (
     <Box sx={{ position: 'relative', height: 'auto', padding: '12.5rem 0' }}>
       <Container sx={{ position: 'relative', height: '60rem' }}>
@@ -97,7 +110,7 @@ export default function SignIn() {
                 value={email}
                 autoFocus
                 inputProps={{
-                  autoComplete: "off",
+                  autoComplete: 'off',
                 }}
                 InputLabelProps={{
                   shrink: true,
@@ -137,7 +150,7 @@ export default function SignIn() {
               </FormControl>
               <Box sx={{ textAlign: 'center', mt: 2.5, color: 'primary.main' }}>
                 <CustomLink to='/'>Forgot Password</CustomLink> |
-                <CustomLink to='/'>Create An Account</CustomLink>
+                <CustomLink to='/signup'>Create An Account</CustomLink>
               </Box>
 
               <MainButton onClick={handleSubmit}>Submit</MainButton>

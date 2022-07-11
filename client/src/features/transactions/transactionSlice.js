@@ -23,7 +23,6 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     getTransactionsBySearch: builder.query({
       query: term => `/transactions/search?term=${term}`,
-      
     }),
     getTransactionById: builder.query({
       query: _id => `/transactions/${_id}`,
@@ -38,12 +37,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
 
-        url: `/transactions/${user?.id}`,
+        url: `/transactions/${user.id}`,
         body: { party, category, amount, cashFlow, date },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'Transactions', id: arg.id },
-      ],
+      invalidatesTags: ['Transactions'],
     }),
     deleteTransaction: builder.mutation({
       query: _id => ({

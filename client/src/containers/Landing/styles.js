@@ -4,22 +4,31 @@ import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 
 export const Image = styled('img')({
   width: '100%',
+  height: '100%',
   objectFit: 'cover',
 });
 
-export const ImageWrap = styled('div')({});
-
 export const LandingSection = styled('section')({
   width: '100%',
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'stretch',
 });
 
-export const LandingWrap = styled(Box)({
+export const LandingWrap = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  marginTop: '4rem',
+  padding: '9.5rem calc(8px + 2vw)',
   height: '100%',
   gap: '2.5rem',
-});
+  width: '100%',
+  [theme.breakpoints.down('md')]: {
+    padding: '0 calc(8px + 1.5vw) 5.5rem  calc(8px + 1.5vw)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+}));
 
 export const MainButton = styled(ButtonUnstyled)(({ theme }) => ({
   background: theme.palette.success.main,
@@ -37,18 +46,22 @@ export const MainButton = styled(ButtonUnstyled)(({ theme }) => ({
   },
 }));
 
-export const Heading = styled(Typography)({
+export const Heading = styled(Typography)(({ theme }) => ({
   fontFamily: 'balboa, sans-serif',
   textTransform: 'uppercase',
-  lineHeight: '100%',
-  fontSize: 'clamp(4.50rem, calc(2.64rem + 9.32vw), 9.28rem)',
+  fontSize: 'clamp(4.50rem, calc(2.64rem + 9.32vw), 8rem)',
   fontWeight: 'bold',
-  display: 'block',
-});
-
-export const GridContainer = styled('div')({
-  display: 'flex',
-});
+  lineHeight: 1.2,
+  marginTop: '10rem',
+  overflow: 'hidden',
+  [theme.breakpoints.down('lg')]: {
+    fontSize: '6.4rem',
+  },
+  [theme.breakpoints.down('md')]: {
+    textAlign: 'center',
+    marginTop: '5.5rem',
+  },
+}));
 
 export const GridImage = styled(Grid)(({ theme }) => ({
   display: 'flex',
@@ -57,42 +70,6 @@ export const GridImage = styled(Grid)(({ theme }) => ({
 
 export const Underline = styled('span')(({ theme }) => ({
   color: theme.palette.success.main,
-  display: 'inline-block',
 }));
 
-export const FreeIcon = styled('img')({
-  height: '7.5rem',
-  '@keyframes spin': {
-    from: {
-      transform: ' translate3d(-50%, -50%, 0) rotate(0deg)',
-    },
-    to: {
-      transform: 'translate3d(-50%, -50%, 0) rotate(360deg)',
-    },
-  },
-  animation: 'spin 2s linear infinite',
-});
-
-export const IconWrap = styled(Box)({
-  position: 'relative',
-});
-
-export const ContentContainer = styled(Box)({
-  paddingLeft: 'calc(5rem  + 1.5625vw)',
-  paddingTop: 'calc(5rem + 1.5625vw)',
-});
-
-export const SubTextContainer = styled(Box)({
-  maxWidth: '55rem',
-  overflow: 'hidden',
-  position: 'relative',
-  paddingLeft: 'calc(5rem  + 1.5625vw)',
-  display: 'inline-block',
-});
-
-export const ButtonContainer = styled(Box)({
-  display: 'flex',
-  gap: 50,
-  alignItems: 'center',
-  marginTop: 50,
-});
+export const GridItem = styled(Grid)(({ theme }) => ({}));

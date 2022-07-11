@@ -26,7 +26,7 @@ export default function TransactionsListContainer() {
       );
     } else if (isSuccess) {
       return loadedTransactions?.map(transaction => {
-        const { party, _id, amount, date, cashFlow } = transaction;
+        const { party, _id, amount, date, cashFlow, category } = transaction;
         return (
           <Box
             key={_id}
@@ -35,6 +35,7 @@ export default function TransactionsListContainer() {
               flexDirection: 'column',
               alignItems: 'center',
               width: '100%',
+              overflow: 'hidden'
             }}>
             <Accordion
               party={party}
@@ -42,6 +43,7 @@ export default function TransactionsListContainer() {
               amount={amount}
               date={date}
               cashFlow={cashFlow}
+              category={category}
             />
           </Box>
         );

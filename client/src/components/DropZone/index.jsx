@@ -32,7 +32,6 @@ export default function DropZone() {
     });
   }, []);
 
-
   const {
     getRootProps,
     getInputProps,
@@ -45,14 +44,24 @@ export default function DropZone() {
   });
 
   const canSave = [photo].every(Boolean);
-;
 
+  console.log(data);
+  
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setUser({ user: data.updatedAvatar }));
-      localStorage.setItem('user', JSON.stringify(data.updatedAvatar));
+      dispatch(
+        setUser({
+          user: {
+            id: data.updatedAvatar._id,
+            creditScore: data.updatedAvatar.creditScore,
+            email: data.updatedAvatar.email,
+            firstName: data.updatedAvatar.firstName,
+            lastName: data.updatedAvatar.lastName,
+            avatar: data.updatedAvatar.avatar,
+          },
+        })
+      );
       setPhoto('');
-      navigate('/dashboard');
     }
   }, [isSuccess, data]);
 

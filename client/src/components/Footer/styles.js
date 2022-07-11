@@ -5,8 +5,9 @@ import { Grid, Box } from '@mui/material';
 export const CustomFooter = styled('footer')(({ theme }) => ({
   background: theme.palette.secondary.main,
   padding: '5rem',
-  height: 'auto',
+  height: '100%',
   borderTop: `1px solid ${theme.palette.primary.main}`,
+  display: 'flex',
 }));
 
 export const Icons = styled('img')({
@@ -23,7 +24,7 @@ export const Links = styled(NavLink)(({ theme }) => ({
 export const GridLinks = styled(Grid)(({ theme }) => ({
   display: 'inline-flex',
   gap: 10,
-  color:theme.palette.primary.main,
+  color: theme.palette.primary.main,
 }));
 
 export const CopyrightWrap = styled(Box)({

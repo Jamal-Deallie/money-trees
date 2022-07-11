@@ -28,7 +28,7 @@ export const MainButton = styled(Button)(({ theme }) => ({
   width: '100%',
   marginTop: '5rem',
   '&:hover': {
-    backgroundColor: '#ffffff',
+    color: theme.palette.success.main,
     boxShadow: 'none',
   },
 }));

@@ -2,33 +2,23 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { SubmitButton, UpdateSection, CustomInput } from './styles';
 import { Box, Stack, Typography } from '@mui/material';
 import { useUpdateMeMutation } from '../../features/users/usersSlice';
-import { setUser } from '../../features/auth/authSlice';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-const initialValues = {
-  creditScore: '',
-  email: '',
-  firstName: '',
-  lastName: '',
-};
+import { setUser, selectUser } from '../../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 
 export default function UpdateForm() {
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
-  const [updateMe, { data, isSuccess }] = useUpdateMeMutation();
-  const [updateData, setUpdateData] = useState(initialValues);
-
-  useEffect(() => {
-    setUpdateData({
-      creditScore: user.creditScore,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    });
-  }, []);
-
+  const userInfo = useSelector(selectUser);
+  const [updateMe, { data, isSuccess, isLoading }] = useUpdateMeMutation();
+  const { creditScore, email, firstName, lastName } = userInfo || {};
+  const [updateData, setUpdateData] = useState({
+    creditScore: creditScore,
+    email: email,
+    firstName: firstName,
+    lastName: lastName,
+  });
 
   const handleChange = useCallback(
     type => event => {
@@ -37,18 +27,31 @@ export default function UpdateForm() {
     [updateData]
   );
 
-  if (isSuccess) {
-    dispatch(setUser({ user: data.updatedUser }));
-    localStorage.setItem('user', JSON.stringify(data.updatedUser));
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(
+        setUser({
+          user: {
+            creditScore: data.updatedUser.creditScore,
+            email: data.updatedUser.email,
+            firstName: data.updatedUser.firstName,
+            lastName: data.updatedUser.lastName,
+            avatar: data.updatedUser.avatar,
+          },
+        })
+      );
+    }
+  }, [isSuccess]);
+
   const handleSubmit = async () => {
     try {
-      await updateMe({ ...updateData });
+      await updateMe({ ...updateData }).unwrap();
     } catch (err) {
       setError('Failed to update your profile');
     }
   };
+
+
   return (
     <UpdateSection>
       <Box sx={{ width: '100%' }}>

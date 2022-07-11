@@ -13,21 +13,17 @@ import {
   AccountContainer,
   CardContainer,
 } from '../../containers';
-import { useGetMeQuery, selectMe } from '../../features/users/usersSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { extendedApiSlice, selectName } from '../../features/users/usersSlice';
+import { extendedApiSlice } from '../../features/users/usersSlice';
+import { selectUser } from '../../features/auth/authSlice';
 export default function DashboardContainer() {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const { firstName } = user;
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(extendedApiSlice.endpoints.getMe.initiate());
   });
-
-  const name = useSelector(selectName);
-
+  const userInfo = useSelector(selectUser);
+  const { firstName } = userInfo || {};
 
   return (
     <CustomContainer>
@@ -42,7 +38,7 @@ export default function DashboardContainer() {
                 sx={{
                   overflow: 'hidden',
                 }}>
-                <Underline> Hello {name && name}</Underline>
+                <Underline> Hello {firstName && firstName}</Underline>
               </Box>
             </NameWrapper>
             <CardContainer />

@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Container, Typography, Button } from '@mui/material';
 
 export const DropSection = styled(Box)({
-  marginTop: '5.5rem',
+  padding: '5.5rem 0',
   width: '100%',
   display: 'flex',
   flexDirection: 'column',

@@ -6,11 +6,7 @@ import {
   LandingWrap,
   MainButton,
   Heading,
-  ButtonContainer,
-  SubTextContainer,
-  ContentContainer,
-  IconWrap,
-  FreeIcon,
+  GridContainer,
   GridImage,
   Underline,
 } from './styles';
@@ -26,25 +22,27 @@ export default function LandingContainer() {
   useEffect(() => {
     let wordSplit = new SplitText('#landing-words', { type: 'words' });
     let lineSplit = new SplitText('#landing-lines', { type: 'lines' });
-    gsap.set(wordSplit.words, { yPercent: 100 });
-    gsap.set(lineSplit.lines, { opacity: 0 });
-    tl.current = gsap.timeline();
-    tl.current
-      .fromTo(
+    gsap.set(wordSplit.words, { y: 100, opacity: 0 });
+    gsap.set(lineSplit.lines, { y: 100, opacity: 0 });
+
+    tl.current = gsap.timeline({
+      onComplete() {
+        lineSplit.revert();
+        wordSplit.revert();
+      },
+    });
+
+    let contentAnimation = tl.current
+      .to(
         wordSplit.words,
-        { yPercent: 100 },
-        {
-          yPercent: 0,
-          stagger: 0.05,
-          duration: 0.7,
-          overflow: 'hidden',
-        }
+
+        { opacity: 1, y: 0, stagger: 0.05, duration: 0.7 }
       )
-      .fromTo(
+      .to(
         lineSplit.lines,
-        { yPercent: 100 },
+
         {
-          yPercent: 0,
+          y: 0,
           stagger: 0.05,
           duration: 0.7,
           opacity: 1,
@@ -65,52 +63,41 @@ export default function LandingContainer() {
           opacity: 1,
           duration: 0.5,
         }
-      )
+      );
+
+    return () => {
+      contentAnimation.progress(1); // reverts the SplitText in the onComplete
+    };
   }, []);
   return (
     <LandingSection>
-      <Grid container>
-        <Grid item lg={6} sx={{ backgroundColor: 'secondary.main' }}>
+      <Grid container sx={{ height: '100%' }}>
+        <Grid item md={6} sx={{ backgroundColor: 'secondary.main' }}>
           <LandingWrap>
-            <ContentContainer
+            <Heading id='landing-words'>
+              <Underline> Money trees</Underline> is the perfect place for shade
+            </Heading>
+
+            <Typography
               sx={{
-                position: 'relative',
-              }}>
-              <IconWrap></IconWrap>
-              <Heading
-                sx={{
-                  color: 'primary.main',
-                  overflow: 'hidden',
-                  display: 'inline-block',
-                }}
-                id='landing-words'>
-                <Underline> Money trees</Underline> is the perfect place for
-                shade
-              </Heading>
-            </ContentContainer>
-            <SubTextContainer>
-              <Typography
-                sx={{
-                  color: 'primary.main',
-                  overflow: 'hidden',
-                  display: 'inline-block',
-                }}
-                id='landing-lines'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </Typography>
-              <ButtonContainer>
-                <Link to='/signup'>
-                  <MainButton id='landing-btn'> SIGN UP NOW</MainButton>
-                </Link>
-              </ButtonContainer>
-            </SubTextContainer>
+                color: 'primary.main',
+                overflow: 'hidden',
+                maxWidth: '60rem',
+              }}
+              id='landing-lines'>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </Typography>
+
+            <Link to='/signup'>
+              <MainButton id='landing-btn'> SIGN UP NOW</MainButton>
+            </Link>
           </LandingWrap>
         </Grid>
 
-        <GridImage item lg={6}>
+        <GridImage item md={6}>
           <Image
             src='images/landing_img.png'
             alt='happy man'

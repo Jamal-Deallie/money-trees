@@ -18,33 +18,9 @@ exports.getAllUsers = factory.getAll(User);
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
 
-// exports.getMe = catchAsync(async (req, res) => {
-//   let me = User.findById(req.params.id);
-
-//   const doc = await me;
-
-//   if (!doc) {
-//     return next(new AppError('No document found with that ID', 404));
-//   }
-
-//   let userData = {
-//     id: doc._id,
-//     firstName: doc.firstName,
-//     email: doc.email,
-//     photo: doc.avatar.url,
-//     creditScore: doc.creditScore,
-//     passwordResetToken: doc.passwordResetToken,
-//     roles: doc.roles,
-//   };
-
-//   res.status(200).json({
-//     status: 'success',
-//     data: { userData },
-//   });
-// });
-
 exports.updateMe = catchAsync(async (req, res, next) => {
-
+  console.log('test');
+  console.log(req.body);
   //create an error if user attempts to update password
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError('This route is not for updating password', 400));
@@ -58,8 +34,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'creditScore'
   );
   //update user document
-
-
 
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
@@ -84,16 +58,18 @@ exports.updateAvatar = catchAsync(async (req, res, next) => {
         upload_preset: 'money-tree-avatar',
       });
 
+      console.log(uploadedRes);
+
       if (uploadedRes) {
         const updatedAvatar = await User.findByIdAndUpdate(
           req.user.id,
-          { avatar: uploadedRes },
+          { avatar: uploadedRes.url },
           {
             new: true,
             runValidators: true,
           }
         );
-   
+        console.log(updatedAvatar);
         //send update Avatar
         res.status(200).json({
           status: 'success',
@@ -110,11 +86,13 @@ exports.updateAvatar = catchAsync(async (req, res, next) => {
 });
 
 exports.getMe = catchAsync(async (req, res) => {
+  console.log(req.user);
   const doc = req.user;
 
   let userData = {
     id: doc._id,
     firstName: doc.firstName,
+    lastName: doc.lastName,
     email: doc.email,
     photo: doc.avatar.url,
     creditScore: doc.creditScore,
