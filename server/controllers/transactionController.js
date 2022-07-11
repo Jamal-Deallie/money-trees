@@ -7,9 +7,8 @@ exports.getTransaction = factory.getOne(Transactions);
 
 exports.updateTransaction = factory.updateOne(Transactions);
 exports.deleteTransaction = factory.deleteOne(Transactions);
-
+// exports.getAllTransactions = factory.getAll(Transactions);
 exports.getAllTransactions = catchAsync(async (req, res) => {
-
   try {
     const transactions = await Transactions.find({ user: req.user.id });
 
@@ -24,7 +23,6 @@ exports.getAllTransactions = catchAsync(async (req, res) => {
 });
 
 exports.createTransaction = catchAsync(async (req, res) => {
-
   const { party, category, amount, cashFlow, date } = req.body;
   try {
     const transaction = await Transactions.create({
@@ -52,12 +50,17 @@ exports.getTransactionsBySearch = catchAsync(async (req, res) => {
 
   try {
     const query = new RegExp(term, 'i');
-
     const transactions = await Transactions.find({
+      user: req.user.id,
       $and: [
         { $or: [{ party: query }, { cashFlow: query }, { category: query }] },
       ],
     });
+    // const transactions = await Transactions.find({
+    //   $and: [
+    //     { $or: [{ party: query }, { cashFlow: query }, { category: query }] },
+    //   ],
+    // });
 
     res.status(200).json({
       status: 'success',
