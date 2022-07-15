@@ -1277,6 +1277,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@gsap/shockingly@^3.10.4", "gsap@npm:@gsap/shockingly":
+  version "3.10.4"
+  resolved "https://npm.greensock.com/@gsap%2fshockingly/-/shockingly-3.10.4.tgz#a8a785b23b83cdc62cb8bc70b8b26163e22499e8"
+  integrity sha512-yHI7bywPYdLEAue7m7bhD7ZYY54OzIq1Hu34yjFyKzVxHqZc1F/fEHlRMl8W9bHbb89f3JXq12Ih3U7g4vowQQ==
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.5.tgz#2cbaf9a89460da24b5ca6531b8bbfc23e1df50c7"
@@ -4909,11 +4914,6 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4, 
   version "4.2.10"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
-
-"gsap@npm:@gsap/shockingly":
-  version "3.10.4"
-  resolved "https://npm.greensock.com/@gsap%2fshockingly/-/shockingly-3.10.4.tgz#a8a785b23b83cdc62cb8bc70b8b26163e22499e8"
-  integrity sha512-yHI7bywPYdLEAue7m7bhD7ZYY54OzIq1Hu34yjFyKzVxHqZc1F/fEHlRMl8W9bHbb89f3JXq12Ih3U7g4vowQQ==
 
 gzip-size@^6.0.0:
   version "6.0.0"
