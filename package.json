@@ -8,10 +8,9 @@
     "node": "17.x"
   },
   "scripts": {
-    "start": "node server/server.js",
-    "heroku-postbuild": "cd client && yarn && yarn run build"
+    "start": "node server/server.js"
   },
-    "dependencies": {
+  "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
