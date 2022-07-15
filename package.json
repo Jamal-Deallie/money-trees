@@ -1,10 +1,18 @@
 {
-  "name": "money-trees",
+  "name": "Medusa",
   "version": "1.0.0",
-  "description": "Mock Budget App",
-  "main": "server.js",
+  "main": "index.js",
+  "repository": "https://github.com/Jamal-Deallie/medusa.git",
   "license": "MIT",
-  "dependencies": {
+  "engines": {
+    "node": "17.x"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "heroku-postbuild": "cd client && yarn && yarn run build"
+  },
+    "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
@@ -28,10 +36,6 @@
     "mongoose": "^6.3.0",
     "nodemailer": "^6.7.3",
     "nodemon": "^2.0.15",
-    "passport": "^0.6.0",
-    "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^7.1.2",
     "path": "^0.12.7",
     "stripe": "^8.217.0",
     "uuid": "^8.3.2",
