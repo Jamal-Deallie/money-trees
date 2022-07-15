@@ -49,7 +49,7 @@ export const MainButton = styled(ButtonUnstyled)(({ theme }) => ({
 export const Heading = styled(Typography)(({ theme }) => ({
   fontFamily: 'balboa, sans-serif',
   textTransform: 'uppercase',
-  fontSize: 'clamp(4.50rem, calc(2.64rem + 9.32vw), 8rem)',
+  fontSize: 'clamp(4.50rem, calc(2.64rem + 9.32vw), 9.2rem)',
   fontWeight: 'bold',
   lineHeight: 1.2,
   marginTop: '10rem',
@@ -72,4 +72,10 @@ export const Underline = styled('span')(({ theme }) => ({
   color: theme.palette.success.main,
 }));
 
-export const GridItem = styled(Grid)(({ theme }) => ({}));
+export const TextWrap = styled(Box, {
+  shouldForwardProp: prop => prop !== '$mw',
+})(({ $mw }) => ({
+  overflow: 'hidden',
+  maxWidth: $mw ? '80rem' : '60rem',
+  whiteSpace: 'pre-line',
+}));

@@ -72,6 +72,7 @@ export default function TransactionsContainer() {
               inputProps={{ 'aria-label': 'search' }}
               onChange={handleChange}
               value={searchParams.keyword}
+           
             />
 
             <SubmitBtn type='submit'></SubmitBtn>

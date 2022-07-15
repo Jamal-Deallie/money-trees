@@ -10,7 +10,7 @@ export const BtnGroup = styled(Box)({
   gap: 2,
 });
 
-export const AccordionMenu = styled('div')(({ theme }) => ({
+export const AccordionMenu = styled(Box)(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
   width: '100%',
@@ -18,17 +18,18 @@ export const AccordionMenu = styled('div')(({ theme }) => ({
   maxWidth: 800,
 }));
 
-export const TitleContainer = styled('div', {
-  shouldForwardProp: prop => prop !== '$bg',
-})(({ theme, $bg }) => ({
+export const TitleContainer = styled(Box, {
+  shouldForwardProp: prop => prop !== '$bc',
+})(({ $bc }) => ({
   height: '6rem',
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
   boxSizing: 'border-box',
-  border: `0.1rem solid ${theme.palette.primary.main}`,
   alignItems: 'center',
-  backgroundColor: $bg === 'debit' ? '#F25116' : '#00ABBD',
+  borderColor: $bc === 'debit' ? '#F25116' : '#00ABBD',
+  borderStyle: 'solid',
+  borderWidth: '.1rem',
 }));
 
 //
@@ -49,18 +50,21 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   transform: 'translate(-50%, -50%)',
   width: 400,
   backgroundColor: theme.palette.secondary.main,
-  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 }));
 
-export const ContentInner = styled(Box)(({ theme }) => ({
+export const ContentInner = styled(Box, {
+  shouldForwardProp: prop => prop !== '$bc',
+})(({ $bc, theme }) => ({
   padding: '2rem 4rem',
   display: 'flex',
   flexDirection: 'column',
   gap: '.5rem',
-  border: `0.1rem solid ${theme.palette.primary.main}`,
-  background: theme.palette.primary.main,
+  borderColor: $bc === 'debit' ? '#F25116' : '#00ABBD',
+  borderStyle: 'solid',
+  borderWidth: '.1rem',
+  background: $bc === 'debit' ? '#F25116' : '#00ABBD',
   color: theme.palette.secondary.light,
 }));
 

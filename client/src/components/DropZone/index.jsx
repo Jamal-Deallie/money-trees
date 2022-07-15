@@ -1,12 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import {
-  DropSection,
-  Image,
-  UploadImage,
-  DropContainer,
-  Text,
-} from './styles';
+import { DropSection, Image, UploadImage, DropContainer, Text } from './styles';
 import { Typography, Box, Button } from '@mui/material';
 import { useUpdateAvatarMutation } from '../../features/users/usersSlice';
 import { setUser } from '../../features/auth/authSlice';
@@ -87,7 +81,7 @@ export default function DropZone() {
         {photo.length > 0 && <Image src={photo} alt='avatar' />}
       </DropContainer>
 
-      <Button variant='main' onClick={handleSubmit}>
+      <Button variant='main' sx={{ mt: 5.5, mb: 2 }} onClick={handleSubmit}>
         Upload
       </Button>
     </DropSection>

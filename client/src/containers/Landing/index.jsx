@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { Box, Typography, Grid } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 import {
   Image,
   LandingSection,
   LandingWrap,
   MainButton,
   Heading,
-  GridContainer,
   GridImage,
   Underline,
+  TextWrap,
 } from './styles';
 
 import { Link } from 'react-router-dom';
@@ -74,22 +74,24 @@ export default function LandingContainer() {
       <Grid container sx={{ height: '100%' }}>
         <Grid item md={6} sx={{ backgroundColor: 'secondary.main' }}>
           <LandingWrap>
-            <Heading id='landing-words'>
-              <Underline> Money trees</Underline> is the perfect place for shade
-            </Heading>
-
-            <Typography
-              sx={{
-                color: 'primary.main',
-                overflow: 'hidden',
-                maxWidth: '60rem',
-              }}
-              id='landing-lines'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </Typography>
+            <TextWrap $mw={true}>
+              <Heading id='landing-words'>
+                <Underline> Money trees</Underline> is the perfect place for
+                shade
+              </Heading>
+            </TextWrap>
+            <TextWrap>
+              <Typography
+                sx={{
+                  color: 'primary.main',
+                }}
+                id='landing-lines'>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </Typography>
+            </TextWrap>
 
             <Link to='/signup'>
               <MainButton id='landing-btn'> SIGN UP NOW</MainButton>

@@ -64,7 +64,7 @@ export default function Accordion({
       });
       await deleteTransaction(id);
     } catch (err) {
-     alert('Failed to delete the transaction', err);
+      alert('Failed to delete the transaction', err);
     }
   };
 
@@ -73,7 +73,7 @@ export default function Accordion({
       <AccordionMenu key={id} ref={setTransactionRef}>
         <AccordionWrapper>
           <TitleContainer
-            $bg={cashFlow}
+            $bc={cashFlow}
             onMouseEnter={() => setIsShown(true)}
             onMouseLeave={() => setIsShown(false)}>
             <Box
@@ -138,7 +138,7 @@ export default function Accordion({
           </TitleContainer>
 
           <ContentContainer ref={contentRef}>
-            <ContentInner>
+            <ContentInner $bc={cashFlow}>
               <Typography variant='header1'>Summary:</Typography>
               <Typography variant='body3'>Party: {party}</Typography>
               <Typography variant='body3'>Category: {category}</Typography>
