@@ -45,7 +45,7 @@ export default function TransactionsListContainer({ term }) {
         );
       });
     } else if (isError) {
-      return <Typography>An Error has occured</Typography>;
+      return <Typography>An Error has occurred</Typography>;
     }
   }, [isLoading, isSuccess, isError]);
 

@@ -19,8 +19,6 @@ exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log('test');
-  console.log(req.body);
   //create an error if user attempts to update password
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError('This route is not for updating password', 400));
@@ -58,8 +56,6 @@ exports.updateAvatar = catchAsync(async (req, res, next) => {
         upload_preset: 'money-tree-avatar',
       });
 
-      console.log(uploadedRes);
-
       if (uploadedRes) {
         const updatedAvatar = await User.findByIdAndUpdate(
           req.user.id,
@@ -69,7 +65,7 @@ exports.updateAvatar = catchAsync(async (req, res, next) => {
             runValidators: true,
           }
         );
-        console.log(updatedAvatar);
+
         //send update Avatar
         res.status(200).json({
           status: 'success',
@@ -86,7 +82,6 @@ exports.updateAvatar = catchAsync(async (req, res, next) => {
 });
 
 exports.getMe = catchAsync(async (req, res) => {
-  console.log(req.user);
   const doc = req.user;
 
   let userData = {

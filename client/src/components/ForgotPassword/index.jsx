@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import { Typography, Box, Container } from '@mui/material';
+import { Typography, Box, Button } from '@mui/material';
 import { useSignInUserMutation } from '../../features/users/usersSlice';
-import {
-  MainButton,
-  CustomInput,
-  Text,
-  Form,
-  FormContainer,
-  Subheader,
-} from './styles';
+import { CustomInput, Text, Form, FormContainer, Subheader } from './styles';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 export default function ForgotPassword() {
@@ -17,11 +10,12 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const from = location.state?.from?.pathname || '/';
-  const [signInUser, { isLoading, isSuccess, data }] = useSignInUserMutation();
+  const [signInUser, { isLoading, isSuccess }] = useSignInUserMutation();
 
   const canSave = [email].every(Boolean) && !isLoading;
 
   if (isSuccess) {
+    setEmail('');
     navigate(from, { replace: true });
   }
 
@@ -31,27 +25,26 @@ export default function ForgotPassword() {
         await signInUser({ email }).unwrap();
       } catch (err) {
         if (!err?.originalStatus) {
-          // isLoading: true until timeout occurs
-          setError('No Server Response');
-        } else if (err.originalStatus === 400) {
-          setError('Missing Username or Password');
-        } else if (err.originalStatus === 401) {
-          setError('Unauthorized');
-        } else {
           setError('Login Failed');
         }
       }
     }
   };
 
-  const handleEmailInput = e => setEmail(e.target.value);
-
   return (
     <FormContainer>
-      {error && <Typography>{error}</Typography>}
+      <Box sx={{ textAlign: 'center' }}>
+        {error && (
+          <Typography
+            variant='body1'
+            sx={{ color: 'primary.main', textAlign: 'center' }}>
+            {error}
+          </Typography>
+        )}
+      </Box>
       <Subheader variant='h2'>Forgot Password</Subheader>
       <Text>We will send you an email to reset your password</Text>
-      <Form component='form' onSubmit={handleSubmit} maxWidth='md' sx={{}}>
+      <Form component='form' onSubmit={handleSubmit} maxWidth='md'>
         <CustomInput
           margin='normal'
           fullWidth
@@ -69,7 +62,9 @@ export default function ForgotPassword() {
           }}
         />
 
-        <MainButton onClick={handleSubmit}>Submit</MainButton>
+        <Button type='submit' fullWidth variant='main' sx={{ mt: 5.5, mb: 2 }}>
+          Sign Up
+        </Button>
 
         <Box sx={{ textAlign: 'center', mt: 2.5, color: 'primary.main' }}>
           <Link to='/cancel'>

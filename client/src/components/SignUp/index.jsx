@@ -7,10 +7,10 @@ import {
   InputAdornment,
   IconButton,
   InputLabel,
+  Button,
   FormControl,
 } from '@mui/material';
-import { MainButton, CustomInput, OutlineInput } from './styles';
-
+import { CustomInput, OutlineInput } from './styles';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSignUpUserMutation } from '../../features/users/usersSlice';
 import Visibility from '@mui/icons-material/Visibility';
@@ -66,14 +66,6 @@ export default function SignUp() {
     passwordConfirm,
   ].every(Boolean);
 
-  console.log(
-    firstName,
-    lastName,
-    email,
-    creditScore,
-    password,
-    passwordConfirm
-  );
   const handleSubmit = async e => {
     e.preventDefault();
 
@@ -89,15 +81,7 @@ export default function SignUp() {
           avatar: photo,
         }).unwrap();
       } catch (err) {
-        if (!err?.originalStatus) {
-          setError('No Server Response');
-        } else if (err.originalStatus === 400) {
-          setError('Missing Required Fields');
-        } else if (err.originalStatus === 401) {
-          setError('Unauthorized');
-        } else {
-          setError('Registration Failed');
-        }
+        setError('Registration Failed');
       }
     }
   };
@@ -110,9 +94,15 @@ export default function SignUp() {
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-        {error && error.message && (
-          <Typography sx={{ textAlign: 'center' }}>{error}</Typography>
-        )}
+        <Box sx={{ textAlign: 'center' }}>
+          {error && (
+            <Typography
+              variant='body1'
+              sx={{ color: 'primary.main', textAlign: 'center' }}>
+              {error}
+            </Typography>
+          )}
+        </Box>
         <Typography
           variant='h2'
           sx={{
@@ -206,7 +196,7 @@ export default function SignUp() {
                   onChange={e => setPassword(e.target.value)}
                   name='password'
                   value={password}
-                  startAdornment={
+                  endAdornment={
                     <InputAdornment position='start'>
                       <IconButton
                         onClick={handleClickShowPassword}
@@ -237,7 +227,7 @@ export default function SignUp() {
                   onChange={e => setPasswordConfirm(e.target.value)}
                   name='passwordConfirm'
                   value={passwordConfirm}
-                  startAdornment={
+                  endAdornment={
                     <InputAdornment position='start'>
                       <IconButton
                         onClick={handleClickShowPassword}
@@ -256,13 +246,13 @@ export default function SignUp() {
               </FormControl>
             </Grid>
           </Grid>
-          <MainButton
+          <Button
             type='submit'
             fullWidth
-            variant='contained'
+            variant='main'
             sx={{ mt: 5.5, mb: 2 }}>
             Sign Up
-          </MainButton>
+          </Button>
 
           <Grid item xs={12} sx={{ textAlign: 'center', pt: 5.5 }}>
             <Link to='/signin' variant='body2'>

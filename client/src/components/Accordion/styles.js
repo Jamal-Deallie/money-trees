@@ -1,17 +1,14 @@
 import { styled } from '@mui/system';
 import { Tooltip, Box } from '@mui/material';
 
-export const BtnGroup = styled(Box, {
-  shouldForwardProp: prop => prop !== '$options',
-})(({ $options }) => ({
+export const BtnGroup = styled(Box)({
   transition: 'opacity 0.5s ease-in-out',
   opacity: 1,
-  // opacity: $options ? 1 : 0,
   width: '10rem',
   display: 'flex',
   justifyContent: 'center',
   gap: 2,
-}));
+});
 
 export const AccordionMenu = styled('div')(({ theme }) => ({
   overflow: 'hidden',
@@ -19,17 +16,6 @@ export const AccordionMenu = styled('div')(({ theme }) => ({
   width: '100%',
   height: 'auto',
   maxWidth: 800,
-}));
-
-export const AccordionTitle = styled('h2')(({ theme }) => ({}));
-/* color: pink; */
-
-export const AccordionContent = styled('p')(({ theme }) => ({
-  color: 'orange',
-  padding: '5rem',
-  overflow: 'hidden',
-  fontSize: 'clamp(1.44rem, calc(1.05rem + 1.95vw), 2.44rem)',
-  transform: 'translateY(-100%)',
 }));
 
 export const TitleContainer = styled('div', {
@@ -40,20 +26,16 @@ export const TitleContainer = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   boxSizing: 'border-box',
-  border: '0.1rem solid white',
+  border: `0.1rem solid ${theme.palette.primary.main}`,
   alignItems: 'center',
-  // background: $bg === 'debit' ? 'none' : 'none',
-  backgroundColor: $bg === 'debit' ? '#D9303E' : '#39B54A',
+  backgroundColor: $bg === 'debit' ? '#F25116' : '#00ABBD',
 }));
 
 //
-export const Icon = styled('img')({});
-/* height: 2.5rem; */
 
-export const AccordionWrapper = styled('div')(({ theme }) => ({
-  border: '0.1rem solid pink',
+export const AccordionWrapper = styled(Box)({
   overflow: 'hidden',
-}));
+});
 
 export const ContentContainer = styled('div')(({ theme }) => ({
   overflow: 'hidden',
@@ -72,12 +54,15 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   p: 4,
 }));
 
-export const ContentInner = styled(Box)({
+export const ContentInner = styled(Box)(({ theme }) => ({
   padding: '2rem 4rem',
   display: 'flex',
   flexDirection: 'column',
   gap: '.5rem',
-});
+  border: `0.1rem solid ${theme.palette.primary.main}`,
+  background: theme.palette.primary.main,
+  color: theme.palette.secondary.light,
+}));
 
 export const CustomTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />

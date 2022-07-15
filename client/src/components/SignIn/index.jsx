@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { FormWrap, CustomLink, CustomInput, OutlineInput } from './styles';
 import {
-  MainButton,
-  FormWrap,
-  CustomLink,
-  CustomInput,
-  OutlineInput,
-} from './styles';
-import { useNavigate } from 'react-router-dom';
-import {
+  Button,
   Typography,
   Box,
   Container,
@@ -17,14 +11,13 @@ import {
   FormControl,
   Stack,
 } from '@mui/material';
-import { useSignInUserMutation, } from '../../features/users/usersSlice';
+import { useSignInUserMutation } from '../../features/users/usersSlice';
 import { setCredentials, setUser } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export default function SignIn() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +27,6 @@ export default function SignIn() {
   const [signInUser, { isLoading, isSuccess, data }] = useSignInUserMutation();
 
   const canSave = [email, password].every(Boolean) && !isLoading;
-  console.log(data);
 
   useEffect(() => {
     if (isSuccess) {
@@ -53,9 +45,8 @@ export default function SignIn() {
       );
       setEmail('');
       setPassword('');
-      navigate('/dashboard');
     }
-  }, [isSuccess]);
+  }, [isSuccess, dispatch, data]);
 
   const handleClickShowPassword = () => {
     setShowPassword(showPassword => !showPassword);
@@ -66,23 +57,10 @@ export default function SignIn() {
       try {
         await signInUser({ email, password }).unwrap();
       } catch (err) {
-        if (!err?.originalStatus) {
-          // isLoading: true until timeout occurs
-          setError('No Server Response');
-        } else if (err.originalStatus === 400) {
-          setError('Missing Username or Password');
-        } else if (err.originalStatus === 401) {
-          setError('Unauthorized');
-        } else {
-          setError('Login Failed');
-        }
+        setError('Login Failed');
       }
     }
   };
-
-  const handleEmailInput = e => setEmail(e.target.value);
-
-  const handlePasswordInput = e => setPassword(e.target.value);
 
   return (
     <Box sx={{ position: 'relative', height: 'auto', padding: '12.5rem 0' }}>
@@ -128,7 +106,7 @@ export default function SignIn() {
                   name='password'
                   value={password}
                   autoComplete='new-password'
-                  startAdornment={
+                  endAdornment={
                     <InputAdornment position='start'>
                       <IconButton
                         onClick={handleClickShowPassword}
@@ -152,8 +130,13 @@ export default function SignIn() {
                 <CustomLink to='/'>Forgot Password</CustomLink> |
                 <CustomLink to='/signup'>Create An Account</CustomLink>
               </Box>
-
-              <MainButton onClick={handleSubmit}>Submit</MainButton>
+              <Button
+                type='submit'
+                fullWidth
+                variant='main'
+                sx={{ mt: 5.5, mb: 2 }}>
+                Sign Up
+              </Button>
             </Stack>
           </Box>
         </FormWrap>

@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles';
 import { Box, InputBase } from '@mui/material';
-import { InputUnstyled } from '@mui/base';
 
 export const Header = styled('h1')(({ theme }) => ({
   fontFamily: 'balboa, sans-serif',
@@ -19,10 +18,7 @@ export const SearchBarSection = styled('div')(({ theme }) => ({
   padding: '5rem 0',
   display: 'flex',
   alignItems: 'center',
-
 }));
-
-export const SearchInput = styled('div')(({ theme }) => ({}));
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -31,10 +27,9 @@ export const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: 'transparent',
   },
-  borderBottom: `1px solid ${theme.palette.secondary.light}`,
+  borderBottom: `1px solid ${theme.palette.primary.main}`,
   marginLeft: 0,
   width: '100%',
-
 }));
 
 export const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -58,19 +53,6 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const Heading = styled('div')(({ theme }) => ({
-  fontFamily: 'Mightype',
-  fontSize: '4.5rem',
-  color: theme.palette.secondary.main,
-  paddingBottom: '2.5rem',
-}));
-
-export const Form = styled('form')(({ theme }) => ({
-  margin: '0 auto',
-  width: '100%',
-  height: 'auto',
-}));
-
 export const FormWrapper = styled('div')(({ theme }) => ({
   margin: '0 auto',
   width: '100%',
@@ -87,4 +69,10 @@ export const TransactionSection = styled(Box)(({ theme }) => ({
   padding: 'calc(8px + 1.5625vw) calc(8px + 1.5625vw)',
   maxHeight: '60rem',
   width: '100%',
+  overflow: 'auto',
+}));
+
+export const TransactionInner = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  maxHeight: '60rem',
 }));

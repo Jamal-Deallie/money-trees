@@ -1,9 +1,10 @@
 import { createTheme } from '@mui/material/styles';
 
+const primaryColor = '#FCF4EC';
+
 const secondaryDark = '#26323';
 const secondaryColor = '#253232';
-
-const primaryColor = '#FCF4EC';
+const secondaryLight = '#463a46';
 
 const warningColor = '#DC756C';
 const successColor = '#56C090';
@@ -16,6 +17,7 @@ export const customTheme = createTheme({
     secondary: {
       main: secondaryColor,
       dark: secondaryDark,
+      light: secondaryLight,
     },
     warning: {
       main: warningColor,
@@ -36,7 +38,6 @@ export const customTheme = createTheme({
       fontFamily: 'balboa, sans-serif',
       textTransform: 'uppercase',
       fontSize: '2.4rem',
-      color: primaryColor,
     },
     body1: {
       fontSize: '1.6rem',
@@ -61,10 +62,10 @@ export const customTheme = createTheme({
           style: {
             fontFamily: 'open-sans, sans-serif',
             color: primaryColor,
-            background: secondaryColor,
-            border: '1px solid transparent',
+            background: successColor,
+            border: `2px solid ${primaryColor}`,
             letterSpacing: '0.025rem',
-            fontSize: '1.8rem',
+            fontSize: '1.6rem',
             fontWeight: 300,
             padding: '1rem 4rem',
             borderRadius: '3px',
@@ -72,11 +73,12 @@ export const customTheme = createTheme({
             height: '5rem',
             width: '100%',
             maxWidth: '65rem',
-            transition: 'border color background 0.2s ease-in-out',
+            textTransform: 'capitalize',
+            transition: 'color border background 0.2s ease-in-out',
             '&:hover': {
               background: 'none',
-              color: secondaryColor,
-              border: `2px solid ${secondaryColor}`,
+              color: successColor,
+              border: `2px solid ${successColor}`,
             },
           },
         },

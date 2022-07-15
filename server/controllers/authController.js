@@ -3,7 +3,7 @@ const User = require('./../models/userModel');
 const crypto = require('crypto');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const sendEmail = require('../utils/email');
+const sendEmail = require('../utils/sendEmail');
 const { promisify } = require('util');
 const cloudinary = require('cloudinary');
 
@@ -68,8 +68,6 @@ exports.signup = catchAsync(async (req, res, next) => {
         upload_preset: 'money-tree-avatar',
       });
 
-   
-
       if (uploadedRes) {
         newUser = await User.create({
           firstName: firstName,
@@ -85,7 +83,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
     createSendToken(newUser, 201, req, res);
   } catch (err) {
-    console.log('signup error', err);
+    console.error('signup error', err);
     res.status(500).json({
       errorMessage: `Server Error: ${err.message}`,
     });
@@ -93,7 +91,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.signin = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const { email, password } = req.body;
 
   // 1) Check if email and password exist

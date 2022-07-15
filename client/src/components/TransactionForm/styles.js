@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import ButtonUnstyled from '@mui/base/ButtonUnstyled';
+
 import {
   Radio,
   FormControl,
@@ -18,22 +18,7 @@ export const Text = styled('p')({
   width: '350px',
 });
 
-export const SubmitButton = styled(ButtonUnstyled)(({ theme }) => ({
-  background: theme.palette.success.main,
-  color: theme.palette.primary.main,
-  fontSize: 16,
-  fontFamily: 'open-sans,sans-serif',
-  fontWeight: 400,
-  padding: '1rem 4rem',
-  border: `2px solid ${theme.palette.primary.main}`,
-  borderRadius: '3px',
-  boxSizing: 'border-box',
-  height: '5rem',
-  width: '100%',
-  '&:hover': {
-    backgroundColor: theme.palette.secondary.main,
-  },
-}));
+
 
 export const CustomInput = styled(TextField)(({ theme }) => ({
   width: '350px',

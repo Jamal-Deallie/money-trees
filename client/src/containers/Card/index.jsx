@@ -12,7 +12,6 @@ export default function CardContainer() {
   const income = useSelector(selectTotalCreditAmount);
   const expenses = useSelector(selectTotalDebitAmount);
   const cash = useMemo(() => income - expenses, [income, expenses]);
-  console.log(expenses);
   const user = useSelector(selectUser);
   const { creditScore } = user || {};
   return (

@@ -1,27 +1,9 @@
 import { styled } from '@mui/system';
-import { Button, Box, TextField, OutlinedInput } from '@mui/material';
+import { Box, TextField, OutlinedInput } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const CustomLink = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main,
-}));
-
-export const MainButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.success.main,
-  color: theme.palette.primary.main,
-  fontSize: 16,
-  fontFamily: 'open-sans,sans-serif',
-  fontWeight: 400,
-  padding: '1rem 4rem',
-  border: '2px solid #111',
-  borderRadius: '8px',
-  boxSizing: 'border-box',
-
-  '&:hover': {
-    backgroundColor: '#ffffff',
-    color: theme.palette.secondary.main,
-    boxShadow: 'none',
-  },
 }));
 
 export const Container = styled(Box)(({ theme }) => ({

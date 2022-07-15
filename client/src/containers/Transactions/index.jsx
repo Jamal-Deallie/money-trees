@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+import { Box } from '@mui/material';
 import {
   SearchBarSection,
   Search,
@@ -12,6 +11,7 @@ import {
   SubmitBtn,
   TransactionSection,
   Header,
+  TransactionInner,
 } from './styles';
 import {
   TransactionsListContainer,
@@ -50,7 +50,7 @@ export default function TransactionsContainer() {
         setSearchParams(searchParams);
       }
     }
-  }, []);
+  }, [searchParams, setSearchParams]);
 
   return (
     <TransactionSection>
@@ -60,34 +60,32 @@ export default function TransactionsContainer() {
 
       <SearchBarSection>
         <FormWrapper>
-         
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon
-                  color='primary.main'
-                  sx={{ fontSize: 25, color: '#FCF4EC' }}
-                />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder='Search A Transaction'
-                inputProps={{ 'aria-label': 'search' }}
-                onChange={handleChange}
-                value={searchParams.keyword}
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon
+                color='primary.main'
+                sx={{ fontSize: 25, color: '#FCF4EC' }}
               />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder='Search A Transaction'
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={handleChange}
+              value={searchParams.keyword}
+            />
 
-              <SubmitBtn type='submit'></SubmitBtn>
-            </Search>
-        
+            <SubmitBtn type='submit'></SubmitBtn>
+          </Search>
         </FormWrapper>
       </SearchBarSection>
 
-      <Box sx={{ mt: 5.5, maxHeight: '60rem', overflow: 'auto' }}>
+      <TransactionInner>
         {searchParams.get('keyword') ? (
           <SearchListContainer term={searchParams.get('keyword')} />
         ) : (
           <TransactionsListContainer />
         )}
-      </Box>
+      </TransactionInner>
     </TransactionSection>
   );
 }

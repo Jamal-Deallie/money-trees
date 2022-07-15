@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Container, Typography, Button } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 export const DropSection = styled(Box)({
   padding: '5.5rem 0',
@@ -40,25 +40,4 @@ export const Text = styled('p')(({ theme }) => ({
   color: theme.palette.primary.main,
   textAlign: 'center',
   marginBottom: '2.5rem',
-}));
-
-export const UploadButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.success.main,
-  color: theme.palette.primary.main,
-  fontSize: 16,
-  fontFamily: 'open-sans,sans-serif',
-  fontWeight: 400,
-  padding: '1rem 4rem',
-  border: `2px solid ${theme.palette.primary.main}`,
-  borderRadius: '3px',
-  boxSizing: 'border-box',
-  height: '5rem',
-  width: '35rem',
-  marginTop: '2.5rem',
-  transition: 'color, backgroundColor, border .3s ease-in-out',
-  '&:hover': {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.success.main,
-    border: `2px solid ${theme.palette.success.main}`,
-  },
 }));

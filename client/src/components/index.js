@@ -6,7 +6,6 @@ export { default as TransactionForm } from './TransactionForm';
 export { default as EditForm } from './EditForm';
 export { default as DropZone } from './DropZone';
 export { default as UpdateForm } from './UpdateForm';
-export { default as Menu } from './Menu';
 export { default as Accordion } from './Accordion';
 export { default as SignIn } from './SignIn';
 export { default as SignUp } from './SignUp';

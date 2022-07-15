@@ -5,8 +5,6 @@ const router = express.Router();
 
 router.use(authController.protect);
 
-
-
 router.route('/').get(transactionController.getAllTransactions);
 router.route('/search').get(transactionController.getTransactionsBySearch);
 router

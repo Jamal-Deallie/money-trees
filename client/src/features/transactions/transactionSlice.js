@@ -36,7 +36,6 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: ({ party, category, amount, cashFlow, date }) => ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-
         url: `/transactions/${user.id}`,
         body: { party, category, amount, cashFlow, date },
       }),
@@ -48,20 +47,16 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: `/transactions/${_id}`,
         body: { _id },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'Transactions', id: arg.id },
-      ],
+      invalidatesTags: ['Transactions'],
     }),
     updateTransaction: builder.mutation({
-      query: ({ merchant, category, amount, cashFlow, date, _id }) => ({
+      query: ({ party, category, amount, cashFlow, date, _id }) => ({
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         url: `/transactions/${_id}`,
-        body: { merchant, category, amount, cashFlow, date },
+        body: { party, category, amount, cashFlow, date },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'Transactions', id: arg.id },
-      ],
+      invalidatesTags: ['Transactions'],
     }),
   }),
 });

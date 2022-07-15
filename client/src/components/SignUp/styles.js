@@ -1,23 +1,5 @@
 import { styled } from '@mui/system';
-import { Button, Box, TextField, OutlinedInput } from '@mui/material';
-
-export const MainButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.success.main,
-  color: theme.palette.primary.main,
-  fontSize: 16,
-  fontFamily: 'open-sans,sans-serif',
-  fontWeight: 400,
-  padding: '1rem 4rem',
-  border: '2px solid #111',
-  borderRadius: '8px',
-  boxSizing: 'border-box',
-  transition: 'all 0.2s ease-in-out',
-  '&:hover': {
-    backgroundColor: '#ffffff',
-    color: theme.palette.success.main,
-    boxShadow: 'none',
-  },
-}));
+import { Box, TextField, OutlinedInput } from '@mui/material';
 
 export const Container = styled(Box)(({ theme }) => ({
   position: 'absolute',

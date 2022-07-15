@@ -6,19 +6,16 @@ import {
   UploadImage,
   DropContainer,
   Text,
-  UploadButton,
 } from './styles';
-import { Container, Box, Typography } from '@mui/material';
+import { Typography, Box, Button } from '@mui/material';
 import { useUpdateAvatarMutation } from '../../features/users/usersSlice';
 import { setUser } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 export default function DropZone() {
   const [photo, setPhoto] = useState('');
   const [error, setError] = useState('');
   const [updateAvatar, { isSuccess, data }] = useUpdateAvatarMutation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onDrop = useCallback(acceptedFiles => {
@@ -32,21 +29,13 @@ export default function DropZone() {
     });
   }, []);
 
-  const {
-    getRootProps,
-    getInputProps,
-    // isDragActive,
-    // acceptedFiles,
-    // fileRejections,
-  } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: { 'image/png': ['.png'], 'image/jpeg': ['.jpeg'] },
   });
 
   const canSave = [photo].every(Boolean);
 
-  console.log(data);
-  
   useEffect(() => {
     if (isSuccess) {
       dispatch(
@@ -63,7 +52,7 @@ export default function DropZone() {
       );
       setPhoto('');
     }
-  }, [isSuccess, data]);
+  }, [isSuccess, data, dispatch]);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -74,21 +63,22 @@ export default function DropZone() {
           avatar: photo,
         }).unwrap();
       } catch (err) {
-        if (!err?.originalStatus) {
-          setError('No Server Response');
-        } else if (err.originalStatus === 400) {
-          setError('Missing Required Fields');
-        } else if (err.originalStatus === 401) {
-          setError('Unauthorized');
-        } else {
-          setError('Upload Failed');
-        }
+        setError('Upload Failed');
       }
     }
   };
 
   return (
     <DropSection>
+      <Box sx={{ textAlign: 'center', my: 1 }}>
+        {error && (
+          <Typography
+            variant='body1'
+            sx={{ color: 'primary.main', textAlign: 'center' }}>
+            {error}
+          </Typography>
+        )}
+      </Box>
       <DropContainer {...getRootProps({ className: 'dropzone' })}>
         <UploadImage src='images/upload.svg' alt='Upload' />
         <input {...getInputProps()} />
@@ -97,9 +87,9 @@ export default function DropZone() {
         {photo.length > 0 && <Image src={photo} alt='avatar' />}
       </DropContainer>
 
-      <UploadButton variant='contained' onClick={handleSubmit}>
+      <Button variant='main' onClick={handleSubmit}>
         Upload
-      </UploadButton>
+      </Button>
     </DropSection>
   );
 }

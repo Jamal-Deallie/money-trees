@@ -5,32 +5,25 @@ import {
   RadioGroup,
   Box,
   Stack,
-  FormGroup,
-  FormControl,
-  TextField,
   InputLabel,
-  Select,
   Typography,
   InputAdornment,
   FormControlLabel,
   FormLabel,
-  MenuItem,
+  Button
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import {
-  SubmitButton,
   EditSection,
   CustomItem,
   CustomSelect,
-  TransactionSection,
   CustomInput,
   CustomRadio,
   SelectWrapper,
 } from './styles';
 import {
-  useAddTransactionMutation,
-  useGetTransactionByIdQuery,
+  useUpdateTransactionMutation,
   selectTransactionById,
 } from '../../features/transactions/transactionSlice';
 
@@ -111,15 +104,12 @@ const initialValues = {
   date: todaysDate(),
 };
 
-
 export default function EditForm({ id }) {
   const [error, setError] = useState(false);
-  const [helperText, setHelperText] = useState();
   const loadedTransaction = useSelector(state =>
     selectTransactionById(state, id)
   );
   const [editTransaction, setEditTransaction] = useState(initialValues);
-
 
   useEffect(() => {
     setEditTransaction({
@@ -128,8 +118,9 @@ export default function EditForm({ id }) {
       date: loadedTransaction.date,
       party: loadedTransaction.party,
       category: loadedTransaction.category,
+      _id: id,
     });
-  }, [loadedTransaction]);
+  }, [loadedTransaction, id]);
 
   const handleChange = useCallback(
     type => event => {
@@ -137,11 +128,11 @@ export default function EditForm({ id }) {
     },
     [editTransaction]
   );
-  const [addTransaction] = useAddTransactionMutation();
+  const [updateTransaction] = useUpdateTransactionMutation();
 
   const handleSubmit = async () => {
     try {
-      await addTransaction({ ...editTransaction });
+      await updateTransaction({ ...editTransaction });
     } catch (err) {
       setError('Failed to update the transaction');
     }
@@ -161,7 +152,7 @@ export default function EditForm({ id }) {
           }}>
           {error && <Typography>{error}</Typography>}
           <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
-          <Stack spacing={4}>
+            <Stack spacing={4}>
               <CustomInput
                 label='Enter Amount'
                 type='number'
@@ -241,12 +232,12 @@ export default function EditForm({ id }) {
                 onChange={handleChange('date')}
               />
 
-              <SubmitButton
-                variant='contained'
+              <Button
+                variant='main'
                 type='submit'
                 sx={{ px: 5, py: 1.5 }}>
                 Enter Transaction
-              </SubmitButton>
+              </Button>
             </Stack>
           </Box>
         </Box>

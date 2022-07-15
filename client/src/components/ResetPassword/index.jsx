@@ -8,22 +8,17 @@ import {
   IconButton,
   InputLabel,
   FormControl,
+  Button,
 } from '@mui/material';
-import { MainButton, CustomLink, OutlineInput } from './styles';
+import { CustomLink, OutlineInput } from './styles';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  useSignUpUserMutation,
-  selectResetToken,
-} from '../../features/users/usersSlice';
-import { useSelector } from 'react-redux';
-
+import { useSignUpUserMutation } from '../../features/users/usersSlice';
 
 export default function ResetPassword() {
   const navigate = useNavigate();
   const location = useLocation();
-
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
@@ -31,8 +26,7 @@ export default function ResetPassword() {
 
   const from = location.state?.from?.pathname || '/';
   const [signUpUser, { isSuccess }] = useSignUpUserMutation();
-  const resetToken = useSelector(selectResetToken);
-  
+
   const handleClickShowPassword = () => {
     setShowPassword(showPassword => !showPassword);
   };
@@ -53,15 +47,7 @@ export default function ResetPassword() {
           passwordConfirm,
         }).unwrap();
       } catch (err) {
-        if (!err?.originalStatus) {
-          setError('No Server Response');
-        } else if (err.originalStatus === 400) {
-          setError('Missing Required Fields');
-        } else if (err.originalStatus === 401) {
-          setError('Unauthorized');
-        } else {
-          setError('Password Reset Failed');
-        }
+        setError('Password Reset Failed');
       }
     }
   };
@@ -151,13 +137,13 @@ export default function ResetPassword() {
               </FormControl>
             </Grid>
           </Grid>
-          <MainButton
+          <Button
             type='submit'
             fullWidth
-            variant='contained'
+            variant='main'
             sx={{ mt: 5.5, mb: 2 }}>
-            Submit
-          </MainButton>
+            Sign Up
+          </Button>
 
           <Grid item xs={12} sx={{ textAlign: 'center', pt: 5.5 }}>
             <CustomLink to='/' variant='body2'>

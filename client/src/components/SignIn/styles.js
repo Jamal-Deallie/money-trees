@@ -1,37 +1,11 @@
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import {
-  Box,
-  Typography,
-  TextField,
-  OutlinedInput,
-  Button,
-} from '@mui/material';
+import { Box, TextField, OutlinedInput } from '@mui/material';
 
-export const LoginSection = styled('div')(({ theme }) => ({}));
-
-export const LoginWrap = styled('div')({
+export const LoginWrap = styled(Box)({
   width: '45rem',
   margin: '0 auto',
 });
-
-export const MainButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.success.main,
-  color: theme.palette.primary.main,
-  fontSize: 16,
-  fontFamily: 'open-sans,sans-serif',
-  fontWeight: 400,
-  padding: '1.5rem 4rem',
-  border: `1px solid${theme.palette.primary.main}`,
-  borderRadius: '8px',
-  boxSizing: 'border-box',
-  width: '100%',
-  marginTop: '5rem',
-  '&:hover': {
-    color: theme.palette.success.main,
-    boxShadow: 'none',
-  },
-}));
 
 export const Links = styled(Link)(({ theme }) => ({
   cursor: 'pointer',

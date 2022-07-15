@@ -2,8 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { todaysDate } from '../../helpers/todaysDate';
 import { useAddTransactionMutation } from '../../features/transactions/transactionSlice';
 import {
-  SubmitButton,
-  ButtonWrap,
   CustomItem,
   CustomSelect,
   TransactionSection,
@@ -15,16 +13,12 @@ import {
   RadioGroup,
   Box,
   Stack,
-  FormGroup,
-  FormControl,
-  TextField,
   InputLabel,
-  Select,
   Typography,
   InputAdornment,
   FormControlLabel,
   FormLabel,
-  MenuItem,
+  Button,
 } from '@mui/material';
 const categories = [
   {
@@ -107,16 +101,14 @@ export default function TransactionForm() {
   const [transactionData, setTransactionData] = useState(initialValues);
   const [error, setError] = useState(false);
 
-  console.log('### Refreshing');
-  // const dispatch = useDispatch();
-
   const handleChange = useCallback(
     type => event => {
       setTransactionData({ ...transactionData, [type]: event.target.value });
     },
     [transactionData]
   );
-  const [addTransaction, { isLoading, isSuccess }] = useAddTransactionMutation();
+  const [addTransaction, { isLoading, isSuccess }] =
+    useAddTransactionMutation();
   const canSave =
     [
       transactionData.party,
@@ -126,11 +118,9 @@ export default function TransactionForm() {
       transactionData.date,
     ].every(Boolean) && !isLoading;
 
-    if(isSuccess) {
-
-      console.log('Success')
-    }
-
+  if (isSuccess) {
+    alert('Success');
+  }
 
   const handleSubmit = async () => {
     if (canSave) {
@@ -142,7 +132,6 @@ export default function TransactionForm() {
     }
   };
 
-console.log(transactionData)
   return (
     <TransactionSection>
       <Box sx={{ width: '100%' }}>
@@ -155,7 +144,15 @@ console.log(transactionData)
             p: 4,
             color: 'primary.main',
           }}>
-          {error && <Typography>{error}</Typography>}
+          <Box sx={{ textAlign: 'center' }}>
+            {error && (
+              <Typography
+                variant='body1'
+                sx={{ color: 'primary.main', textAlign: 'center' }}>
+                {error}
+              </Typography>
+            )}
+          </Box>
           <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
             <Stack spacing={4}>
               <CustomInput
@@ -242,13 +239,13 @@ console.log(transactionData)
                 }}
                 onChange={handleChange('date')}
               />
-
-              <SubmitButton
-                variant='contained'
+              <Button
                 type='submit'
-                sx={{ px: 5, py: 1.5 }}>
-                Enter Transaction
-              </SubmitButton>
+                fullWidth
+                variant='main'
+                sx={{ mt: 5.5, mb: 2 }}>
+                Sign Up
+              </Button>
             </Stack>
           </Box>
         </Box>

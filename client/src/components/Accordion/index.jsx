@@ -26,7 +26,6 @@ export default function Accordion({
   date,
   cashFlow,
   category,
-  submittedDate,
 }) {
   const contentRef = useRef(null);
   const tl = useRef();
@@ -47,7 +46,7 @@ export default function Accordion({
         transform: 'rotate(45deg)',
       })
       .to(contentRef.current, {
-        height: 'auto',
+        height: '30rem',
         ease: 'elastic',
         duration: 1.2,
       });
@@ -65,7 +64,7 @@ export default function Accordion({
       });
       await deleteTransaction(id);
     } catch (err) {
-      console.log('Failed to delete the transaction', err);
+     alert('Failed to delete the transaction', err);
     }
   };
 

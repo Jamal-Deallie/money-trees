@@ -11,7 +11,6 @@ export default function Navigation() {
 
   const signOut = () => {
     dispatch(logOut());
-    console.log('Logged Out');
     navigate('/');
   };
 

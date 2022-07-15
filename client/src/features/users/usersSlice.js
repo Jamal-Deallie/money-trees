@@ -73,7 +73,6 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     getMe: builder.query({
       query: () => `/users/getme?fields=firstName`,
       transformResponse: response => {
-        console.log(response);
         const { data } = response;
         return userAdapter.setAll(initialState, data);
       },
