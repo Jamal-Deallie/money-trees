@@ -135,7 +135,7 @@ export default function SignIn() {
                 fullWidth
                 variant='main'
                 sx={{ mt: 5.5, mb: 2 }}>
-                Sign Up
+                Sign In
               </Button>
             </Stack>
           </Box>
