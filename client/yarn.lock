@@ -1285,7 +1285,7 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gsap/shockingly@^3.10.4", "gsap@npm:@gsap/shockingly":
+"@gsap/shockingly@^3.10.4", "@gsap/shockingly@npm:@gsap/shockingly", "gsap@npm:@gsap/shockingly":
   version "3.10.4"
   resolved "https://npm.greensock.com/@gsap%2fshockingly/-/shockingly-3.10.4.tgz#a8a785b23b83cdc62cb8bc70b8b26163e22499e8"
   integrity sha512-yHI7bywPYdLEAue7m7bhD7ZYY54OzIq1Hu34yjFyKzVxHqZc1F/fEHlRMl8W9bHbb89f3JXq12Ih3U7g4vowQQ==
@@ -3216,9 +3216,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001335, caniuse-lite@^1.0.30001366:
-  version "1.0.30001366"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001366.tgz#c73352c83830a9eaf2dea0ff71fb4b9a4bbaa89c"
-  integrity sha512-yy7XLWCubDobokgzudpkKux8e0UOOnLHE6mlNJBzT3lZJz6s5atSEzjoL+fsCPkI0G8MP5uVdDx1ur/fXEWkZA==
+  version "1.0.30001367"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001367.tgz#2b97fe472e8fa29c78c5970615d7cd2ee414108a"
+  integrity sha512-XDgbeOHfifWV3GEES2B8rtsrADx4Jf+juKX2SICJcaUhjYBO3bR96kvEIHa15VU6ohtOhBZuPGGYGbXMRn0NCw==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
