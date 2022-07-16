@@ -1,8 +1,8 @@
 {
-  "name": "Medusa",
+  "name": "money-trees",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/Jamal-Deallie/medusa.git",
+  "repository": "https://github.com/Jamal-Deallie/money-trees.git",
   "license": "MIT",
   "engines": {
     "node": "17.x"
