@@ -39,15 +39,7 @@ export default function UpdateForm() {
         })
       );
     }
-  }, [
-    isSuccess,
-    data.updatedUser.avatar,
-    data.updatedUser.creditScore,
-    data.updatedUser.email,
-    data.updatedUser.firstName,
-    data.updatedUser.lastName,
-    dispatch,
-  ]);
+  }, [isSuccess, dispatch]);
 
   const handleSubmit = async () => {
     try {

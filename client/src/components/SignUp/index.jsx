@@ -11,14 +11,13 @@ import {
   FormControl,
 } from '@mui/material';
 import { CustomInput, OutlineInput } from './styles';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useSignUpUserMutation } from '../../features/users/usersSlice';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -28,7 +27,7 @@ export default function SignUp() {
   const [creditScore, setCreditScore] = useState('');
   const [photo, setPhoto] = useState('');
   const [error, setError] = useState('');
-  const from = location.state?.from?.pathname || '/';
+
   const [signUpUser, { isSuccess }] = useSignUpUserMutation();
 
   const handleClickShowPassword = () => {
@@ -36,7 +35,13 @@ export default function SignUp() {
   };
 
   if (isSuccess) {
-    navigate(from, { replace: true });
+    setEmail('');
+    setPassword('');
+    setLastName('');
+    setPasswordConfirm('');
+    setFirstName('');
+    setPhoto('');
+    navigate('/');
   }
 
   const TransformFileData = file => {

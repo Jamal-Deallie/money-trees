@@ -4,45 +4,28 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/dbConn');
-const cors = require('cors');
 const userRouter = require('./routes/userRoutes');
 const transactionRouter = require('./routes/transactionRoutes');
 const mongoSanitize = require('express-mongo-sanitize');
-const bodyParser = require('body-parser');
-
+const helmet = require('helmet');
 const app = express();
+const cors = require('cors');
+const xss = require('xss-clean');
 
 connectDB();
 
-// Handle options credentials check - before CORS!
-// and fetch cookies credentials requirement
-// app.use(credentials);
-
-// Cross Origin Resource Sharing
-
-const corsOpts = {
-  origin: process.env.WEB_APP_URL,
-  credentials: true,
-  methods: ['GET', 'POST', 'HEAD', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-  exposedHeaders: ['Content-Type'],
-};
-app.use(cors(corsOpts));
-
-// built-in middleware to handle urlencoded form data
 app.use(
-  express.urlencoded({
-    extended: true,
-    limit: '25mb',
+  cors({
+    origin: process.env.WEB_APP_URL,
   })
 );
 
+app.use(helmet());
 app.use(express.json({ limit: '25mb' }));
-
-app.use(bodyParser.json());
-// built-in middleware for json
-//middleware for cookies
+app.use(express.urlencoded({ limit: '25mb' }));
 app.use(cookieParser());
+app.use(mongoSanitize());
+app.use(xss());
 
 app.use((req, res, next) => {
   console.log('middleware check');
@@ -59,6 +42,7 @@ app.get('/', function (req, res) {
 });
 
 const port = process.env.PORT || 5001;
+
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });

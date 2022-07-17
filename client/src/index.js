@@ -15,9 +15,7 @@ root.render(
   <Provider store={store}>
     <ThemeProvider theme={customTheme}>
       <CssBaseline />
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <App />
     </ThemeProvider>
   </Provider>
 );

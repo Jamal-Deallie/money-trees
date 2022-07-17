@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, } from 'react';
 import { FormWrap, CustomLink, CustomInput, OutlineInput } from './styles';
 import {
   Button,
@@ -16,9 +16,11 @@ import { setCredentials, setUser } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,36 +30,40 @@ export default function SignIn() {
 
   const canSave = [email, password].every(Boolean) && !isLoading;
 
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(setCredentials({ token: data.token }));
-      dispatch(
-        setUser({
-          user: {
-            id: data.user._id,
-            creditScore: data.user.creditScore,
-            email: data.user.email,
-            firstName: data.user.firstName,
-            lastName: data.user.lastName,
-            avatar: data.user.avatar,
-          },
-        })
-      );
-      setEmail('');
-      setPassword('');
-    }
-  }, [isSuccess, dispatch, data]);
+  if (isSuccess) {
+    dispatch(setCredentials({ token: data.token }));
+    dispatch(
+      setUser({
+        user: {
+          id: data.user._id,
+          creditScore: data.user.creditScore,
+          email: data.user.email,
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+          avatar: data.user.avatar,
+        },
+      })
+    );
+    setEmail('');
+    setPassword('');
+    navigate('/dashboard', { replace: true });
+  }
 
   const handleClickShowPassword = () => {
     setShowPassword(showPassword => !showPassword);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async e => {
+    e.preventDefault();
+
     if (canSave) {
       try {
-        await signInUser({ email, password }).unwrap();
+        await signInUser({
+          email,
+          password,
+        }).unwrap();
       } catch (err) {
-        setError('Login Failed');
+        setError('Sign In Failed');
       }
     }
   };
@@ -85,12 +91,11 @@ export default function SignIn() {
               <CustomInput
                 margin='normal'
                 fullWidth
-                id='user'
-                placeholder='Email'
+                id='email'
                 label='Email Address'
+                name='email'
                 onChange={e => setEmail(e.target.value)}
                 value={email}
-                autoFocus
                 inputProps={{
                   autoComplete: 'off',
                 }}

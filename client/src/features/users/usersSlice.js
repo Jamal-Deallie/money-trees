@@ -119,4 +119,3 @@ export const selectResetToken = createSelector(
 
   // normalized state object with ids & entities
 );
-
