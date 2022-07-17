@@ -74,7 +74,11 @@ export default function ResetPassword() {
           Reset Password
         </Typography>
 
-        <Box sx={{ mt: 3 }} component='form' onSubmit={handleSubmit}>
+        <Box
+          sx={{ mt: 3 }}
+          component='form'
+          onSubmit={handleSubmit}
+          method='POST'>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormControl fullWidth>

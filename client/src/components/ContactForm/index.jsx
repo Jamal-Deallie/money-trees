@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Typography,
-  Grid,
-  Box,
-  Container,
-} from '@mui/material';
+import { Typography, Grid, Box, Container } from '@mui/material';
 import { MainButton, CustomInput, Text } from './styles';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSignUpUserMutation } from '../../features/users/usersSlice';
@@ -66,7 +61,11 @@ export default function ContactForm() {
           Contact Us
         </Typography>
 
-        <Box sx={{ mt: 3 }} component='form' onSubmit={handleSubmit}>
+        <Box
+          sx={{ mt: 3 }}
+          component='form'
+          onSubmit={handleSubmit}
+          method='POST'>
           <Grid container rowSpacing={5}>
             <Grid item xs={12}>
               <CustomInput

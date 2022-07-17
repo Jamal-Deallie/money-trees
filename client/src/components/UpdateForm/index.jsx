@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { SubmitButton, UpdateSection, CustomInput } from './styles';
-import { Box, Stack, Typography } from '@mui/material';
+import { UpdateSection, CustomInput } from './styles';
+import { Box, Stack, Typography, Button } from '@mui/material';
 import { useUpdateMeMutation } from '../../features/users/usersSlice';
 import { setUser, selectUser } from '../../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';

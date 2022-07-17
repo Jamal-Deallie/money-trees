@@ -44,7 +44,11 @@ export default function ForgotPassword() {
       </Box>
       <Subheader variant='h2'>Forgot Password</Subheader>
       <Text>We will send you an email to reset your password</Text>
-      <Form component='form' onSubmit={handleSubmit} maxWidth='md'>
+      <Form
+        component='form'
+        onSubmit={handleSubmit}
+        maxWidth='md'
+        method='POST'>
         <CustomInput
           margin='normal'
           fullWidth
