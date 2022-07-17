@@ -17,7 +17,6 @@ const signToken = id => {
 };
 
 const createSendToken = (user, statusCode, req, res) => {
-  console.log(user);
   const token = signToken(user._id);
   res.cookie('jwt', token, {
     expires: new Date(
@@ -39,7 +38,6 @@ const createSendToken = (user, statusCode, req, res) => {
 
 // Register User Controller
 exports.signup = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   //abstract items from body
   const {
     firstName,
@@ -81,7 +79,6 @@ exports.signup = catchAsync(async (req, res, next) => {
         });
       }
     }
-    console.log(newUser);
     createSendToken(newUser, 201, req, res);
   } catch (err) {
     console.error('signup error', err);
@@ -93,7 +90,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.signin = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body);
   // 1) Check if email and password exist
   if (!email || !password) {
     return next(new AppError('Please provide email and password!', 400));
