@@ -1,6 +1,5 @@
 import { styled } from '@mui/system';
 import { Box, Grid } from '@mui/material/';
-import { Typography } from '@material-ui/core';
 
 export const CustomContainer = styled('div')(({ theme }) => ({
   width: '100%',

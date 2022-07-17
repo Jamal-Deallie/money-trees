@@ -9,7 +9,7 @@ export default function UpdateForm() {
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUser);
-  const [updateMe, { data, isSuccess, isLoading }] = useUpdateMeMutation();
+  const [updateMe, { data, isSuccess }] = useUpdateMeMutation();
   const { creditScore, email, firstName, lastName } = userInfo || {};
   const [updateData, setUpdateData] = useState({
     creditScore: creditScore,
@@ -39,7 +39,15 @@ export default function UpdateForm() {
         })
       );
     }
-  }, [isSuccess]);
+  }, [
+    isSuccess,
+    data.updatedUser.avatar,
+    data.updatedUser.creditScore,
+    data.updatedUser.email,
+    data.updatedUser.firstName,
+    data.updatedUser.lastName,
+    dispatch,
+  ]);
 
   const handleSubmit = async () => {
     try {

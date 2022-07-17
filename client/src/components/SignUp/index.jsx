@@ -129,6 +129,9 @@ export default function SignUp() {
                 onChange={e => setFirstName(e.target.value)}
                 value={firstName}
                 autoFocus
+                inputProps={{
+                  autoComplete: 'off',
+                }}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -142,6 +145,9 @@ export default function SignUp() {
                 name='lastName'
                 onChange={e => setLastName(e.target.value)}
                 value={lastName}
+                inputProps={{
+                  autoComplete: 'off',
+                }}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -156,6 +162,9 @@ export default function SignUp() {
                 name='creditScore'
                 onChange={e => setCreditScore(e.target.value)}
                 value={creditScore}
+                inputProps={{
+                  autoComplete: 'off',
+                }}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -183,6 +192,9 @@ export default function SignUp() {
                 name='email'
                 onChange={e => setEmail(e.target.value)}
                 value={email}
+                inputProps={{
+                  autoComplete: 'off',
+                }}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -200,6 +212,7 @@ export default function SignUp() {
                   onChange={e => setPassword(e.target.value)}
                   name='password'
                   value={password}
+                  autoComplete='new-password'
                   endAdornment={
                     <InputAdornment position='start'>
                       <IconButton
@@ -231,6 +244,7 @@ export default function SignUp() {
                   onChange={e => setPasswordConfirm(e.target.value)}
                   name='passwordConfirm'
                   value={passwordConfirm}
+                  autoComplete='new-password'
                   endAdornment={
                     <InputAdornment position='start'>
                       <IconButton

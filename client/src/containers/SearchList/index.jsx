@@ -1,19 +1,11 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { Accordion } from '../../components';
-import {
-  useGetTransactionsQuery,
-  selectAllTransactions,
-  useGetTransactionsBySearchQuery,
-  selectTransactionIds,
-} from '../../features/transactions/transactionSlice';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useGetTransactionsBySearchQuery } from '../../features/transactions/transactionSlice';
 
 export default function TransactionsListContainer({ term }) {
   const { data, isLoading, isSuccess, isError } =
     useGetTransactionsBySearchQuery(term);
-
 
   const renderedTransaction = useCallback(() => {
     if (isLoading) {
@@ -47,7 +39,7 @@ export default function TransactionsListContainer({ term }) {
     } else if (isError) {
       return <Typography>An Error has occurred</Typography>;
     }
-  }, [isLoading, isSuccess, isError]);
+  }, [isLoading, isSuccess, isError, data.transactions]);
 
   return (
     <Box>

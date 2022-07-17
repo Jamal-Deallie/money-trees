@@ -8,7 +8,12 @@ export const apiSlice = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = JSON.parse(localStorage.getItem('token'));
       if (token) {
-        headers.set('authorization', `Bearer ${token}`);
+        headers.set(
+          'authorization',
+          `Bearer ${token}`,
+          'Access-Control-Allow-Origin',
+          '*'
+        );
       }
       return headers;
     },

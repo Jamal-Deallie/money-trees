@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react';
-import { Typography, Box } from '@mui/material/';
+import { useEffect } from 'react';
 import { StatWrap, StyledCard, Header, Stat, Span } from './styles';
 import useArrayRef from '../../hooks/useArrayRef';
 import { gsap } from 'gsap';

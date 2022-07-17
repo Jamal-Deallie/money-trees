@@ -72,7 +72,6 @@ export const customTheme = createTheme({
             boxSizing: 'border-box',
             height: '5rem',
             width: '100%',
-            maxWidth: '65rem',
             textTransform: 'capitalize',
             transition: 'color border background 0.2s ease-in-out',
             '&:hover': {

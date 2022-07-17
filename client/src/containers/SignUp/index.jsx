@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { SignUp } from '../../components';
 import { SignUpSection } from './styles';
 export default function SignUpContainer() {

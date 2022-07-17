@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { Box, Grid, Card, Typography } from '@mui/material/';
+import { Box, Grid } from '@mui/material/';
 
 export const AccountSection = styled(Grid)(({ theme }) => ({
   borderRight: '2px solid #422800',

@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { Accordion } from '../../components';
 import {
@@ -7,15 +7,10 @@ import {
 } from '../../features/transactions/transactionSlice';
 
 import { useSelector } from 'react-redux';
-;
-
 export default function TransactionsListContainer() {
   const { isLoading, isSuccess, isError } = useGetTransactionsQuery();
 
   const loadedTransactions = useSelector(selectAllTransactions);
-
-  const user = JSON.parse(localStorage.getItem('user'));
-
 
   const renderedTransaction = useCallback(() => {
     if (isLoading) {
@@ -35,7 +30,7 @@ export default function TransactionsListContainer() {
               flexDirection: 'column',
               alignItems: 'center',
               width: '100%',
-              overflow: 'hidden'
+              overflow: 'hidden',
             }}>
             <Accordion
               party={party}
@@ -51,7 +46,7 @@ export default function TransactionsListContainer() {
     } else if (isError) {
       return <Typography>An Error has occured</Typography>;
     }
-  }, [isLoading, isSuccess, isError]);
+  }, [isLoading, isSuccess, isError, loadedTransactions]);
 
   return (
     <Box>
