@@ -10,7 +10,7 @@ import {
   InputAdornment,
   FormControlLabel,
   FormLabel,
-  Button
+  Button,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -151,7 +151,11 @@ export default function EditForm({ id }) {
             color: 'primary.main',
           }}>
           {error && <Typography>{error}</Typography>}
-          <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
+          <Box
+            component='form'
+            onSubmit={handleSubmit}
+            sx={{ p: 2 }}
+            method='POST'>
             <Stack spacing={4}>
               <CustomInput
                 label='Enter Amount'
@@ -232,10 +236,7 @@ export default function EditForm({ id }) {
                 onChange={handleChange('date')}
               />
 
-              <Button
-                variant='main'
-                type='submit'
-                sx={{ px: 5, py: 1.5 }}>
+              <Button variant='main' type='submit' sx={{ px: 5, py: 1.5 }}>
                 Enter Transaction
               </Button>
             </Stack>

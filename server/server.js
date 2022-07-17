@@ -19,26 +19,25 @@ connectDB();
 // app.use(credentials);
 
 // Cross Origin Resource Sharing
-app.use(cors());
-// Access-Control-Allow-Origin *
-// api.natours.com, front-end natours.com
-// app.use(cors({
-//   origin: 'https://www.natours.com'
-// }))
 
-app.options('*', cors());
-
-
+const corsOpts = {
+  origin: process.env.WEB_APP_URL,
+  credentials: true,
+  methods: ['GET', 'POST', 'HEAD', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type'],
+  exposedHeaders: ['Content-Type'],
+};
+app.use(cors(corsOpts));
 
 // built-in middleware to handle urlencoded form data
 app.use(
   express.urlencoded({
     extended: true,
-    limit: '25mb'
+    limit: '25mb',
   })
 );
 
-app.use(express.json({limit: '25mb'}));
+app.use(express.json({ limit: '25mb' }));
 
 app.use(bodyParser.json());
 // built-in middleware for json
@@ -50,8 +49,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
 // 3) ROUTES
 
 app.use('/api/v1/users', userRouter);
@@ -60,17 +57,6 @@ app.use('/api/v1/transactions', transactionRouter);
 app.get('/', function (req, res) {
   res.send({ status: 'success' });
 });
-
-// app.all('*', (req, res) => {
-//   res.status(404);
-//   if (req.accepts('html')) {
-//     res.sendFile(path.join(__dirname, 'views', '404.html'));
-//   } else if (req.accepts('json')) {
-//     res.json({ error: '404 Not Found' });
-//   } else {
-//     res.type('txt').send('404 Not Found');
-//   }
-// });
 
 const port = process.env.PORT || 5001;
 const server = app.listen(port, () => {

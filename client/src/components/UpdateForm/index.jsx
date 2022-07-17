@@ -5,8 +5,6 @@ import { useUpdateMeMutation } from '../../features/users/usersSlice';
 import { setUser, selectUser } from '../../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-
-
 export default function UpdateForm() {
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
@@ -51,7 +49,6 @@ export default function UpdateForm() {
     }
   };
 
-
   return (
     <UpdateSection>
       <Box sx={{ width: '100%' }}>
@@ -66,7 +63,11 @@ export default function UpdateForm() {
           }}>
           {error && <Typography>{error}</Typography>}
 
-          <Box sx={{ p: 2 }}>
+          <Box
+            component='form'
+            onSubmit={handleSubmit}
+            sx={{ p: 2 }}
+            method='POST'>
             <Stack spacing={4}>
               <CustomInput
                 label='First Name'
@@ -124,12 +125,13 @@ export default function UpdateForm() {
                 }}
               />
 
-              <SubmitButton
-                variant='contained'
-                onClick={handleSubmit}
-                sx={{ px: 5, py: 1.5 }}>
+              <Button
+                type='submit'
+                fullWidth
+                variant='main'
+                sx={{ mt: 5.5, mb: 2 }}>
                 Submit
-              </SubmitButton>
+              </Button>
             </Stack>
           </Box>
         </Box>

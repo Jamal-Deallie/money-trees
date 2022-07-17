@@ -76,7 +76,11 @@ export default function SignIn() {
             }}>
             Sign In
           </Typography>
-          <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
+          <Box
+            component='form'
+            onSubmit={handleSubmit}
+            sx={{ p: 2 }}
+            method='POST'>
             <Stack spacing={4}>
               <CustomInput
                 margin='normal'
