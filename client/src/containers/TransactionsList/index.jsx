@@ -29,6 +29,7 @@ export default function TransactionsListContainer() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
               width: '100%',
               overflow: 'hidden',
             }}>

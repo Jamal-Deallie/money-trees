@@ -24,6 +24,7 @@ export default function TransactionsListContainer({ term }) {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
               width: '100%',
             }}>
             <Accordion

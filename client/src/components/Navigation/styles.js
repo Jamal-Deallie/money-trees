@@ -27,6 +27,9 @@ export const MainButton = styled(Button)(({ theme }) => ({
     color: theme.palette.primary.main,
     border: 'none',
   },
+  [theme.breakpoints.down('md')]: {
+    border: 'none',
+  },
 }));
 
 export const Logo = styled(Typography)(({ theme }) => ({
@@ -35,4 +38,8 @@ export const Logo = styled(Typography)(({ theme }) => ({
   fontWeight: 'bold',
   color: theme.palette.primary.main,
   fontSize: '3.6rem',
+  [theme.breakpoints.down('md')]: {
+    fontSize: '2.4rem',
+    
+  },
 }));

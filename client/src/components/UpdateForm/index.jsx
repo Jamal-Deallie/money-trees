@@ -58,18 +58,25 @@ export default function UpdateForm() {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            p: 4,
             color: 'primary.main',
+            width: '100%',
           }}>
-          {error && <Typography>{error}</Typography>}
+          <Box sx={{ textAlign: 'center' }}>
+            {error && (
+              <Typography variant='body1' color='primary'>
+                {error}
+              </Typography>
+            )}
+          </Box>
 
           <Box
             component='form'
             onSubmit={handleSubmit}
-            sx={{ p: 2 }}
+            sx={{ width: '100%' }}
             method='POST'>
-            <Stack spacing={4}>
+            <Stack spacing={4} sx={{ width: '100%' }}>
               <CustomInput
+                fullWidth
                 label='First Name'
                 value={updateData.firstName}
                 type='text'

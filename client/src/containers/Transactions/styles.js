@@ -9,6 +9,9 @@ export const Header = styled('h1')(({ theme }) => ({
   color: theme.palette.primary.main,
   margin: 0,
   fontWeight: 300,
+  [theme.breakpoints.down('md')]: {
+    fontSize: '3.2rem',
+  },
 }));
 
 export const SearchBarSection = styled('div')(({ theme }) => ({
@@ -66,10 +69,11 @@ export const SubmitBtn = styled('button')(({ theme }) => ({
 
 export const TransactionSection = styled(Box)(({ theme }) => ({
   borderTop: `1px solid ${theme.palette.primary.main}`,
-  padding: 'calc(8px + 1.5625vw) calc(8px + 1.5625vw)',
   maxHeight: '60rem',
   width: '100%',
   overflow: 'auto',
+  paddingBottom: '2.5rem',
+  padding: 'calc(8px + 1.5625vw)',
 }));
 
 export const TransactionInner = styled(Box)(({ theme }) => ({

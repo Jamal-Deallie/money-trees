@@ -35,7 +35,7 @@ export default function Accordion({
   const [edit, setEdit] = useState(false);
   const handleOpen = () => setEdit(true);
   const handleClose = () => setEdit(false);
-  const [isShown, setIsShown] = useState(true);
+  const [isShown, setIsShown] = useState(false);
   const [transactionRef, setTransactionRef] = useArrayRef();
 
   useEffect(() => {
@@ -97,7 +97,6 @@ export default function Accordion({
                   fontSize: 18,
                   textTransform: 'capitalize',
                   textAlign: 'center',
-                  ml: 10,
                 }}>
                 {party}
               </Typography>

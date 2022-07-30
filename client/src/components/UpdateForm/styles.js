@@ -1,43 +1,12 @@
 import { styled } from '@mui/system';
-import { Box, TextField } from '@mui/material';
-
-
-export const Wrapper = styled(Box)`
-  width: 100%;
-  padding: 1.5rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-`;
+import { TextField } from '@mui/material';
 
 export const UpdateSection = styled('section')({
   width: '100%',
-  padding: '5px',
-});
-
-export const Text = styled('p')({
-  padding: '20px',
-  width: '350px',
-});
-
-export const ValidationTextField = styled(TextField)({
-  '& input:valid + fieldset': {
-    borderColor: 'green',
-    borderWidth: 2,
-  },
-  '& input:invalid + fieldset': {
-    borderColor: 'red',
-    borderWidth: 2,
-  },
-  '& input:valid:focus + fieldset': {
-    borderLeftWidth: 6,
-    padding: '4px !important', // override inline-style
-  },
 });
 
 export const CustomInput = styled(TextField)(({ theme }) => ({
-  width: '350px',
+  width: '35rem',
   '& .MuiOutlinedInput-root': {
     '& > fieldset': { border: `1px solid ${theme.palette.primary.main}` },
   },
@@ -60,5 +29,8 @@ export const CustomInput = styled(TextField)(({ theme }) => ({
 
   ' & ::-webkit-calendar-picker-indicator': {
     filter: 'invert(100%)',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
   },
 }));

@@ -1,4 +1,4 @@
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { FormWrap, CustomLink, CustomInput, OutlineInput } from './styles';
 import {
   Button,
@@ -72,7 +72,9 @@ export default function SignIn() {
     <Box sx={{ position: 'relative', height: 'auto', padding: '12.5rem 0' }}>
       <Container sx={{ position: 'relative', height: '60rem' }}>
         <FormWrap noValidate>
-          {error && <Typography>{error}</Typography>}
+          <Box sx={{ textAlign: 'center' }}>
+            {error && <Typography>{error}</Typography>}
+          </Box>
           <Typography
             variant='h1'
             sx={{

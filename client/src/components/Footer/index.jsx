@@ -1,6 +1,5 @@
-import { CustomFooter, Icons, Links, GridLinks} from './styles';
+import { CustomFooter, Icons, Links, GridLinks } from './styles';
 import { Typography, Grid } from '@mui/material/';
-
 
 export default function Footer() {
   return (
@@ -40,7 +39,7 @@ export default function Footer() {
           </Links>
           <Links to='/'>
             <Typography variant='body1' sx={{ color: 'primary.main' }}>
-              TERMS & CONDITIONS
+              TERMS
             </Typography>
           </Links>
         </GridLinks>

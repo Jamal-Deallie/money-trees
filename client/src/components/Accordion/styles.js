@@ -1,21 +1,25 @@
 import { styled } from '@mui/system';
 import { Tooltip, Box } from '@mui/material';
 
-export const BtnGroup = styled(Box)({
-  transition: 'opacity 0.5s ease-in-out',
-  opacity: 1,
+export const BtnGroup = styled(Box, {
+  shouldForwardProp: prop => prop !== '$options',
+})(({ $options, theme }) => ({
+  transition: 'display 0.5s ease-in-out',
+  display: $options ? 'flex' : 'none',
   width: '10rem',
-  display: 'flex',
   justifyContent: 'center',
   gap: 2,
-});
+}));
 
 export const AccordionMenu = styled(Box)(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
   width: '100%',
   height: 'auto',
-  maxWidth: 800,
+  width: '100%',
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+  },
 }));
 
 export const TitleContainer = styled(Box, {
@@ -52,6 +56,10 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
   boxShadow: 24,
   p: 4,
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    p: 0,
+  },
 }));
 
 export const ContentInner = styled(Box, {

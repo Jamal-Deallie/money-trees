@@ -17,12 +17,12 @@ export default function FormContainer() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <TabContainer>
+    <Box sx={{ width: '100%', pb: '5.5rem' }}>
+      <TabContainer sx={{ pb: '2.5rem' }}>
         <Tabs value={index} onChange={onTabClicked}>
-          <CustomTab label='Enter Transaction' />
-          <CustomTab label='Update Profile' />
-          <CustomTab label='Upload Avatar' />
+          <CustomTab label='Transaction' />
+          <CustomTab label='Profile' />
+          <CustomTab label='Avatar' />
         </Tabs>
       </TabContainer>
       <Panel value={index} index={0}>

@@ -32,8 +32,7 @@ export const FormWrap = styled(Box)(({ theme }) => ({
 export const CustomLink = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main,
   '&:hover': {
-    color: theme.palette.primary.dark,
-    fontWeight: 600,
+    color: theme.palette.success.main,
   },
 }));
 

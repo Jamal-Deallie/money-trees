@@ -18,26 +18,29 @@ export default function CardContainer() {
     <CardSection>
       <GridContainer
         container
-        rowSpacing={{ xs: 1, xl: 2 }}
-        columnSpacing={{ xs: 1, xl: 2 }}>
-        <GridItem item xs={12} md={6} lg={6} xl={3}>
+        // rowSpacing={{ xs: 1, xl: 2 }}
+        // columnSpacing={{ xs: 1, xl: 2 }}
+        
+        
+        >
+        <GridItem item xs={12} md={4} lg={2} xl={2.5}>
           <CustomCard
             image='creditScore'
             category='Credit Score'
             stat={creditScore}
           />
         </GridItem>
-        <GridItem item xs={12} md={6} lg={6} xl={3}>
+        <GridItem item xs={12} md={4} lg={2} xl={2.5}>
           <CustomCard
             image='expenses'
             category='Expenses'
             stat={`${expenses}`}
           />
         </GridItem>
-        <GridItem item xs={12} md={6} lg={6} xl={3}>
+        <GridItem item xs={12} md={4} lg={2} xl={2.5}>
           <CustomCard image='income' category='Income' stat={`${income}`} />
         </GridItem>
-        <GridItem item xs={12} md={6} lg={6} xl={3}>
+        <GridItem item xs={12} md={4} lg={2} xl={2.5}>
           <CustomCard image='savings' category='Savings' stat={`${cash}`} />
         </GridItem>
       </GridContainer>

@@ -141,21 +141,19 @@ export default function TransactionForm() {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
-            p: 4,
             color: 'primary.main',
           }}>
           <Box sx={{ textAlign: 'center' }}>
             {error && (
-              <Typography
-                variant='body1'
-                sx={{ color: 'primary.main', textAlign: 'center' }}>
+              <Typography variant='body1' color='primary'>
                 {error}
               </Typography>
             )}
           </Box>
-          <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }}>
-            <Stack spacing={4}>
+          <Box component='form' onSubmit={handleSubmit} sx={{ width: '100%' }}>
+            <Stack spacing={4} sx={{ width: '100%' }}>
               <CustomInput
+                fullWidth
                 label='Enter Amount'
                 type='number'
                 value={transactionData.amount}
